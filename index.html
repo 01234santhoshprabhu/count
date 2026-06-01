@@ -138,7 +138,7 @@
   <header>
     <div>
       <h1>NPTEL Enrollment Live Dashboard</h1>
-      <div class="sub">Page refreshes from GitHub data every 10 seconds.</div>
+      <div class="sub">Display refreshes every 10 seconds. GitHub regenerates data about every 5 minutes.</div>
     </div>
     <div class="status" id="status">Loading...</div>
   </header>
@@ -258,7 +258,8 @@
       document.getElementById("meta").innerHTML = `
         <div>Data source: <b>GitHub Pages summary.json</b></div>
         <div>CSV report: <b>enrollment_report.csv</b></div>
-        <div>Browser refresh: <b>Every 10 seconds</b></div>
+        <div>Display refresh: <b>Every 10 seconds</b></div>
+        <div>Automatic data regeneration: <b>About every 5 minutes</b></div>
         <div>Total enrollment: <b>${fmt.format(data.total_enrollment)}</b></div>
       `;
       document.getElementById("topRows").innerHTML = data.top_courses.map(row => `
