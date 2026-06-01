@@ -181,6 +181,7 @@
   </main>
   <script>
     const fmt = new Intl.NumberFormat("en-IN");
+    const dataBase = "https://raw.githubusercontent.com/01234santhoshprabhu/count/gh-pages";
     let allCourseRows = [];
 
     function text(value) {
@@ -235,18 +236,19 @@
     }
 
     async function refreshTable() {
-      const response = await fetch(`enrollment_report.csv?t=${Date.now()}`, { cache: "no-store" });
+      const response = await fetch(`${dataBase}/enrollment_report.csv?t=${Date.now()}`, { cache: "no-store" });
       const csvText = await response.text();
       const parsed = parseCsv(csvText).slice(1);
       allCourseRows = parsed
         .filter(row => row[0] && row[0] !== "TOTAL")
         .map(row => ({ course_id: row[0], count: row[1] }));
-      document.getElementById("downloadLink").href = `enrollment_report.csv?t=${Date.now()}`;
+      document.getElementById("downloadLink").href = `${dataBase}/enrollment_report.csv?t=${Date.now()}`;
       renderAllRows();
     }
 
     async function refreshDashboard() {
-      const response = await fetch(`summary.json?t=${Date.now()}`, { cache: "no-store" });
+      const checkedAt = new Date();
+      const response = await fetch(`${dataBase}/summary.json?t=${Date.now()}`, { cache: "no-store" });
       const data = await response.json();
       const updated = new Date(data.updated_at);
 
@@ -254,9 +256,9 @@
       document.getElementById("numeric").textContent = fmt.format(data.numeric_count);
       document.getElementById("errors").textContent = fmt.format(data.error_count);
       document.getElementById("total").textContent = fmt.format(data.total_enrollment);
-      document.getElementById("status").textContent = `Last data update: ${updated.toLocaleString()}`;
+      document.getElementById("status").textContent = `Data: ${updated.toLocaleString()} | Checked: ${checkedAt.toLocaleTimeString()}`;
       document.getElementById("meta").innerHTML = `
-        <div>Data source: <b>GitHub Pages summary.json</b></div>
+        <div>Data source: <b>GitHub raw summary.json</b></div>
         <div>CSV report: <b>enrollment_report.csv</b></div>
         <div>Display refresh: <b>Every 10 seconds</b></div>
         <div>Automatic data regeneration: <b>About every 5 minutes</b></div>
