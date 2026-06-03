@@ -327,8 +327,8 @@
           <div class="actions">
             <input id="candidateSearch" type="search" placeholder="Search email ID">
             <button id="clearCandidate" class="secondary" type="button">Clear</button>
-            <label class="file-button secondary" for="candidateFile">Upload candidate CSV</label>
-            <input id="candidateFile" type="file" accept=".csv,text/csv">
+            <label class="file-button secondary" for="candidateFile">Upload CSV / Excel</label>
+            <input id="candidateFile" type="file" accept=".csv,text/csv,.xlsx,.xls">
             <span class="note" id="candidateDataStatus">Looking for dis_star_data.csv...</span>
           </div>
           <div class="candidate-kpis">
@@ -368,6 +368,7 @@
       </main>
     </div>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script>
     const fmt = new Intl.NumberFormat("en-IN");
     const SUPABASE_URL = "https://oiebamupeucekvcfscpj.supabase.co";
@@ -375,6 +376,7 @@
     let allCourseRows = [];
     let candidateRowsData = [];
     let candidateHeaders = [];
+    let candidateSheetName = "";
     let candidateMode = "supabase";
 
     const emailKeys = ["email", "emailid", "mail", "mailid", "candidate email", "email id"];
@@ -547,11 +549,11 @@
           method: "POST",
           body: "{}"
         });
-        const summaryData = Array.isArray(summary) ? summary[0] : summary;
-        document.getElementById("candidateRows").textContent = fmt.format(Number(summaryData.rows || 0));
-        document.getElementById("candidateEmails").textContent = fmt.format(Number(summaryData.emails || 0));
-        document.getElementById("candidateCourses").textContent = fmt.format(Number(summaryData.courses || 0));
-        document.getElementById("candidateGroups").textContent = fmt.format(Number(summaryData.groups || 0));
+      const summaryData = Array.isArray(summary) ? summary[0] : summary;
+      document.getElementById("candidateRows").textContent = fmt.format(Number(summaryData.rows || 0));
+      document.getElementById("candidateEmails").textContent = fmt.format(Number(summaryData.emails || 0));
+      document.getElementById("candidateCourses").textContent = fmt.format(Number(summaryData.courses || 0));
+      document.getElementById("candidateGroups").textContent = fmt.format(Number(summaryData.sheets || summaryData.groups || 0));
 
         const topRows = await supabaseFetch("/rest/v1/rpc/candidate_top_values", {
           method: "POST",
@@ -570,14 +572,14 @@
         }
 
         const encoded = encodeURIComponent(`*${query}*`);
-        const matches = await supabaseFetch(`/rest/v1/candidate_records?select=email,course_id,course_name,category,group_name,raw&email=ilike.${encoded}&limit=500`);
+        const matches = await supabaseFetch(`/rest/v1/candidate_records?select=email,course_id,course_name,category,group_name,sheet_name,raw&email=ilike.${encoded}&limit=500`);
         document.getElementById("candidateMatches").textContent = fmt.format(matches.length);
         if (!matches.length) {
           document.getElementById("candidateDetails").innerHTML = `<div class="empty">No rows found for this email in Supabase.</div>`;
           return;
         }
         const rawHeaders = [...new Set(matches.flatMap(row => Object.keys(row.raw || {})))].slice(0, 14);
-        const visibleHeaders = rawHeaders.length ? rawHeaders : ["email", "course_id", "course_name", "category", "group_name"];
+        const visibleHeaders = rawHeaders.length ? ["sheet_name", ...rawHeaders.filter(header => header !== "sheet_name")] : ["sheet_name", "email", "course_id", "course_name", "category", "group_name"];
         document.getElementById("candidateDetails").innerHTML = `
           <div style="padding:10px;">
             <span class="pill good">${fmt.format(matches.length)} rows</span>
@@ -587,7 +589,7 @@
           <table>
             <thead><tr>${visibleHeaders.map(header => `<th>${escapeHtml(header)}</th>`).join("")}</tr></thead>
             <tbody>${matches.map(row => `
-              <tr>${visibleHeaders.map(header => `<td>${escapeHtml((row.raw && row.raw[header]) || row[header] || "")}</td>`).join("")}</tr>
+              <tr>${visibleHeaders.map(header => `<td>${escapeHtml(header === "sheet_name" ? row.sheet_name : ((row.raw && row.raw[header]) || row[header] || ""))}</td>`).join("")}</tr>
             `).join("")}</tbody>
           </table>`;
       } catch (error) {
@@ -595,11 +597,12 @@
       }
     }
 
-    async function loadCandidateCsvFromText(csvText, sourceLabel) {
+    async function loadCandidateCsvFromText(csvText, sourceLabel, sheetName = "CSV") {
       const parsed = parseCsv(csvText);
       const shaped = rowsToObjects(parsed);
       candidateHeaders = shaped.headers;
       candidateRowsData = shaped.rows;
+      candidateSheetName = sheetName;
       const emailColumn = findColumn(candidateHeaders, emailKeys);
       const courseColumn = findColumn(candidateHeaders, courseKeys);
       const groupColumn = findColumn(candidateHeaders, groupKeys);
@@ -612,12 +615,12 @@
       if (emailColumn && candidateRowsData.length) {
         const shouldUpload = confirm(`Upload ${fmt.format(candidateRowsData.length)} rows into Supabase for team search?`);
         if (shouldUpload) {
-          await uploadCandidateRowsToSupabase(sourceLabel, emailColumn, courseColumn, groupColumn);
+          await uploadCandidateRowsToSupabase(sourceLabel, emailColumn, courseColumn, groupColumn, sheetName);
         }
       }
     }
 
-    async function uploadCandidateRowsToSupabase(sourceLabel, emailColumn, courseColumn, groupColumn) {
+    async function uploadCandidateRowsToSupabase(sourceLabel, emailColumn, courseColumn, groupColumn, sheetName = candidateSheetName || "Sheet") {
       document.getElementById("candidateDataStatus").textContent = `Uploading ${fmt.format(candidateRowsData.length)} rows to Supabase...`;
       const uploadRows = await supabaseFetch("/rest/v1/candidate_uploads", {
         method: "POST",
@@ -633,6 +636,7 @@
       for (let start = 0; start < candidateRowsData.length; start += chunkSize) {
         const chunk = candidateRowsData.slice(start, start + chunkSize).map(row => ({
           upload_id: uploadId,
+          sheet_name: sheetName,
           email: text(row[emailColumn]).trim(),
           course_id: courseColumn ? text(row[courseColumn]).trim() : "",
           course_name: courseColumn && /name/i.test(courseColumn) ? text(row[courseColumn]).trim() : "",
@@ -649,6 +653,37 @@
       }
       candidateMode = "supabase";
       document.getElementById("candidateDataStatus").textContent = `Supabase upload complete: ${fmt.format(candidateRowsData.length)} rows`;
+      await renderCandidateAnalytics();
+    }
+
+    async function uploadWorkbookToSupabase(file) {
+      if (!window.XLSX) throw new Error("Excel parser did not load. Check internet connection and try again.");
+      document.getElementById("candidateDataStatus").textContent = `Reading workbook ${file.name}...`;
+      const workbook = XLSX.read(await file.arrayBuffer(), { type: "array" });
+      const sheetNames = workbook.SheetNames || [];
+      if (!sheetNames.length) throw new Error("No sheets found in this workbook.");
+      const shouldUpload = confirm(`Upload all ${sheetNames.length} sheet(s) from ${file.name} into Supabase?`);
+      if (!shouldUpload) return;
+      let totalRows = 0;
+      for (const sheetName of sheetNames) {
+        const rows = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { defval: "", raw: false });
+        if (!rows.length) continue;
+        candidateRowsData = rows;
+        candidateHeaders = Object.keys(rows[0] || {});
+        candidateSheetName = sheetName;
+        const emailColumn = findColumn(candidateHeaders, emailKeys);
+        const courseColumn = findColumn(candidateHeaders, courseKeys);
+        const groupColumn = findColumn(candidateHeaders, groupKeys);
+        if (!emailColumn) {
+          document.getElementById("candidateDataStatus").textContent = `Skipped ${sheetName}: email column not found.`;
+          continue;
+        }
+        document.getElementById("candidateDataStatus").textContent = `Uploading sheet ${sheetName}: ${fmt.format(rows.length)} rows...`;
+        await uploadCandidateRowsToSupabase(file.name, emailColumn, courseColumn, groupColumn, sheetName);
+        totalRows += rows.length;
+      }
+      candidateMode = "supabase";
+      document.getElementById("candidateDataStatus").textContent = `Workbook upload complete: ${fmt.format(totalRows)} rows from ${fmt.format(sheetNames.length)} sheet(s).`;
       await renderCandidateAnalytics();
     }
 
@@ -728,7 +763,16 @@
     document.getElementById("candidateFile").addEventListener("change", async event => {
       const file = event.target.files && event.target.files[0];
       if (!file) return;
-      await loadCandidateCsvFromText(await file.text(), file.name);
+      const lowerName = file.name.toLowerCase();
+      try {
+        if (lowerName.endsWith(".xlsx") || lowerName.endsWith(".xls")) {
+          await uploadWorkbookToSupabase(file);
+        } else {
+          await loadCandidateCsvFromText(await file.text(), file.name, "CSV");
+        }
+      } catch (error) {
+        document.getElementById("candidateDataStatus").textContent = `Upload failed: ${error.message}`;
+      }
     });
     document.querySelectorAll(".nav-item").forEach(item => {
       item.addEventListener("click", () => goToSection(item.dataset.go, item));
