@@ -6,15 +6,19 @@
   <title>NPTEL Enrollment Live Dashboard</title>
   <style>
     :root {
-      --bg: #f6f8fb;
+      --bg: #f4f7fb;
       --panel: #ffffff;
       --ink: #172033;
       --muted: #667085;
       --line: #d9dee8;
-      --blue: #1f5fa8;
-      --green: #1c7c54;
+      --blue: #1f6fd1;
+      --blue-dark: #10233f;
+      --nav: #111d2f;
+      --nav-soft: #1b2b44;
+      --green: #16845b;
       --amber: #9a6700;
       --red: #b42318;
+      --shadow: 0 18px 40px rgba(15, 35, 65, .09);
     }
     * { box-sizing: border-box; }
     body {
@@ -24,6 +28,88 @@
       font-family: "Segoe UI", Arial, sans-serif;
       letter-spacing: 0;
     }
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+    }
+    aside {
+      background: linear-gradient(180deg, #10233f, #121b2c 55%, #0f1726);
+      color: #eef5ff;
+      padding: 18px 14px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      box-shadow: 12px 0 30px rgba(12, 24, 44, .16);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 4px 18px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      margin-bottom: 22px;
+      font-weight: 800;
+    }
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #20a4f3, #2365c8);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 10px 28px rgba(32,164,243,.3);
+    }
+    .brand small { display: block; color: #9fb0ca; margin-top: 2px; font-weight: 600; }
+    .nav-label {
+      color: #8ea0ba;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 0 10px;
+      margin: 18px 0 8px;
+    }
+    .nav-item {
+      width: 100%;
+      border: 1px solid transparent;
+      background: transparent;
+      color: #dbe6f5;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      text-align: left;
+      padding: 11px 12px;
+      border-radius: 10px;
+      font-weight: 750;
+      cursor: pointer;
+    }
+    .nav-item.active, .nav-item:hover {
+      background: rgba(31,111,209,.2);
+      border-color: rgba(75,158,255,.35);
+      color: #fff;
+    }
+    .nav-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 7px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,.08);
+    }
+    .theme-chip {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 20px;
+      color: #dce7f6;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 12px;
+      padding: 11px 13px;
+      background: rgba(255,255,255,.06);
+      font-weight: 700;
+    }
+    .content { min-width: 0; }
     header {
       background: #fff;
       border-bottom: 1px solid var(--line);
@@ -33,18 +119,33 @@
       align-items: center;
       gap: 16px;
       flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 5;
     }
     h1 { margin: 0; font-size: 24px; line-height: 1.2; }
     .sub { color: var(--muted); margin-top: 4px; font-size: 13px; }
-    main { max-width: 1180px; margin: 0 auto; padding: 22px; }
+    main { max-width: 1360px; margin: 0 auto; padding: 22px; }
+    section { scroll-margin-top: 88px; }
     .status {
       border: 1px solid var(--line);
       background: #fff;
       color: var(--muted);
       padding: 9px 11px;
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 13px;
     }
+    .hero {
+      background: linear-gradient(135deg, #12213a, #285c9e 62%, #2f89ea);
+      color: #fff;
+      border-radius: 18px;
+      padding: 28px;
+      margin-bottom: 18px;
+      box-shadow: var(--shadow);
+    }
+    .hero .eyebrow { color: #c8d8ec; font-size: 12px; font-weight: 800; letter-spacing: .14em; }
+    .hero h2 { margin: 12px 0 6px; font-size: 32px; }
+    .hero p { margin: 0; color: #dbe8f8; font-weight: 600; }
     .grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -54,13 +155,15 @@
     .metric, .panel {
       background: var(--panel);
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: 12px;
       padding: 16px;
+      box-shadow: 0 10px 26px rgba(25, 45, 75, .05);
     }
     .metric .label { color: var(--muted); font-size: 13px; }
-    .metric .value { font-size: 30px; font-weight: 700; margin-top: 8px; }
+    .metric .value { font-size: 30px; font-weight: 800; margin-top: 8px; }
     .metric.good .value { color: var(--green); }
     .metric.warn .value { color: var(--amber); }
+    .metric.blue .value { color: var(--blue); }
     .wide {
       display: grid;
       grid-template-columns: 1.35fr .9fr;
@@ -73,32 +176,34 @@
       flex-wrap: wrap;
       margin-bottom: 12px;
     }
-    button, a.download {
+    button, a.download, .file-button {
       border: 1px solid #174f8a;
       background: var(--blue);
       color: #fff;
       padding: 9px 12px;
-      border-radius: 6px;
-      font-weight: 600;
+      border-radius: 8px;
+      font-weight: 700;
       cursor: pointer;
       text-decoration: none;
       font-size: 14px;
     }
-    button.secondary {
+    button.secondary, .file-button.secondary {
       background: #fff;
       color: var(--blue);
     }
     input[type="search"] {
       border: 1px solid var(--line);
-      border-radius: 6px;
-      padding: 9px 10px;
-      min-width: 240px;
+      border-radius: 8px;
+      padding: 10px 11px;
+      min-width: 260px;
       font-size: 14px;
     }
-    .panel h2 { margin: 0 0 12px; font-size: 17px; color: #23456f; }
+    input[type="file"] { display: none; }
+    .panel h2 { margin: 0 0 12px; font-size: 18px; color: #23456f; }
+    .panel h3 { margin: 10px 0 8px; font-size: 15px; color: #23456f; }
     table { width: 100%; border-collapse: collapse; font-size: 14px; }
-    th, td { border-bottom: 1px solid #eef1f5; padding: 9px 8px; text-align: left; }
-    th { color: var(--muted); font-weight: 600; background: #f5f7fa; }
+    th, td { border-bottom: 1px solid #eef1f5; padding: 9px 8px; text-align: left; vertical-align: top; }
+    th { color: var(--muted); font-weight: 700; background: #f5f7fa; }
     td.num { text-align: right; font-variant-numeric: tabular-nums; }
     .meta {
       display: grid;
@@ -109,12 +214,12 @@
       margin-bottom: 16px;
     }
     .meta b { color: var(--ink); }
-    .empty { color: var(--muted); padding: 10px 0; }
+    .empty { color: var(--muted); padding: 16px 0; font-weight: 650; }
     .table-wrap {
       max-height: 560px;
       overflow: auto;
       border: 1px solid #eef1f5;
-      border-radius: 6px;
+      border-radius: 8px;
     }
     .table-wrap table th {
       position: sticky;
@@ -122,79 +227,173 @@
       z-index: 1;
     }
     .note { color: var(--muted); font-size: 13px; }
-    @media (max-width: 900px) {
-      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .wide { grid-template-columns: 1fr; }
+    .candidate-kpis {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      margin: 12px 0;
+    }
+    .mini-card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px;
+      background: #fbfdff;
+    }
+    .mini-card strong { display: block; font-size: 22px; margin-bottom: 4px; }
+    .split {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      gap: 14px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 5px 10px;
+      background: #edf4ff;
+      color: #185ba8;
+      font-weight: 800;
+      font-size: 12px;
+      margin: 2px 4px 2px 0;
+    }
+    .pill.good { background: #e9f8f1; color: #08724b; }
+    .pill.warn { background: #fff5df; color: #8a5b00; }
+    @media (max-width: 1060px) {
+      .app { grid-template-columns: 1fr; }
+      aside { position: relative; height: auto; }
+      .theme-chip { position: static; margin-top: 16px; }
+      .grid, .candidate-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .wide, .split { grid-template-columns: 1fr; }
     }
     @media (max-width: 560px) {
       main { padding: 14px; }
-      .grid { grid-template-columns: 1fr; }
-      .meta { grid-template-columns: 1fr; }
+      .grid, .meta, .candidate-kpis { grid-template-columns: 1fr; }
       h1 { font-size: 20px; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div>
-      <h1>NPTEL Enrollment Live Dashboard</h1>
-      <div class="sub">Display refreshes every 10 seconds. GitHub regenerates data about every 5 minutes.</div>
+  <div class="app">
+    <aside>
+      <div class="brand"><div class="brand-mark">N</div><div>NPTEL<small>SP</small></div></div>
+      <div class="nav-label">Main</div>
+      <button class="nav-item active" data-go="dashboard"><span class="nav-icon">▣</span><span>Dashboard</span></button>
+      <div class="nav-label">Tools</div>
+      <button class="nav-item" data-go="course-counts"><span class="nav-icon">#</span><span>Course Counts</span></button>
+      <button class="nav-item" data-go="candidate-analytics"><span class="nav-icon">@</span><span>Candidates</span></button>
+      <button class="nav-item" data-go="data-filter"><span class="nav-icon">⌕</span><span>Data Filter</span></button>
+      <div class="theme-chip">Light Mode</div>
+    </aside>
+    <div class="content">
+      <header>
+        <div>
+          <h1>NPTEL Enrollment Live Dashboard</h1>
+          <div class="sub">Display refreshes every 10 seconds. GitHub regenerates data about every 5 minutes.</div>
+        </div>
+        <div class="status" id="status">Loading...</div>
+      </header>
+      <main>
+        <section id="dashboard">
+          <div class="hero">
+            <div class="eyebrow">SP</div>
+            <h2>Dashboard</h2>
+            <p>Enrollment count, missing courses, candidate lookup, and uploaded data analytics in one place.</p>
+          </div>
+          <section class="meta" id="meta"></section>
+          <section class="grid">
+            <div class="metric"><div class="label">Courses</div><div class="value" id="courses">-</div></div>
+            <div class="metric good"><div class="label">Numeric Counts</div><div class="value" id="numeric">-</div></div>
+            <div class="metric warn"><div class="label">Missing/Error</div><div class="value" id="errors">-</div></div>
+            <div class="metric"><div class="label">Total Enrollment</div><div class="value" id="total">-</div></div>
+          </section>
+        </section>
+
+        <section id="course-counts" class="wide">
+          <div class="panel">
+            <h2>Top Courses</h2>
+            <table>
+              <thead><tr><th>Course ID</th><th class="num">Learners</th></tr></thead>
+              <tbody id="topRows"></tbody>
+            </table>
+          </div>
+          <div class="panel">
+            <h2>Missing Courses</h2>
+            <div id="errorRows"></div>
+          </div>
+        </section>
+
+        <section id="candidate-analytics" class="panel" style="margin-top:14px;">
+          <h2>Candidate Analytics</h2>
+          <div class="actions">
+            <input id="candidateSearch" type="search" placeholder="Search email ID">
+            <button id="clearCandidate" class="secondary" type="button">Clear</button>
+            <label class="file-button secondary" for="candidateFile">Upload candidate CSV</label>
+            <input id="candidateFile" type="file" accept=".csv,text/csv">
+            <span class="note" id="candidateDataStatus">Looking for dis_star_data.csv...</span>
+          </div>
+          <div class="candidate-kpis">
+            <div class="mini-card"><strong id="candidateRows">-</strong><span>Total rows</span></div>
+            <div class="mini-card"><strong id="candidateEmails">-</strong><span>Unique emails</span></div>
+            <div class="mini-card"><strong id="candidateCourses">-</strong><span>Unique courses</span></div>
+            <div class="mini-card"><strong id="candidateGroups">-</strong><span>Groups/categories</span></div>
+            <div class="mini-card"><strong id="candidateMatches">-</strong><span>Email matches</span></div>
+          </div>
+          <div class="split">
+            <div>
+              <h3>Top Values</h3>
+              <div id="candidateTopValues" class="table-wrap"><div class="empty">Candidate data not loaded.</div></div>
+            </div>
+            <div>
+              <h3>Email Details</h3>
+              <div id="candidateDetails" class="table-wrap"><div class="empty">Enter an email ID after loading candidate data.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="data-filter" class="panel" style="margin-top:14px;">
+          <h2>All Course Counts</h2>
+          <div class="actions">
+            <button id="copyBtn" type="button">Copy table</button>
+            <a class="download" id="downloadLink" href="enrollment_report.csv" download>Download CSV</a>
+            <input id="searchBox" type="search" placeholder="Search course ID">
+            <span class="note" id="tableInfo"></span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Course ID</th><th class="num">Learners Enrolled</th></tr></thead>
+              <tbody id="allRows"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
     </div>
-    <div class="status" id="status">Loading...</div>
-  </header>
-  <main>
-    <section class="meta" id="meta"></section>
-    <section class="grid">
-      <div class="metric"><div class="label">Courses</div><div class="value" id="courses">-</div></div>
-      <div class="metric good"><div class="label">Numeric Counts</div><div class="value" id="numeric">-</div></div>
-      <div class="metric warn"><div class="label">Missing/Error</div><div class="value" id="errors">-</div></div>
-      <div class="metric"><div class="label">Total Enrollment</div><div class="value" id="total">-</div></div>
-    </section>
-    <section class="wide">
-      <div class="panel">
-        <h2>Top Courses</h2>
-        <table>
-          <thead><tr><th>Course ID</th><th class="num">Learners</th></tr></thead>
-          <tbody id="topRows"></tbody>
-        </table>
-      </div>
-      <div class="panel">
-        <h2>Missing Courses</h2>
-        <div id="errorRows"></div>
-      </div>
-    </section>
-    <section class="panel" style="margin-top:14px;">
-      <h2>All Course Counts</h2>
-      <div class="actions">
-        <button id="copyBtn" type="button">Copy table</button>
-        <a class="download" id="downloadLink" href="enrollment_report.csv" download>Download CSV</a>
-        <input id="searchBox" type="search" placeholder="Search course ID">
-        <span class="note" id="tableInfo"></span>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Course ID</th><th class="num">Learners Enrolled</th></tr></thead>
-          <tbody id="allRows"></tbody>
-        </table>
-      </div>
-    </section>
-  </main>
+  </div>
   <script>
     const fmt = new Intl.NumberFormat("en-IN");
     let allCourseRows = [];
+    let candidateRowsData = [];
+    let candidateHeaders = [];
+
+    const emailKeys = ["email", "emailid", "mail", "mailid", "candidate email", "email id"];
+    const courseKeys = ["course", "course id", "course_id", "course name", "coursename", "courseid"];
+    const groupKeys = ["group", "category", "discipline", "domain", "department", "star"];
 
     function text(value) {
       return value === undefined || value === null ? "" : String(value);
     }
 
-    function parseCsv(text) {
+    function norm(value) {
+      return text(value).trim().toLowerCase();
+    }
+
+    function parseCsv(csvText) {
       const rows = [];
       let row = [];
       let value = "";
       let quoted = false;
-      for (let i = 0; i < text.length; i++) {
-        const char = text[i];
-        const next = text[i + 1];
+      for (let i = 0; i < csvText.length; i++) {
+        const char = csvText[i];
+        const next = csvText[i + 1];
         if (quoted) {
           if (char === '"' && next === '"') {
             value += '"';
@@ -225,13 +424,121 @@
       return rows;
     }
 
+    function escapeHtml(value) {
+      return text(value).replace(/[&<>"']/g, char => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+      }[char]));
+    }
+
+    function findColumn(headers, options) {
+      const normalized = headers.map(header => norm(header).replace(/[_\s-]+/g, " "));
+      for (const option of options) {
+        const wanted = norm(option).replace(/[_\s-]+/g, " ");
+        const index = normalized.findIndex(header => header === wanted || header.includes(wanted));
+        if (index >= 0) return headers[index];
+      }
+      return "";
+    }
+
+    function rowsToObjects(rows) {
+      const headers = rows[0] || [];
+      return {
+        headers,
+        rows: rows.slice(1)
+          .filter(row => row.some(cell => text(cell).trim()))
+          .map(row => Object.fromEntries(headers.map((header, index) => [header, row[index] || ""])))
+      };
+    }
+
+    function countBy(rows, column) {
+      const counts = new Map();
+      if (!column) return [];
+      rows.forEach(row => {
+        const value = text(row[column]).trim();
+        if (!value) return;
+        counts.set(value, (counts.get(value) || 0) + 1);
+      });
+      return [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 10);
+    }
+
     function renderAllRows() {
       const query = document.getElementById("searchBox").value.trim().toLowerCase();
       const filtered = allCourseRows.filter(row => row.course_id.toLowerCase().includes(query));
       document.getElementById("tableInfo").textContent = `${fmt.format(filtered.length)} rows shown`;
       document.getElementById("allRows").innerHTML = filtered.map(row => `
-        <tr><td>${text(row.course_id)}</td><td class="num">${text(row.count)}</td></tr>
+        <tr><td>${escapeHtml(row.course_id)}</td><td class="num">${escapeHtml(row.count)}</td></tr>
       `).join("");
+    }
+
+    function renderCandidateAnalytics() {
+      const emailColumn = findColumn(candidateHeaders, emailKeys);
+      const courseColumn = findColumn(candidateHeaders, courseKeys);
+      const groupColumn = findColumn(candidateHeaders, groupKeys);
+      const emailSet = new Set(candidateRowsData.map(row => norm(row[emailColumn])).filter(Boolean));
+      const courseSet = new Set(candidateRowsData.map(row => norm(row[courseColumn])).filter(Boolean));
+      const groupSet = new Set(candidateRowsData.map(row => norm(row[groupColumn])).filter(Boolean));
+      const query = norm(document.getElementById("candidateSearch").value);
+      const matches = query && emailColumn
+        ? candidateRowsData.filter(row => norm(row[emailColumn]).includes(query))
+        : [];
+
+      document.getElementById("candidateRows").textContent = fmt.format(candidateRowsData.length);
+      document.getElementById("candidateEmails").textContent = fmt.format(emailSet.size);
+      document.getElementById("candidateCourses").textContent = fmt.format(courseSet.size);
+      document.getElementById("candidateGroups").textContent = fmt.format(groupSet.size);
+      document.getElementById("candidateMatches").textContent = fmt.format(matches.length);
+
+      const topRows = countBy(candidateRowsData, groupColumn || courseColumn || emailColumn);
+      document.getElementById("candidateTopValues").innerHTML = topRows.length
+        ? `<table><thead><tr><th>${escapeHtml(groupColumn || courseColumn || emailColumn)}</th><th class="num">Rows</th></tr></thead><tbody>${topRows.map(row => `
+            <tr><td>${escapeHtml(row[0])}</td><td class="num">${fmt.format(row[1])}</td></tr>
+          `).join("")}</tbody></table>`
+        : `<div class="empty">No candidate analytics available.</div>`;
+
+      if (!query) {
+        document.getElementById("candidateDetails").innerHTML = `<div class="empty">Enter an email ID to see all matching rows.</div>`;
+        return;
+      }
+      if (!matches.length) {
+        document.getElementById("candidateDetails").innerHTML = `<div class="empty">No rows found for this email.</div>`;
+        return;
+      }
+      const visibleHeaders = candidateHeaders.filter(header => matches.some(row => text(row[header]).trim())).slice(0, 14);
+      document.getElementById("candidateDetails").innerHTML = `
+        <div style="padding:10px;">
+          <span class="pill good">${fmt.format(matches.length)} rows</span>
+          <span class="pill">${fmt.format(new Set(matches.map(row => norm(row[courseColumn])).filter(Boolean)).size)} courses</span>
+          <span class="pill warn">${fmt.format(new Set(matches.map(row => norm(row[groupColumn])).filter(Boolean)).size)} groups</span>
+        </div>
+        <table>
+          <thead><tr>${visibleHeaders.map(header => `<th>${escapeHtml(header)}</th>`).join("")}</tr></thead>
+          <tbody>${matches.slice(0, 250).map(row => `
+            <tr>${visibleHeaders.map(header => `<td>${escapeHtml(row[header])}</td>`).join("")}</tr>
+          `).join("")}</tbody>
+        </table>`;
+    }
+
+    async function loadCandidateCsvFromText(csvText, sourceLabel) {
+      const parsed = parseCsv(csvText);
+      const shaped = rowsToObjects(parsed);
+      candidateHeaders = shaped.headers;
+      candidateRowsData = shaped.rows;
+      const emailColumn = findColumn(candidateHeaders, emailKeys);
+      document.getElementById("candidateDataStatus").textContent = emailColumn
+        ? `${sourceLabel}: ${fmt.format(candidateRowsData.length)} rows loaded`
+        : `${sourceLabel}: loaded, but email column not found`;
+      renderCandidateAnalytics();
+    }
+
+    async function loadCandidateCsv() {
+      try {
+        const response = await fetch(`dis_star_data.csv?t=${Date.now()}`, { cache: "no-store" });
+        if (!response.ok) throw new Error("not available");
+        await loadCandidateCsvFromText(await response.text(), "dis_star_data.csv");
+      } catch (error) {
+        document.getElementById("candidateDataStatus").textContent = "Export the Power BI table as CSV and upload it here.";
+        renderCandidateAnalytics();
+      }
     }
 
     async function refreshTable() {
@@ -264,24 +571,46 @@
         <div>Total enrollment: <b>${fmt.format(data.total_enrollment)}</b></div>
       `;
       document.getElementById("topRows").innerHTML = data.top_courses.map(row => `
-        <tr><td>${text(row.course_id)}</td><td class="num">${fmt.format(row.count)}</td></tr>
+        <tr><td>${escapeHtml(row.course_id)}</td><td class="num">${fmt.format(row.count)}</td></tr>
       `).join("");
       document.getElementById("errorRows").innerHTML = data.errors.length
         ? `<table><thead><tr><th>Course ID</th><th>Status</th></tr></thead><tbody>${data.errors.map(row => `
-            <tr><td>${text(row.course_id)}</td><td>${text(row.status)}</td></tr>
+            <tr><td>${escapeHtml(row.course_id)}</td><td>${escapeHtml(row.status)}</td></tr>
           `).join("")}</tbody></table>`
         : `<div class="empty">No missing courses.</div>`;
+    }
+
+    function goToSection(id, button) {
+      const target = document.getElementById(id);
+      if (!target) return;
+      document.querySelectorAll(".nav-item").forEach(item => item.classList.toggle("active", item === button));
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
     refreshDashboard().catch(error => {
       document.getElementById("status").textContent = `Could not load data: ${error}`;
     });
     refreshTable().catch(console.error);
+    loadCandidateCsv().catch(console.error);
     setInterval(() => {
       refreshDashboard().catch(console.error);
       refreshTable().catch(console.error);
     }, 10000);
     document.getElementById("searchBox").addEventListener("input", renderAllRows);
+    document.getElementById("candidateSearch").addEventListener("input", renderCandidateAnalytics);
+    document.getElementById("clearCandidate").addEventListener("click", () => {
+      document.getElementById("candidateSearch").value = "";
+      renderCandidateAnalytics();
+      document.getElementById("candidateSearch").focus();
+    });
+    document.getElementById("candidateFile").addEventListener("change", async event => {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      await loadCandidateCsvFromText(await file.text(), file.name);
+    });
+    document.querySelectorAll(".nav-item").forEach(item => {
+      item.addEventListener("click", () => goToSection(item.dataset.go, item));
+    });
     document.getElementById("copyBtn").addEventListener("click", async () => {
       const lines = [["Course_ID", "Learners_Enrolled"], ...allCourseRows.map(row => [row.course_id, row.count])];
       const tableText = lines.map(row => row.join("\t")).join("\n");
