@@ -370,9 +370,12 @@
   </div>
   <script>
     const fmt = new Intl.NumberFormat("en-IN");
+    const SUPABASE_URL = "https://oiebamupeucekvcfscpj.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_w_l-WFz9E-IrPoQwGqodZw_Zsx929gv";
     let allCourseRows = [];
     let candidateRowsData = [];
     let candidateHeaders = [];
+    let candidateMode = "supabase";
 
     const emailKeys = ["email", "emailid", "mail", "mailid", "candidate email", "email id"];
     const courseKeys = ["course", "course id", "course_id", "course name", "coursename", "courseid"];
@@ -440,6 +443,24 @@
       return "";
     }
 
+    async function supabaseFetch(path, options = {}) {
+      const response = await fetch(`${SUPABASE_URL}${path}`, {
+        ...options,
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`,
+          "Content-Type": "application/json",
+          ...(options.headers || {})
+        }
+      });
+      if (!response.ok) {
+        const body = await response.text();
+        throw new Error(body || response.statusText);
+      }
+      if (options.method === "HEAD") return response;
+      return response.json();
+    }
+
     function rowsToObjects(rows) {
       const headers = rows[0] || [];
       return {
@@ -471,6 +492,7 @@
     }
 
     function renderCandidateAnalytics() {
+      if (candidateMode === "supabase") return renderSupabaseCandidateAnalytics();
       const emailColumn = findColumn(candidateHeaders, emailKeys);
       const courseColumn = findColumn(candidateHeaders, courseKeys);
       const groupColumn = findColumn(candidateHeaders, groupKeys);
@@ -518,25 +540,125 @@
         </table>`;
     }
 
+    async function renderSupabaseCandidateAnalytics() {
+      const query = norm(document.getElementById("candidateSearch").value);
+      try {
+        const summary = await supabaseFetch("/rest/v1/rpc/candidate_summary", {
+          method: "POST",
+          body: "{}"
+        });
+        const summaryData = Array.isArray(summary) ? summary[0] : summary;
+        document.getElementById("candidateRows").textContent = fmt.format(Number(summaryData.rows || 0));
+        document.getElementById("candidateEmails").textContent = fmt.format(Number(summaryData.emails || 0));
+        document.getElementById("candidateCourses").textContent = fmt.format(Number(summaryData.courses || 0));
+        document.getElementById("candidateGroups").textContent = fmt.format(Number(summaryData.groups || 0));
+
+        const topRows = await supabaseFetch("/rest/v1/rpc/candidate_top_values", {
+          method: "POST",
+          body: JSON.stringify({ limit_count: 10 })
+        });
+        document.getElementById("candidateTopValues").innerHTML = topRows.length
+          ? `<table><thead><tr><th>Value</th><th class="num">Rows</th></tr></thead><tbody>${topRows.map(row => `
+              <tr><td>${escapeHtml(row.value)}</td><td class="num">${fmt.format(Number(row.rows || 0))}</td></tr>
+            `).join("")}</tbody></table>`
+          : `<div class="empty">No candidate data uploaded to Supabase yet.</div>`;
+
+        if (!query) {
+          document.getElementById("candidateMatches").textContent = "0";
+          document.getElementById("candidateDetails").innerHTML = `<div class="empty">Enter an email ID to search Supabase records.</div>`;
+          return;
+        }
+
+        const encoded = encodeURIComponent(`*${query}*`);
+        const matches = await supabaseFetch(`/rest/v1/candidate_records?select=email,course_id,course_name,category,group_name,raw&email=ilike.${encoded}&limit=500`);
+        document.getElementById("candidateMatches").textContent = fmt.format(matches.length);
+        if (!matches.length) {
+          document.getElementById("candidateDetails").innerHTML = `<div class="empty">No rows found for this email in Supabase.</div>`;
+          return;
+        }
+        const rawHeaders = [...new Set(matches.flatMap(row => Object.keys(row.raw || {})))].slice(0, 14);
+        const visibleHeaders = rawHeaders.length ? rawHeaders : ["email", "course_id", "course_name", "category", "group_name"];
+        document.getElementById("candidateDetails").innerHTML = `
+          <div style="padding:10px;">
+            <span class="pill good">${fmt.format(matches.length)} rows</span>
+            <span class="pill">${fmt.format(new Set(matches.map(row => norm(row.course_id)).filter(Boolean)).size)} courses</span>
+            <span class="pill warn">${matches.length >= 500 ? "Showing first 500" : "Full match"}</span>
+          </div>
+          <table>
+            <thead><tr>${visibleHeaders.map(header => `<th>${escapeHtml(header)}</th>`).join("")}</tr></thead>
+            <tbody>${matches.map(row => `
+              <tr>${visibleHeaders.map(header => `<td>${escapeHtml((row.raw && row.raw[header]) || row[header] || "")}</td>`).join("")}</tr>
+            `).join("")}</tbody>
+          </table>`;
+      } catch (error) {
+        document.getElementById("candidateDataStatus").textContent = `Supabase unavailable: ${error.message}`;
+      }
+    }
+
     async function loadCandidateCsvFromText(csvText, sourceLabel) {
       const parsed = parseCsv(csvText);
       const shaped = rowsToObjects(parsed);
       candidateHeaders = shaped.headers;
       candidateRowsData = shaped.rows;
       const emailColumn = findColumn(candidateHeaders, emailKeys);
+      const courseColumn = findColumn(candidateHeaders, courseKeys);
+      const groupColumn = findColumn(candidateHeaders, groupKeys);
       document.getElementById("candidateDataStatus").textContent = emailColumn
         ? `${sourceLabel}: ${fmt.format(candidateRowsData.length)} rows loaded`
         : `${sourceLabel}: loaded, but email column not found`;
+      candidateMode = "local";
       renderCandidateAnalytics();
+
+      if (emailColumn && candidateRowsData.length) {
+        const shouldUpload = confirm(`Upload ${fmt.format(candidateRowsData.length)} rows into Supabase for team search?`);
+        if (shouldUpload) {
+          await uploadCandidateRowsToSupabase(sourceLabel, emailColumn, courseColumn, groupColumn);
+        }
+      }
+    }
+
+    async function uploadCandidateRowsToSupabase(sourceLabel, emailColumn, courseColumn, groupColumn) {
+      document.getElementById("candidateDataStatus").textContent = `Uploading ${fmt.format(candidateRowsData.length)} rows to Supabase...`;
+      const uploadRows = await supabaseFetch("/rest/v1/candidate_uploads", {
+        method: "POST",
+        headers: { Prefer: "return=representation" },
+        body: JSON.stringify([{
+          file_name: sourceLabel,
+          row_count: candidateRowsData.length,
+          column_names: candidateHeaders
+        }])
+      });
+      const uploadId = uploadRows[0].id;
+      const chunkSize = 500;
+      for (let start = 0; start < candidateRowsData.length; start += chunkSize) {
+        const chunk = candidateRowsData.slice(start, start + chunkSize).map(row => ({
+          upload_id: uploadId,
+          email: text(row[emailColumn]).trim(),
+          course_id: courseColumn ? text(row[courseColumn]).trim() : "",
+          course_name: courseColumn && /name/i.test(courseColumn) ? text(row[courseColumn]).trim() : "",
+          category: groupColumn ? text(row[groupColumn]).trim() : "",
+          group_name: groupColumn ? text(row[groupColumn]).trim() : "",
+          raw: row
+        }));
+        await supabaseFetch("/rest/v1/candidate_records", {
+          method: "POST",
+          headers: { Prefer: "return=minimal" },
+          body: JSON.stringify(chunk)
+        });
+        document.getElementById("candidateDataStatus").textContent = `Uploaded ${fmt.format(Math.min(start + chunk.length, candidateRowsData.length))} / ${fmt.format(candidateRowsData.length)} rows to Supabase...`;
+      }
+      candidateMode = "supabase";
+      document.getElementById("candidateDataStatus").textContent = `Supabase upload complete: ${fmt.format(candidateRowsData.length)} rows`;
+      await renderCandidateAnalytics();
     }
 
     async function loadCandidateCsv() {
       try {
-        const response = await fetch(`dis_star_data.csv?t=${Date.now()}`, { cache: "no-store" });
-        if (!response.ok) throw new Error("not available");
-        await loadCandidateCsvFromText(await response.text(), "dis_star_data.csv");
+        candidateMode = "supabase";
+        document.getElementById("candidateDataStatus").textContent = "Connected to Supabase database.";
+        await renderCandidateAnalytics();
       } catch (error) {
-        document.getElementById("candidateDataStatus").textContent = "Export the Power BI table as CSV and upload it here.";
+        document.getElementById("candidateDataStatus").textContent = "Supabase has no data yet. Upload an exported CSV here.";
         renderCandidateAnalytics();
       }
     }
