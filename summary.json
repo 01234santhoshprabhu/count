@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-06-04T23:57:30.994867+00:00",
+  "updated_at": "2026-06-05T03:55:36.196378+00:00",
   "course_count": 1058,
-  "numeric_count": 1055,
-  "error_count": 3,
-  "total_enrollment": 125891,
+  "numeric_count": 1004,
+  "error_count": 54,
+  "total_enrollment": 119714,
   "top_courses": [
     {
       "course_id": "noc26_cs107",
-      "count": 2316
+      "count": 2324
     },
     {
       "course_id": "noc26_cs161",
@@ -19,7 +19,7 @@
     },
     {
       "course_id": "noc26_cs153",
-      "count": 1308
+      "count": 1311
     },
     {
       "course_id": "noc26_cs109",
@@ -27,23 +27,23 @@
     },
     {
       "course_id": "noc26_cs157",
-      "count": 1221
+      "count": 1224
     },
     {
       "course_id": "noc26_cs144",
-      "count": 1173
+      "count": 1176
     },
     {
       "course_id": "noc26_cs136",
-      "count": 1118
+      "count": 1125
     },
     {
       "course_id": "noc26_cs182",
-      "count": 1115
+      "count": 1118
     },
     {
-      "course_id": "noc26_cs129",
-      "count": 1069
+      "course_id": "noc26_cs133",
+      "count": 1079
     }
   ],
   "errors": [
@@ -53,14 +53,269 @@
       "status": "Not Found / Error"
     },
     {
+      "course_id": "noc26_ch85",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_ch85",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_ch86",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_ch86",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_ch88",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_ch88",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_ch89",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_ch89",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_cs119",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_cs119",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_cs120",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_cs120",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_cs122",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_cs122",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_cy47",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_cy47",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_cy57",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_cy57",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_cy60",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_cy60",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_cy62",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_cy62",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_ec22",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_ec22",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_ec23",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_ec23",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_ee100",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_ee100",
+      "status": "Not Found / Error"
+    },
+    {
       "course_id": "noc26_hs123",
       "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_hs123",
       "status": "Not Found / Error"
     },
     {
+      "course_id": "noc26_hs148",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_hs148",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_hs149",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_hs149",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_hs150",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_hs150",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_hs155",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_hs155",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_hs156",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_hs156",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_hs157",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_hs157",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_hs158",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_hs158",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_hs159",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_hs159",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_hs160",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_hs160",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_hs161",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_hs161",
+      "status": "Not Found / Error"
+    },
+    {
       "course_id": "noc26_me104",
       "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_me104",
-      "status": "Temporary Error / No Previous Count"
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_me130",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_me130",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_me133",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_me133",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_me134",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_me134",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_me141",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_me141",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_me144",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_me144",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_me146",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_me146",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_me152",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_me152",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_me155",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_me155",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_me156",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_me156",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_me157",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_me157",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_me158",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_me158",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_me160",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_me160",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_me162",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_me162",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_me201",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_me201",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_me202",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_me202",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_me203",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_me203",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_mg100",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_mg100",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_mg101",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_mg101",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_mg104",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_mg104",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_mg106",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_mg106",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_mg112",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_mg112",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_mg113",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_mg113",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_mg114",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_mg114",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_mg115",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_mg115",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_mg116",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_mg116",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_mg118",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_mg118",
+      "status": "Not Found / Error"
+    },
+    {
+      "course_id": "noc26_mg121",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_mg121",
+      "status": "Not Found / Error"
     }
   ]
 }
