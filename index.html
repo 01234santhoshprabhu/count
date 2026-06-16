@@ -135,6 +135,7 @@
       border-radius: 8px;
       font-size: 13px;
     }
+    header .status { display: none; }
     .hero {
       background: linear-gradient(135deg, #12213a, #285c9e 62%, #2f89ea);
       color: #fff;
@@ -290,7 +291,6 @@
           <h1>NPTEL Enrollment and Member Live Dashboard</h1>
           <div class="sub">Display refreshes every 10 seconds. GitHub regenerates data about every 5 minutes.</div>
         </div>
-        <div class="status" id="status">Loading...</div>
       </header>
       <main>
         <section id="dashboard">
@@ -852,10 +852,11 @@
       document.getElementById("numeric").textContent = fmt.format(data.numeric_count);
       document.getElementById("errors").textContent = fmt.format(data.error_count);
       document.getElementById("total").textContent = fmt.format(data.total_enrollment);
-      document.getElementById("status").textContent = `Data: ${updated.toLocaleString()} | Checked: ${checkedAt.toLocaleTimeString()}`;
       document.getElementById("meta").innerHTML = `
         <div>Data source: <b>GitHub Pages summary.json</b></div>
         <div>CSV report: <b>enrollment_report.csv</b></div>
+        <div>Enrollment update: <b>${updated.toLocaleString()}</b></div>
+        <div>Checked: <b>${checkedAt.toLocaleTimeString()}</b></div>
         <div>Display refresh: <b>Every 10 seconds</b></div>
         <div>Automatic data regeneration: <b>About every 5 minutes</b></div>
         <div>Total enrollment: <b>${fmt.format(data.total_enrollment)}</b></div>
@@ -876,7 +877,7 @@
     }
 
     refreshDashboard().catch(error => {
-      document.getElementById("status").textContent = `Could not load data: ${error}`;
+      document.getElementById("meta").innerHTML = `<div>Could not load enrollment data: <b>${escapeHtml(error.message || String(error))}</b></div>`;
     });
     refreshTable().catch(console.error);
     refreshMembers().catch(console.error);
