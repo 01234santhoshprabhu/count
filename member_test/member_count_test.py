@@ -42,6 +42,7 @@ COURSE_RE = re.compile(r"(noc\d{2}_[a-z]+\d+)", re.IGNORECASE)
 HTTP_TIMEOUT = 12
 HTTP_ATTEMPTS = 1
 HTTP_GLOBAL_TIMEOUT = 600
+MIN_FULL_RUN_NUMERIC_COUNT = 1000
 
 
 def course_id_from_url(value):
@@ -246,6 +247,26 @@ def fetch_browser(driver, course_id):
 def write_outputs(rows, total_courses, started_at, running):
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     ordered = sorted(rows, key=lambda row: row["course_id"])
+    numeric = [row for row in ordered if isinstance(row["member_count"], int)]
+    if (
+        not running
+        and total_courses >= 1000
+        and len(numeric) < MIN_FULL_RUN_NUMERIC_COUNT
+    ):
+        write_progress(
+            len(ordered),
+            total_courses,
+            False,
+            (
+                "Refresh rejected: too few numeric member counts "
+                f"({len(numeric)}/{total_courses}). Previous good files kept."
+            ),
+        )
+        raise RuntimeError(
+            "Member refresh rejected because too few numeric counts were found: "
+            f"{len(numeric)}/{total_courses}. Previous good files were kept."
+        )
+
     with REPORT_CSV.open("w", newline="", encoding="utf-8-sig") as file:
         writer = csv.DictWriter(
             file,
@@ -254,7 +275,6 @@ def write_outputs(rows, total_courses, started_at, running):
         writer.writeheader()
         writer.writerows(ordered)
 
-    numeric = [row for row in ordered if isinstance(row["member_count"], int)]
     summary = {
         "updated_at": datetime.now().astimezone().isoformat(),
         "started_at": started_at,
