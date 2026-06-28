@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NPTEL Google Groups Member Test</title>
+  <style>
+    :root { color-scheme: light; font-family: Arial, sans-serif; color: #12233f; background: #f4f7fb; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    header { background: #fff; border-bottom: 1px solid #d8e0ec; padding: 22px 28px; }
+    h1 { font-size: 25px; margin: 0 0 5px; letter-spacing: 0; }
+    header p { margin: 0; color: #5e6d82; }
+    .status { margin-top: 8px; font-size: 14px; color: #42536a; }
+    main { width: min(1400px, calc(100% - 32px)); margin: 24px auto; }
+    .notice { border-left: 4px solid #d28b00; background: #fff8df; padding: 12px 14px; margin-bottom: 18px; }
+    .stats { display: grid; grid-template-columns: repeat(5, minmax(140px, 1fr)); gap: 12px; }
+    .card { background: #fff; border: 1px solid #d8e0ec; border-radius: 7px; padding: 16px; }
+    .label { color: #607088; font-size: 13px; }
+    .value { font-size: 28px; font-weight: 700; margin-top: 6px; }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 10px; }
+    input { flex: 1; min-width: 220px; padding: 10px 12px; border: 1px solid #bfc9d8; border-radius: 5px; }
+    button, a.button { padding: 10px 13px; border: 1px solid #9aa9bc; background: #fff; color: #12233f; border-radius: 5px; cursor: pointer; text-decoration: none; }
+    .table-wrap { background: #fff; border: 1px solid #d8e0ec; overflow: auto; max-height: 68vh; }
+    table { width: 100%; border-collapse: collapse; }
+    th { position: sticky; top: 0; background: #eaf0f8; text-align: left; z-index: 1; }
+    th, td { padding: 10px 12px; border-bottom: 1px solid #e3e8f0; white-space: nowrap; }
+    td.number { text-align: right; font-variant-numeric: tabular-nums; }
+    .ok { color: #08783e; font-weight: 700; }
+    .error { color: #a33c00; }
+    @media (max-width: 850px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>NPTEL Google Groups Member Test</h1>
+    <p>Separate testing dashboard. It does not use or modify the live enrollment dashboard.</p>
+    <div class="status" id="status">Checking automatic updater status...</div>
+  </header>
+  <main>
+    <div class="notice">TEST ONLY: Data regenerates every 5 minutes. This page checks for completed data and progress every 10 seconds.</div>
+    <section class="stats">
+      <div class="card"><div class="label">Courses</div><div class="value" id="courses">0</div></div>
+      <div class="card"><div class="label">Completed</div><div class="value" id="completed">0</div></div>
+      <div class="card"><div class="label">Counts Found</div><div class="value" id="found">0</div></div>
+      <div class="card"><div class="label">Errors</div><div class="value" id="errors">0</div></div>
+      <div class="card"><div class="label">Total Members</div><div class="value" id="total">0</div></div>
+    </section>
+    <div class="toolbar">
+      <input id="search" type="search" placeholder="Search course ID or status">
+      <button id="copy">Copy table</button>
+      <a class="button" href="output/member_counts_test.csv" download>Download CSV</a>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Course ID</th><th>Group</th><th>Members</th><th>Status</th><th>Method</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </main>
+  <script>
+    const fmt = new Intl.NumberFormat("en-IN");
+    let dataRows = [];
+    const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+    function render() {
+      const q = document.getElementById("search").value.toLowerCase();
+      const rows = dataRows.filter(r => `${r.course_id} ${r.status}`.toLowerCase().includes(q));
+      document.getElementById("rows").innerHTML = rows.map(r => `<tr>
+        <td>${esc(r.course_id)}</td><td>${esc(r.group_name)}</td>
+        <td class="number">${r.member_count === "" ? "" : fmt.format(r.member_count)}</td>
+        <td class="${r.member_count !== "" ? "ok" : "error"}">${esc(r.status)}</td><td>${esc(r.method)}</td>
+      </tr>`).join("");
+    }
+    async function refresh() {
+      try {
+        const [summaryResponse, progressResponse] = await Promise.all([
+          fetch(`output/summary_test.json?t=${Date.now()}`, {cache:"no-store"}),
+          fetch(`output/progress_test.json?t=${Date.now()}`, {cache:"no-store"})
+        ]);
+        if (!summaryResponse.ok) return;
+        const data = await summaryResponse.json();
+        const progress = progressResponse.ok ? await progressResponse.json() : {};
+        dataRows = data.rows || [];
+        document.getElementById("courses").textContent = fmt.format(data.total_courses || 0);
+        document.getElementById("completed").textContent = fmt.format(data.completed || 0);
+        document.getElementById("found").textContent = fmt.format(data.numeric_count || 0);
+        document.getElementById("errors").textContent = fmt.format(data.error_count || 0);
+        document.getElementById("total").textContent = fmt.format(data.total_members || 0);
+        const updated = data.updated_at ? new Date(data.updated_at).toLocaleString() : "Not generated";
+        document.getElementById("status").textContent = progress.running
+          ? `Updating: ${fmt.format(progress.completed || 0)} / ${fmt.format(progress.total_courses || 0)} | Last complete data: ${updated}`
+          : `Automatic update: every 5 minutes | Last complete data: ${updated}`;
+        render();
+      } catch (_) {}
+    }
+    document.getElementById("search").addEventListener("input", render);
+    document.getElementById("copy").addEventListener("click", async () => {
+      const lines = [["Course ID","Group","Members","Status","Method"], ...dataRows.map(r => [r.course_id,r.group_name,r.member_count,r.status,r.method])];
+      await navigator.clipboard.writeText(lines.map(row => row.join("\t")).join("\n"));
+    });
+    refresh();
+    setInterval(refresh, 10000);
+  </script>
+</body>
+</html>

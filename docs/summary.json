@@ -1,66 +1,71 @@
 {
-  "updated_at": "2026-06-03T09:25:53.878704+00:00",
+  "updated_at": "2026-06-28T08:17:52.099994+00:00",
   "course_count": 1058,
-  "numeric_count": 1055,
-  "error_count": 3,
-  "total_enrollment": 98281,
+  "numeric_count": 1054,
+  "error_count": 4,
+  "total_enrollment": 597422,
   "top_courses": [
     {
-      "course_id": "noc26_cs107",
-      "count": 1783
+      "course_id": "noc26_cs161",
+      "count": 15685
     },
     {
-      "course_id": "noc26_cs161",
-      "count": 1167
+      "course_id": "noc26_cs107",
+      "count": 12531
     },
     {
       "course_id": "noc26_cs150",
-      "count": 1122
+      "count": 12471
     },
     {
       "course_id": "noc26_cs153",
-      "count": 1038
-    },
-    {
-      "course_id": "noc26_cs141",
-      "count": 946
+      "count": 9016
     },
     {
       "course_id": "noc26_cs144",
-      "count": 889
+      "count": 6910
     },
     {
       "course_id": "noc26_cs157",
-      "count": 886
+      "count": 6787
     },
     {
       "course_id": "noc26_cs136",
-      "count": 885
-    },
-    {
-      "course_id": "noc26_cs133",
-      "count": 862
+      "count": 6243
     },
     {
       "course_id": "noc26_cs109",
-      "count": 857
+      "count": 6187
+    },
+    {
+      "course_id": "noc26_cs117",
+      "count": 5656
+    },
+    {
+      "course_id": "noc26_cs129",
+      "count": 5456
     }
   ],
   "errors": [
     {
+      "course_id": "noc26_ce86",
+      "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_ce86",
+      "status": "Removed / Unavailable"
+    },
+    {
       "course_id": "noc26_ce92",
       "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_ce92",
-      "status": "Not Found / Error"
+      "status": "Removed / Unavailable"
     },
     {
       "course_id": "noc26_hs123",
       "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_hs123",
-      "status": "Not Found / Error"
+      "status": "Removed / Unavailable"
     },
     {
       "course_id": "noc26_me104",
       "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_me104",
-      "status": "Not Found / Error"
+      "status": "Removed / Unavailable"
     }
   ]
 }

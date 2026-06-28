@@ -1,6 +1,9 @@
 import json
+import os
 import re
-from concurrent.futures import ThreadPoolExecutor, as_completed
+import sys
+import time
+from concurrent.futures import ThreadPoolExecutor, TimeoutError, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -13,9 +16,11 @@ COURSES_CSV = BASE_DIR / "courses.csv"
 DOCS_DIR = BASE_DIR / "docs"
 REPORT_CSV = DOCS_DIR / "enrollment_report.csv"
 SUMMARY_JSON = DOCS_DIR / "summary.json"
-MAX_WORKERS = 12
-REQUEST_TIMEOUT = 15
-RETRY_ATTEMPTS = 3
+MAX_WORKERS = 24
+REQUEST_TIMEOUT = 5
+RETRY_ATTEMPTS = 1
+GLOBAL_TIMEOUT_SECONDS = 180
+SECOND_PASS_DELAY_SECONDS = 1
 
 
 def extract_course_id(url):
@@ -40,15 +45,20 @@ def fetch_count(course_id):
                 headers={"User-Agent": "Mozilla/5.0"},
             )
             data = response.json()
+            if response.status_code == 404 or data.get("status") == 404:
+                return course_id, "Removed / Unavailable"
             payload = data.get("payload", {})
             if isinstance(payload, str):
                 payload = json.loads(payload)
             student_count = payload.get("student_count")
             if student_count is None:
-                return course_id, "Not Found / Error"
+                last_error = "student_count missing"
+                time.sleep(SECOND_PASS_DELAY_SECONDS)
+                continue
             return course_id, int(student_count)
         except Exception as exc:
             last_error = exc
+            time.sleep(SECOND_PASS_DELAY_SECONDS)
     return course_id, f"Temporary Error: {last_error}"
 
 
@@ -75,11 +85,30 @@ def main():
     previous_counts = load_previous_counts()
 
     results = {}
-    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-        futures = [executor.submit(fetch_count, cid) for cid in df["Course_ID"]]
-        for future in as_completed(futures):
-            course_id, count = future.result()
-            results[course_id] = count
+    executor = ThreadPoolExecutor(max_workers=MAX_WORKERS)
+    try:
+        futures = {
+            executor.submit(fetch_count, cid): cid for cid in df["Course_ID"]
+        }
+        try:
+            for future in as_completed(futures, timeout=GLOBAL_TIMEOUT_SECONDS):
+                course_id, count = future.result()
+                results[course_id] = count
+        except TimeoutError:
+            print(
+                f"Enrollment HTTP phase exceeded {GLOBAL_TIMEOUT_SECONDS} seconds; "
+                "using previous counts for unfinished courses."
+            )
+        for future, course_id in futures.items():
+            if course_id not in results:
+                previous = previous_counts.get(course_id)
+                results[course_id] = (
+                    previous
+                    if previous is not None
+                    else "Temporary Error: request timed out"
+                )
+    finally:
+        executor.shutdown(wait=False, cancel_futures=True)
 
     df["Learners_Enrolled"] = df["Course_ID"].map(results)
 
@@ -128,3 +157,6 @@ def main():
 if __name__ == "__main__":
     requests.packages.urllib3.disable_warnings()
     main()
+    sys.stdout.flush()
+    sys.stderr.flush()
+    os._exit(0)

@@ -282,6 +282,7 @@
       <div class="nav-label">Tools</div>
       <button class="nav-item" data-go="course-counts"><span class="nav-icon">#</span><span>Course Counts</span></button>
       <button class="nav-item" data-go="member-counts"><span class="nav-icon">M</span><span>Members</span></button>
+      <button class="nav-item" data-go="daily-log"><span class="nav-icon">10</span><span>Daily Log</span></button>
       <button class="nav-item" data-go="data-filter"><span class="nav-icon">⌕</span><span>Data Filter</span></button>
       <div class="theme-chip">Light Mode</div>
     </aside>
@@ -306,6 +307,27 @@
             <div class="metric warn"><div class="label">Missing/Error</div><div class="value" id="errors">-</div></div>
             <div class="metric"><div class="label">Total Enrollment</div><div class="value" id="total">-</div></div>
           </section>
+        </section>
+
+        <section id="daily-log" class="panel" style="margin-top:14px;">
+          <h2>Daily 10 AM Log</h2>
+          <div class="meta" id="dailyLogMeta">
+            <div>Source: <b>daily_log.json</b></div>
+            <div>Capture rule: <b>One entry per day after 10:00 AM</b></div>
+          </div>
+          <div class="actions">
+            <span class="note" id="dailyLogInfo">Loading daily log...</span>
+          </div>
+          <div class="split">
+            <div>
+              <h3>Dates</h3>
+              <div id="dailyLogDates" class="table-wrap"><div class="empty">No daily log data yet.</div></div>
+            </div>
+            <div>
+              <h3>Enrollment and Member Data</h3>
+              <div id="dailyLogDetails" class="table-wrap"><div class="empty">Click a date to view the 10 AM snapshot.</div></div>
+            </div>
+          </div>
         </section>
 
         <section id="data-filter" class="panel" style="margin-top:14px;">
@@ -400,6 +422,7 @@
     let memberRowsData = [];
     let memberCountByCourse = new Map();
     let latestDashboardData = null;
+    let dailyLogRows = [];
     let candidateRowsData = [];
     let candidateHeaders = [];
     let candidateSheetName = "";
@@ -569,6 +592,56 @@
           <td class="num">${formatMemberForCourse(row.course_id)}</td>
         </tr>
       `).join("");
+    }
+
+    function renderDailyLogDates(selectedDate = "") {
+      const sorted = [...dailyLogRows].sort((a, b) => String(b.date).localeCompare(String(a.date)));
+      document.getElementById("dailyLogInfo").textContent = sorted.length
+        ? `${fmt.format(sorted.length)} daily snapshot(s) saved`
+        : "No daily snapshots saved yet. The first one is saved after 10:00 AM.";
+      document.getElementById("dailyLogDates").innerHTML = sorted.length
+        ? `<table><thead><tr><th>Date</th><th>Captured</th></tr></thead><tbody>${sorted.map(entry => `
+            <tr>
+              <td><button class="secondary daily-log-date" type="button" data-date="${escapeHtml(entry.date)}">${escapeHtml(entry.date)}</button></td>
+              <td>${escapeHtml(new Date(entry.captured_at).toLocaleString())}</td>
+            </tr>
+          `).join("")}</tbody></table>`
+        : `<div class="empty">No daily log data yet.</div>`;
+      document.querySelectorAll(".daily-log-date").forEach(button => {
+        button.addEventListener("click", () => showDailyLogDetails(button.dataset.date));
+      });
+      if (selectedDate) showDailyLogDetails(selectedDate);
+      else if (sorted.length) showDailyLogDetails(sorted[0].date);
+    }
+
+    function showDailyLogDetails(date) {
+      const entry = dailyLogRows.find(row => row.date === date);
+      if (!entry) {
+        document.getElementById("dailyLogDetails").innerHTML = `<div class="empty">No snapshot found for this date.</div>`;
+        return;
+      }
+      const enrollment = entry.enrollment || {};
+      const member = entry.member || {};
+      document.getElementById("dailyLogDetails").innerHTML = `
+        <table>
+          <thead><tr><th>Metric</th><th class="num">Enrollment</th><th class="num">Members</th></tr></thead>
+          <tbody>
+            <tr><td>Total</td><td class="num">${fmt.format(Number(enrollment.total_enrollment || 0))}</td><td class="num">${fmt.format(Number(member.total_members || 0))}</td></tr>
+            <tr><td>Courses</td><td class="num">${fmt.format(Number(enrollment.course_count || 0))}</td><td class="num">${fmt.format(Number(member.total_courses || 0))}</td></tr>
+            <tr><td>Numeric counts</td><td class="num">${fmt.format(Number(enrollment.numeric_count || 0))}</td><td class="num">${fmt.format(Number(member.numeric_count || 0))}</td></tr>
+            <tr><td>Missing/Error</td><td class="num">${fmt.format(Number(enrollment.error_count || 0))}</td><td class="num">${fmt.format(Number(member.error_count || 0))}</td></tr>
+            <tr><td>Data updated</td><td>${escapeHtml(new Date(enrollment.updated_at).toLocaleString())}</td><td>${escapeHtml(new Date(member.updated_at).toLocaleString())}</td></tr>
+            <tr><td>Snapshot captured</td><td colspan="2">${escapeHtml(new Date(entry.captured_at).toLocaleString())}</td></tr>
+          </tbody>
+        </table>
+      `;
+    }
+
+    async function refreshDailyLog() {
+      const response = await fetch(`daily_log.json?t=${Date.now()}`, { cache: "no-store" });
+      if (!response.ok) throw new Error("Daily log not available yet");
+      dailyLogRows = await response.json();
+      renderDailyLogDates();
     }
 
     function renderMemberRows() {
@@ -881,11 +954,13 @@
     });
     refreshTable().catch(console.error);
     refreshMembers().catch(console.error);
+    refreshDailyLog().catch(console.error);
     loadCandidateCsv().catch(console.error);
     setInterval(() => {
       refreshDashboard().catch(console.error);
       refreshTable().catch(console.error);
       refreshMembers().catch(console.error);
+      refreshDailyLog().catch(console.error);
     }, 10000);
     document.getElementById("searchBox").addEventListener("input", renderAllRows);
     document.getElementById("memberSearchBox").addEventListener("input", renderMemberRows);
