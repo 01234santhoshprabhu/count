@@ -1,29 +1,29 @@
 {
-  "updated_at": "2026-06-28T08:17:52.099994+00:00",
+  "updated_at": "2026-06-28T08:25:45.419335+00:00",
   "course_count": 1058,
   "numeric_count": 1054,
   "error_count": 4,
-  "total_enrollment": 597422,
+  "total_enrollment": 597818,
   "top_courses": [
     {
       "course_id": "noc26_cs161",
       "count": 15685
     },
     {
+      "course_id": "noc26_cs150",
+      "count": 12585
+    },
+    {
       "course_id": "noc26_cs107",
       "count": 12531
     },
     {
-      "course_id": "noc26_cs150",
-      "count": 12471
-    },
-    {
       "course_id": "noc26_cs153",
-      "count": 9016
+      "count": 9145
     },
     {
       "course_id": "noc26_cs144",
-      "count": 6910
+      "count": 6952
     },
     {
       "course_id": "noc26_cs157",
@@ -43,19 +43,19 @@
     },
     {
       "course_id": "noc26_cs129",
-      "count": 5456
+      "count": 5488
     }
   ],
   "errors": [
     {
       "course_id": "noc26_ce86",
       "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_ce86",
-      "status": "Removed / Unavailable"
+      "status": "Temporary Error / No Previous Count"
     },
     {
       "course_id": "noc26_ce92",
       "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_ce92",
-      "status": "Removed / Unavailable"
+      "status": "Temporary Error / No Previous Count"
     },
     {
       "course_id": "noc26_hs123",
@@ -65,7 +65,7 @@
     {
       "course_id": "noc26_me104",
       "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_me104",
-      "status": "Removed / Unavailable"
+      "status": "Temporary Error / No Previous Count"
     }
   ]
 }
