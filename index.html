@@ -149,7 +149,7 @@
     .hero p { margin: 0; color: #dbe8f8; font-weight: 600; }
     .grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
       gap: 14px;
       margin-bottom: 18px;
     }
@@ -281,6 +281,7 @@
       <button class="nav-item active" data-go="dashboard"><span class="nav-icon">▣</span><span>Dashboard</span></button>
       <div class="nav-label">Tools</div>
       <button class="nav-item" data-go="course-counts"><span class="nav-icon">#</span><span>Course Counts</span></button>
+      <button class="nav-item" data-go="exam-registration"><span class="nav-icon">E</span><span>Exam Registration</span></button>
       <button class="nav-item" data-go="member-counts"><span class="nav-icon">M</span><span>Members</span></button>
       <button class="nav-item" data-go="data-filter"><span class="nav-icon">⌕</span><span>Data Filter</span></button>
       <div class="theme-chip">Light Mode</div>
@@ -305,6 +306,7 @@
             <div class="metric good"><div class="label">Numeric Counts</div><div class="value" id="numeric">-</div></div>
             <div class="metric warn"><div class="label">Missing/Error</div><div class="value" id="errors">-</div></div>
             <div class="metric"><div class="label">Total Enrollment</div><div class="value" id="total">-</div></div>
+            <div class="metric blue"><div class="label">Total Exam Registration</div><div class="value" id="examTotal">-</div></div>
           </section>
         </section>
 
@@ -318,8 +320,29 @@
           </div>
           <div class="table-wrap">
             <table>
-              <thead><tr><th>Course ID</th><th class="num">Learners Enrolled</th><th class="num">Members</th></tr></thead>
+              <thead><tr><th>Course ID</th><th class="num">Learners Enrolled</th><th class="num">Exam Registration</th><th class="num">Members</th></tr></thead>
               <tbody id="allRows"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="exam-registration" class="panel" style="margin-top:14px;">
+          <h2>Exam Registration</h2>
+          <div class="meta" id="examMeta"></div>
+          <section class="grid">
+            <div class="metric"><div class="label">Courses Checked</div><div class="value" id="examCourses">-</div></div>
+            <div class="metric good"><div class="label">Numeric Exam Counts</div><div class="value" id="examNumeric">-</div></div>
+            <div class="metric warn"><div class="label">Missing/Error</div><div class="value" id="examErrors">-</div></div>
+            <div class="metric blue"><div class="label">Total Exam Registration</div><div class="value" id="examSectionTotal">-</div></div>
+          </section>
+          <div class="actions">
+            <input id="examSearchBox" type="search" placeholder="Search course ID">
+            <span class="note" id="examTableInfo"></span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Course ID</th><th class="num">Exam Registration</th><th class="num">Learners Enrolled</th></tr></thead>
+              <tbody id="examRows"></tbody>
             </table>
           </div>
         </section>
@@ -379,7 +402,7 @@
           <div class="panel">
             <h2>Top Courses</h2>
             <table>
-              <thead><tr><th>Course ID</th><th class="num">Learners</th><th class="num">Members</th></tr></thead>
+              <thead><tr><th>Course ID</th><th class="num">Learners</th><th class="num">Exam Registration</th><th class="num">Members</th></tr></thead>
               <tbody id="topRows"></tbody>
             </table>
           </div>
@@ -518,9 +541,17 @@
         <tr>
           <td>${escapeHtml(row.course_id)}</td>
           <td class="num">${escapeHtml(row.count)}</td>
+          <td class="num">${formatNumberOrDash(row.exam_registration)}</td>
           <td class="num">${formatMemberForCourse(row.course_id)}</td>
         </tr>
       `).join("");
+    }
+
+    function formatNumberOrDash(value) {
+      const numeric = Number(value);
+      return Number.isFinite(numeric) && value !== "" && value !== null && value !== undefined
+        ? fmt.format(numeric)
+        : "-";
     }
 
     function memberLookup() {
@@ -546,8 +577,13 @@
 
     function downloadEnrollmentMemberCsv() {
       const rows = [
-        ["Course_ID", "Learners_Enrolled", "Members"],
-        ...allCourseRows.map(row => [row.course_id, row.count, plainMemberForCourse(row.course_id)])
+        ["Course_ID", "Learners_Enrolled", "Exam_Registration", "Members"],
+        ...allCourseRows.map(row => [
+          row.course_id,
+          row.count,
+          row.exam_registration,
+          plainMemberForCourse(row.course_id)
+        ])
       ];
       const csv = rows.map(row => row.map(csvEscape).join(",")).join("\n");
       const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
@@ -566,9 +602,27 @@
         <tr>
           <td>${escapeHtml(row.course_id)}</td>
           <td class="num">${fmt.format(row.count)}</td>
+          <td class="num">${formatNumberOrDash(row.exam_registration)}</td>
           <td class="num">${formatMemberForCourse(row.course_id)}</td>
         </tr>
       `).join("");
+    }
+
+    function renderExamRegistrationRows() {
+      const query = document.getElementById("examSearchBox").value.trim().toLowerCase();
+      const rows = allCourseRows
+        .filter(row => row.course_id.toLowerCase().includes(query))
+        .sort((a, b) => (Number(b.exam_registration) || 0) - (Number(a.exam_registration) || 0));
+      document.getElementById("examTableInfo").textContent = `${fmt.format(rows.length)} rows shown`;
+      document.getElementById("examRows").innerHTML = rows.length
+        ? rows.map(row => `
+            <tr>
+              <td>${escapeHtml(row.course_id)}</td>
+              <td class="num">${formatNumberOrDash(row.exam_registration)}</td>
+              <td class="num">${formatNumberOrDash(row.count)}</td>
+            </tr>
+          `).join("")
+        : `<tr><td class="empty" colspan="3">No exam registration data yet.</td></tr>`;
     }
 
     function renderMemberRows() {
@@ -799,8 +853,9 @@
       const parsed = parseCsv(csvText).slice(1);
       allCourseRows = parsed
         .filter(row => row[0] && row[0] !== "TOTAL")
-        .map(row => ({ course_id: row[0], count: row[1] }));
+        .map(row => ({ course_id: row[0], count: row[1], exam_registration: row[2] || "" }));
       renderAllRows();
+      renderExamRegistrationRows();
     }
 
     async function refreshMembers() {
@@ -839,6 +894,7 @@
       renderMemberRows();
       renderAllRows();
       renderTopCourses();
+      renderExamRegistrationRows();
     }
 
     async function refreshDashboard() {
@@ -852,6 +908,11 @@
       document.getElementById("numeric").textContent = fmt.format(data.numeric_count);
       document.getElementById("errors").textContent = fmt.format(data.error_count);
       document.getElementById("total").textContent = fmt.format(data.total_enrollment);
+      document.getElementById("examTotal").textContent = fmt.format(data.total_exam_registration || 0);
+      document.getElementById("examCourses").textContent = fmt.format(data.course_count || 0);
+      document.getElementById("examNumeric").textContent = fmt.format(data.exam_registration_numeric_count || 0);
+      document.getElementById("examErrors").textContent = fmt.format(data.exam_registration_error_count || 0);
+      document.getElementById("examSectionTotal").textContent = fmt.format(data.total_exam_registration || 0);
       document.getElementById("meta").innerHTML = `
         <div>Data source: <b>GitHub Pages summary.json</b></div>
         <div>CSV report: <b>enrollment_report.csv</b></div>
@@ -860,8 +921,16 @@
         <div>Display refresh: <b>Every 10 seconds</b></div>
         <div>Automatic data regeneration: <b>About every 5 minutes</b></div>
         <div>Total enrollment: <b>${fmt.format(data.total_enrollment)}</b></div>
+        <div>Total exam registration: <b>${fmt.format(data.total_exam_registration || 0)}</b></div>
+      `;
+      document.getElementById("examMeta").innerHTML = `
+        <div>Data source: <b>NPTEL course preview API</b></div>
+        <div>Field: <b>exam_registrations_count</b></div>
+        <div>Last update: <b>${updated.toLocaleString()}</b></div>
+        <div>Automatic data regeneration: <b>Every 5 minutes</b></div>
       `;
       renderTopCourses();
+      renderExamRegistrationRows();
       document.getElementById("errorRows").innerHTML = data.errors.length
         ? `<table><thead><tr><th>Course ID</th><th>Status</th></tr></thead><tbody>${data.errors.map(row => `
             <tr><td>${escapeHtml(row.course_id)}</td><td>${escapeHtml(row.status)}</td></tr>
@@ -888,6 +957,7 @@
       refreshMembers().catch(console.error);
     }, 10000);
     document.getElementById("searchBox").addEventListener("input", renderAllRows);
+    document.getElementById("examSearchBox").addEventListener("input", renderExamRegistrationRows);
     document.getElementById("memberSearchBox").addEventListener("input", renderMemberRows);
     document.getElementById("candidateSearch").addEventListener("input", renderCandidateAnalytics);
     document.getElementById("clearCandidate").addEventListener("click", () => {
@@ -913,7 +983,15 @@
       item.addEventListener("click", () => goToSection(item.dataset.go, item));
     });
     document.getElementById("copyBtn").addEventListener("click", async () => {
-      const lines = [["Course_ID", "Learners_Enrolled", "Members"], ...allCourseRows.map(row => [row.course_id, row.count, plainMemberForCourse(row.course_id)])];
+      const lines = [
+        ["Course_ID", "Learners_Enrolled", "Exam_Registration", "Members"],
+        ...allCourseRows.map(row => [
+          row.course_id,
+          row.count,
+          row.exam_registration,
+          plainMemberForCourse(row.course_id)
+        ])
+      ];
       const tableText = lines.map(row => row.join("\t")).join("\n");
       await navigator.clipboard.writeText(tableText);
       document.getElementById("copyBtn").textContent = "Copied";
