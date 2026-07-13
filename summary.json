@@ -1,140 +1,140 @@
 {
-  "updated_at": "2026-07-12T07:09:26.059997+00:00",
+  "updated_at": "2026-07-13T03:48:52.369249+00:00",
   "course_count": 1058,
   "numeric_count": 1054,
   "error_count": 4,
-  "total_enrollment": 1240660,
+  "total_enrollment": 1272266,
   "exam_registration_numeric_count": 1054,
   "exam_registration_error_count": 4,
-  "total_exam_registration": 55621,
+  "total_exam_registration": 59064,
   "top_courses": [
     {
       "course_id": "noc26_cs161",
-      "count": 41206,
-      "exam_registration": 4342
+      "count": 41957,
+      "exam_registration": 4546
     },
     {
       "course_id": "noc26_cs150",
-      "count": 33329,
-      "exam_registration": 1600
+      "count": 33993,
+      "exam_registration": 1669
     },
     {
       "course_id": "noc26_cs107",
-      "count": 27594,
-      "exam_registration": 1471
+      "count": 28137,
+      "exam_registration": 1604
     },
     {
       "course_id": "noc26_cs153",
-      "count": 26509,
-      "exam_registration": 1905
+      "count": 27458,
+      "exam_registration": 2313
     },
     {
       "course_id": "noc26_cs136",
-      "count": 17343,
-      "exam_registration": 1015
+      "count": 17746,
+      "exam_registration": 1078
     },
     {
       "course_id": "noc26_cs157",
-      "count": 16986,
-      "exam_registration": 483
+      "count": 17347,
+      "exam_registration": 549
     },
     {
       "course_id": "noc26_cs144",
-      "count": 16509,
-      "exam_registration": 606
+      "count": 16975,
+      "exam_registration": 663
     },
     {
       "course_id": "noc26_cs160",
-      "count": 15366,
-      "exam_registration": 506
+      "count": 15762,
+      "exam_registration": 545
     },
     {
       "course_id": "noc26_cs141",
-      "count": 14787,
-      "exam_registration": 660
+      "count": 15108,
+      "exam_registration": 688
     },
     {
       "course_id": "noc26_cs117",
-      "count": 13877,
-      "exam_registration": 544
+      "count": 14220,
+      "exam_registration": 569
     }
   ],
   "top_exam_registrations": [
     {
       "course_id": "noc26_cs161",
-      "exam_registration": 4342,
-      "count": 41206
+      "exam_registration": 4546,
+      "count": 41957
     },
     {
       "course_id": "noc26_cs153",
-      "exam_registration": 1905,
-      "count": 26509
+      "exam_registration": 2313,
+      "count": 27458
     },
     {
       "course_id": "noc26_cs150",
-      "exam_registration": 1600,
-      "count": 33329
+      "exam_registration": 1669,
+      "count": 33993
     },
     {
       "course_id": "noc26_cs107",
-      "exam_registration": 1471,
-      "count": 27594
+      "exam_registration": 1604,
+      "count": 28137
     },
     {
       "course_id": "noc26_hs160",
       "exam_registration": 1170,
-      "count": 10131
+      "count": 10446
     },
     {
       "course_id": "noc26_cs136",
-      "exam_registration": 1015,
-      "count": 17343
-    },
-    {
-      "course_id": "noc26_ge79",
-      "exam_registration": 826,
-      "count": 8455
+      "exam_registration": 1078,
+      "count": 17746
     },
     {
       "course_id": "noc26_cs109",
-      "exam_registration": 790,
-      "count": 13290
+      "exam_registration": 1001,
+      "count": 13695
+    },
+    {
+      "course_id": "noc26_ge79",
+      "exam_registration": 944,
+      "count": 8711
     },
     {
       "course_id": "noc26_hs193",
-      "exam_registration": 787,
-      "count": 9521
+      "exam_registration": 823,
+      "count": 9823
     },
     {
-      "course_id": "noc26_cs141",
-      "exam_registration": 660,
-      "count": 14787
+      "course_id": "noc26_mg134",
+      "exam_registration": 719,
+      "count": 5285
     }
   ],
   "errors": [
     {
       "course_id": "noc26_ce86",
       "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_ce86",
-      "status": "Temporary Error / No Previous Count",
-      "exam_registration_status": "Temporary Error / No Previous Count"
+      "status": "Removed / Unavailable",
+      "exam_registration_status": "Removed / Unavailable"
     },
     {
       "course_id": "noc26_ce92",
       "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_ce92",
-      "status": "Temporary Error / No Previous Count",
-      "exam_registration_status": "Temporary Error / No Previous Count"
+      "status": "Removed / Unavailable",
+      "exam_registration_status": "Removed / Unavailable"
     },
     {
       "course_id": "noc26_hs123",
       "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_hs123",
-      "status": "Temporary Error / No Previous Count",
-      "exam_registration_status": "Temporary Error / No Previous Count"
+      "status": "Removed / Unavailable",
+      "exam_registration_status": "Removed / Unavailable"
     },
     {
       "course_id": "noc26_me104",
       "course_url": "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_me104",
-      "status": "Temporary Error / No Previous Count",
-      "exam_registration_status": "Temporary Error / No Previous Count"
+      "status": "Removed / Unavailable",
+      "exam_registration_status": "Removed / Unavailable"
     }
   ]
 }
