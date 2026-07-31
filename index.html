@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>NPTEL Enrollment and Member Live Dashboard</title>
-  <link rel="stylesheet" href="auth.css?v=20260731-sso">
   <style>
     :root {
       --bg: #f4f7fb;
@@ -274,28 +273,7 @@
     }
   </style>
 </head>
-<body class="auth-pending">
-  <div id="auth-screen" class="auth-screen" aria-live="polite">
-    <div class="auth-card">
-      <div class="auth-mark">N</div>
-      <div class="auth-kicker">NPTEL Portal Team</div>
-      <div class="auth-login">
-        <h1>Sign In</h1>
-        <p id="auth-message">Sign in once to open Count Dashboard or Tool.</p>
-        <button id="auth-google-btn" class="auth-google-btn" type="button">
-          <span class="auth-google-icon">G</span>
-          <span>Sign in with Google</span>
-        </button>
-      </div>
-      <div class="auth-choice">
-        <h1>Choose Application</h1>
-        <p>Signed in as <strong id="auth-choice-email"></strong></p>
-        <button id="auth-count-btn" class="auth-link-btn primary" type="button">Open Count Dashboard</button>
-        <button id="auth-tool-btn" class="auth-link-btn tool" type="button">Open Tool</button>
-      </div>
-      <div id="auth-error" class="auth-error" role="alert"></div>
-    </div>
-  </div>
+<body>
   <div class="app">
     <aside>
       <div class="brand"><div class="brand-mark">N</div><div>NPTEL<small>SP</small></div></div>
@@ -313,10 +291,6 @@
         <div>
           <h1>NPTEL Enrollment and Member Live Dashboard</h1>
           <div class="sub">Display refreshes every 10 seconds. GitHub regenerates data about every 5 minutes.</div>
-        </div>
-        <div class="auth-user-pill" id="auth-user-pill" style="display:none">
-          <span id="auth-user-email"></span>
-          <button id="auth-signout-btn" type="button" title="Sign out">Sign out</button>
         </div>
       </header>
       <main>
@@ -440,9 +414,6 @@
       </main>
     </div>
   </div>
-  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
-  <script src="auth.js?v=20260731-sso"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script>
     const fmt = new Intl.NumberFormat("en-IN");
@@ -974,76 +945,70 @@
       target.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
-    let dashboardStarted = false;
-    function startDashboard() {
-      if (dashboardStarted) return;
-      dashboardStarted = true;
-      refreshDashboard().catch(error => {
-        document.getElementById("meta").innerHTML = `<div>Could not load enrollment data: <b>${escapeHtml(error.message || String(error))}</b></div>`;
-      });
+    refreshDashboard().catch(error => {
+      document.getElementById("meta").innerHTML = `<div>Could not load enrollment data: <b>${escapeHtml(error.message || String(error))}</b></div>`;
+    });
+    refreshTable().catch(console.error);
+    refreshMembers().catch(console.error);
+    loadCandidateCsv().catch(console.error);
+    setInterval(() => {
+      refreshDashboard().catch(console.error);
       refreshTable().catch(console.error);
       refreshMembers().catch(console.error);
-      loadCandidateCsv().catch(console.error);
-      setInterval(() => {
-        refreshDashboard().catch(console.error);
-        refreshTable().catch(console.error);
-        refreshMembers().catch(console.error);
-      }, 10000);
-      document.getElementById("searchBox").addEventListener("input", renderAllRows);
-      document.getElementById("examSearchBox").addEventListener("input", renderExamRegistrationRows);
-      document.getElementById("memberSearchBox").addEventListener("input", renderMemberRows);
-      document.getElementById("candidateSearch").addEventListener("input", renderCandidateAnalytics);
-      document.getElementById("clearCandidate").addEventListener("click", () => {
-        document.getElementById("candidateSearch").value = "";
-        renderCandidateAnalytics();
-        document.getElementById("candidateSearch").focus();
-      });
-      document.getElementById("candidateFile").addEventListener("change", async event => {
-        const file = event.target.files && event.target.files[0];
-        if (!file) return;
-        const lowerName = file.name.toLowerCase();
-        try {
-          if (lowerName.endsWith(".xlsx") || lowerName.endsWith(".xls")) {
-            await uploadWorkbookToSupabase(file);
-          } else {
-            await loadCandidateCsvFromText(await file.text(), file.name, "CSV");
-          }
-        } catch (error) {
-          document.getElementById("candidateDataStatus").textContent = `Upload failed: ${error.message}`;
+    }, 10000);
+    document.getElementById("searchBox").addEventListener("input", renderAllRows);
+    document.getElementById("examSearchBox").addEventListener("input", renderExamRegistrationRows);
+    document.getElementById("memberSearchBox").addEventListener("input", renderMemberRows);
+    document.getElementById("candidateSearch").addEventListener("input", renderCandidateAnalytics);
+    document.getElementById("clearCandidate").addEventListener("click", () => {
+      document.getElementById("candidateSearch").value = "";
+      renderCandidateAnalytics();
+      document.getElementById("candidateSearch").focus();
+    });
+    document.getElementById("candidateFile").addEventListener("change", async event => {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const lowerName = file.name.toLowerCase();
+      try {
+        if (lowerName.endsWith(".xlsx") || lowerName.endsWith(".xls")) {
+          await uploadWorkbookToSupabase(file);
+        } else {
+          await loadCandidateCsvFromText(await file.text(), file.name, "CSV");
         }
-      });
-      document.querySelectorAll(".nav-item").forEach(item => {
-        item.addEventListener("click", () => goToSection(item.dataset.go, item));
-      });
-      document.getElementById("copyBtn").addEventListener("click", async () => {
-        const lines = [
-          ["Course_ID", "Learners_Enrolled", "Exam_Registration", "Members"],
-          ...allCourseRows.map(row => [
-            row.course_id,
-            row.count,
-            row.exam_registration,
-            plainMemberForCourse(row.course_id)
-          ])
-        ];
-        const tableText = lines.map(row => row.join("\t")).join("\n");
-        await navigator.clipboard.writeText(tableText);
-        document.getElementById("copyBtn").textContent = "Copied";
-        setTimeout(() => document.getElementById("copyBtn").textContent = "Copy table", 1500);
-      });
-      document.getElementById("downloadLink").addEventListener("click", event => {
-        event.preventDefault();
-        downloadEnrollmentMemberCsv();
-      });
-      document.getElementById("copyMemberBtn").addEventListener("click", async () => {
-        const lines = [["Course_ID", "Group", "Members", "Status", "Method"], ...memberRowsData.map(row => [
-          row.course_id, row.group_name, row.member_count, row.status, row.method
-        ])];
-        await navigator.clipboard.writeText(lines.map(row => row.join("\t")).join("\n"));
-        document.getElementById("copyMemberBtn").textContent = "Copied";
-        setTimeout(() => document.getElementById("copyMemberBtn").textContent = "Copy member table", 1500);
-      });
-    }
-    window.addEventListener("nptel-auth-ready", startDashboard, { once: true });
+      } catch (error) {
+        document.getElementById("candidateDataStatus").textContent = `Upload failed: ${error.message}`;
+      }
+    });
+    document.querySelectorAll(".nav-item").forEach(item => {
+      item.addEventListener("click", () => goToSection(item.dataset.go, item));
+    });
+    document.getElementById("copyBtn").addEventListener("click", async () => {
+      const lines = [
+        ["Course_ID", "Learners_Enrolled", "Exam_Registration", "Members"],
+        ...allCourseRows.map(row => [
+          row.course_id,
+          row.count,
+          row.exam_registration,
+          plainMemberForCourse(row.course_id)
+        ])
+      ];
+      const tableText = lines.map(row => row.join("\t")).join("\n");
+      await navigator.clipboard.writeText(tableText);
+      document.getElementById("copyBtn").textContent = "Copied";
+      setTimeout(() => document.getElementById("copyBtn").textContent = "Copy table", 1500);
+    });
+    document.getElementById("downloadLink").addEventListener("click", event => {
+      event.preventDefault();
+      downloadEnrollmentMemberCsv();
+    });
+    document.getElementById("copyMemberBtn").addEventListener("click", async () => {
+      const lines = [["Course_ID", "Group", "Members", "Status", "Method"], ...memberRowsData.map(row => [
+        row.course_id, row.group_name, row.member_count, row.status, row.method
+      ])];
+      await navigator.clipboard.writeText(lines.map(row => row.join("\t")).join("\n"));
+      document.getElementById("copyMemberBtn").textContent = "Copied";
+      setTimeout(() => document.getElementById("copyMemberBtn").textContent = "Copy member table", 1500);
+    });
   </script>
 </body>
 </html>
