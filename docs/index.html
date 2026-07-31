@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>NPTEL Enrollment and Member Live Dashboard</title>
-  <link rel="stylesheet" href="auth.css?v=20260731-sso">
+  <link rel="stylesheet" href="auth.css?v=20260731-tool-link">
   <style>
     :root {
       --bg: #f4f7fb;
@@ -137,6 +137,31 @@
       font-size: 13px;
     }
     header .status { display: none; }
+    .header-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .tool-link {
+      min-height: 36px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0 14px;
+      background: #1769d8;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      text-decoration: none;
+      white-space: nowrap;
+      box-shadow: 0 8px 18px rgba(23, 105, 216, .18);
+    }
+    .tool-link:hover { background: #145ec2; }
+    .tool-nav-link { text-decoration: none; }
     .hero {
       background: linear-gradient(135deg, #12213a, #285c9e 62%, #2f89ea);
       color: #fff;
@@ -302,6 +327,7 @@
       <div class="nav-label">Main</div>
       <button class="nav-item active" data-go="dashboard"><span class="nav-icon">▣</span><span>Dashboard</span></button>
       <div class="nav-label">Tools</div>
+      <a class="nav-item tool-nav-link" href="https://01234santhoshprabhu.github.io/Tool/"><span class="nav-icon">T</span><span>Tool</span></a>
       <button class="nav-item" data-go="course-counts"><span class="nav-icon">#</span><span>Course Counts</span></button>
       <button class="nav-item" data-go="exam-registration"><span class="nav-icon">E</span><span>Exam Registration</span></button>
       <button class="nav-item" data-go="member-counts"><span class="nav-icon">M</span><span>Members</span></button>
@@ -314,9 +340,12 @@
           <h1>NPTEL Enrollment and Member Live Dashboard</h1>
           <div class="sub">Display refreshes every 10 seconds. GitHub regenerates data about every 5 minutes.</div>
         </div>
-        <div class="auth-user-pill" id="auth-user-pill" style="display:none">
-          <span id="auth-user-email"></span>
-          <button id="auth-signout-btn" type="button" title="Sign out">Sign out</button>
+        <div class="header-actions">
+          <a class="tool-link" href="https://01234santhoshprabhu.github.io/Tool/" title="Open Tool"><span>Tool</span></a>
+          <div class="auth-user-pill" id="auth-user-pill" style="display:none">
+            <span id="auth-user-email"></span>
+            <button id="auth-signout-btn" type="button" title="Sign out">Sign out</button>
+          </div>
         </div>
       </header>
       <main>
