@@ -173,3 +173,94 @@
   color: #fff;
 }
 
+
+/* Animated portal login button */
+.auth-google-btn {
+  position: relative;
+  overflow: hidden;
+  justify-content: space-between;
+  padding: 0 14px 0 22px;
+  isolation: isolate;
+  transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+}
+
+.auth-google-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(120deg, rgba(255,255,255,.16), transparent 34%, rgba(255,255,255,.22) 52%, transparent 70%);
+  transform: translateX(-110%);
+  transition: transform .65s ease;
+}
+
+.auth-google-btn:hover,
+.auth-google-btn:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 30px rgba(23, 105, 216, .28);
+}
+
+.auth-google-btn:hover::before,
+.auth-google-btn:focus-visible::before {
+  transform: translateX(110%);
+}
+
+.auth-google-icon {
+  position: relative;
+  width: 58px;
+  height: 30px;
+  border-radius: 8px;
+  background: transparent;
+  color: transparent;
+  overflow: visible;
+  flex: 0 0 58px;
+}
+
+.auth-google-icon::before {
+  content: "";
+  position: absolute;
+  right: 2px;
+  top: 3px;
+  width: 18px;
+  height: 24px;
+  border-radius: 3px;
+  background: #ffffff;
+  box-shadow: inset -5px 0 0 rgba(23, 105, 216, .24), 0 0 0 2px rgba(255,255,255,.46);
+}
+
+.auth-google-icon::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 9px 0 1px #ffffff, 9px 12px 0 -1px #ffffff, 17px 15px 0 -2px #ffffff;
+  animation: authWalk 1.45s ease-in-out infinite;
+}
+
+.auth-google-btn:hover .auth-google-icon::after,
+.auth-google-btn:focus-visible .auth-google-icon::after {
+  animation-duration: .78s;
+}
+
+.auth-google-btn:active .auth-google-icon::before {
+  transform: perspective(80px) rotateY(-18deg);
+  transform-origin: right center;
+}
+
+@keyframes authWalk {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(18px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-google-btn,
+  .auth-google-btn::before,
+  .auth-google-icon::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
