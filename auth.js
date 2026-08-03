@@ -11,6 +11,7 @@
   };
 
   const TOOL_URL = "https://01234santhoshprabhu.github.io/Tool/";
+  const WATERMARK_URL = "https://nptel-watermark.onrender.com/";
   const ALLOWED_EMAILS = [];
   const $ = id => document.getElementById(id);
   let auth;
@@ -96,10 +97,12 @@
     const signOutBtn = $("auth-signout-btn");
     const countBtn = $("auth-count-btn");
     const toolBtn = $("auth-tool-btn");
+    const watermarkBtn = $("auth-watermark-btn");
     if (signInBtn) signInBtn.addEventListener("click", signIn);
     if (signOutBtn) signOutBtn.addEventListener("click", signOut);
     if (countBtn) countBtn.addEventListener("click", showCount);
     if (toolBtn) toolBtn.addEventListener("click", () => window.location.href = TOOL_URL);
+    if (watermarkBtn) watermarkBtn.addEventListener("click", () => window.location.href = WATERMARK_URL);
 
     if (!window.firebase || !firebase.initializeApp || !firebase.auth) {
       showLocked("Firebase Authentication did not load. Check your internet connection and refresh.");
