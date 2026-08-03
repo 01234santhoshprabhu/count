@@ -11,7 +11,7 @@
   };
 
   const TOOL_URL = "https://01234santhoshprabhu.github.io/Tool/";
-  const WATERMARK_URL = "https://nptel-watermark.onrender.com/";
+  const WATERMARK_URL = "https://01234santhoshprabhu.github.io/NPTEL-Watermark/";
   const ALLOWED_EMAILS = [];
   const $ = id => document.getElementById(id);
   let auth;
