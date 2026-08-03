@@ -66,27 +66,34 @@
     window.dispatchEvent(new CustomEvent("nptel-auth-ready", { detail: { user: currentUser } }));
   }
 
-  async function signIn() {
-    if (!auth) return;
-    setBusy(true);
-    setError("");
-    try {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      provider.setCustomParameters({ prompt: "select_account" });
-      await auth.signInWithPopup(provider);
-    } catch (err) {
-      if (err && (err.code === "auth/popup-blocked" || err.code === "auth/cancelled-popup-request")) {
-        const provider = new firebase.auth.GoogleAuthProvider();
-        provider.setCustomParameters({ prompt: "select_account" });
-        await auth.signInWithRedirect(provider);
-        return;
-      }
-      setError((err && err.message) ? err.message : "Google sign-in failed. Please try again.");
-    } finally {
-      setBusy(false);
-    }
+  function googleProvider() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: "select_account" });
+    return provider;
   }
 
+  async function signIn() {
+    if (!auth) {
+      setError("Firebase Authentication is still loading. Please try again.");
+      return;
+    }
+    setBusy(true);
+    setError("");
+    setMessage("Opening Google sign-in...");
+    const unlockTimer = window.setTimeout(() => {
+      setBusy(false);
+      setMessage("Sign in with your Google account to continue.");
+    }, 6000);
+    try {
+      await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+      await auth.signInWithRedirect(googleProvider());
+    } catch (err) {
+      window.clearTimeout(unlockTimer);
+      setBusy(false);
+      setMessage("Sign in with your Google account to continue.");
+      setError((err && err.message) ? err.message : "Google sign-in failed. Please try again.");
+    }
+  }
   async function signOut() {
     if (!auth) return;
     await auth.signOut();
