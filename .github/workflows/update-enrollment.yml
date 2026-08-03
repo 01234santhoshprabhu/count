@@ -34,6 +34,11 @@ jobs:
           curl -fsSL https://raw.githubusercontent.com/01234santhoshprabhu/count/gh-pages/member_summary.json -o docs/member_summary.json || true
           curl -fsSL https://raw.githubusercontent.com/01234santhoshprabhu/count/gh-pages/member_counts.csv -o docs/member_counts.csv || true
           curl -fsSL https://raw.githubusercontent.com/01234santhoshprabhu/count/gh-pages/daily_log.json -o docs/daily_log.json || true
+      - name: Restore protected app shell
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/01234santhoshprabhu/count/main/docs/index.html -o docs/index.html
+          curl -fsSL https://raw.githubusercontent.com/01234santhoshprabhu/count/main/docs/auth.css -o docs/auth.css
+          curl -fsSL https://raw.githubusercontent.com/01234santhoshprabhu/count/main/docs/auth.js -o docs/auth.js
       - name: Commit refreshed dashboard data
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
