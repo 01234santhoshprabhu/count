@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>NPTEL Enrollment and Member Live Dashboard</title>
-  <link rel="stylesheet" href="auth.css?v=20260731-tool-link">
+  <link rel="stylesheet" href="auth.css?v=20260803-watermark">
   <style>
     :root {
       --bg: #f4f7fb;
@@ -161,6 +161,8 @@
       box-shadow: 0 8px 18px rgba(23, 105, 216, .18);
     }
     .tool-link:hover { background: #145ec2; }
+    .watermark-link { background: #0f766e; }
+    .watermark-link:hover { background: #0d665f; }
     .tool-nav-link { text-decoration: none; }
     .hero {
       background: linear-gradient(135deg, #12213a, #285c9e 62%, #2f89ea);
@@ -317,6 +319,7 @@
         <p>Signed in as <strong id="auth-choice-email"></strong></p>
         <button id="auth-count-btn" class="auth-link-btn primary" type="button">Open Count Dashboard</button>
         <button id="auth-tool-btn" class="auth-link-btn tool" type="button">Open Tool</button>
+        <button id="auth-watermark-btn" class="auth-link-btn watermark" type="button">Open Watermark</button>
       </div>
       <div id="auth-error" class="auth-error" role="alert"></div>
     </div>
@@ -328,6 +331,7 @@
       <button class="nav-item active" data-go="dashboard"><span class="nav-icon">▣</span><span>Dashboard</span></button>
       <div class="nav-label">Tools</div>
       <a class="nav-item tool-nav-link" href="https://01234santhoshprabhu.github.io/Tool/"><span class="nav-icon">T</span><span>Tool</span></a>
+      <a class="nav-item tool-nav-link" href="https://nptel-watermark.onrender.com/"><span class="nav-icon">W</span><span>Watermark</span></a>
       <button class="nav-item" data-go="course-counts"><span class="nav-icon">#</span><span>Course Counts</span></button>
       <button class="nav-item" data-go="exam-registration"><span class="nav-icon">E</span><span>Exam Registration</span></button>
       <button class="nav-item" data-go="member-counts"><span class="nav-icon">M</span><span>Members</span></button>
@@ -342,6 +346,7 @@
         </div>
         <div class="header-actions">
           <a class="tool-link" href="https://01234santhoshprabhu.github.io/Tool/" title="Open Tool"><span>Tool</span></a>
+          <a class="tool-link watermark-link" href="https://nptel-watermark.onrender.com/" title="Open Watermark"><span>Watermark</span></a>
           <div class="auth-user-pill" id="auth-user-pill" style="display:none">
             <span id="auth-user-email"></span>
             <button id="auth-signout-btn" type="button" title="Sign out">Sign out</button>
@@ -471,7 +476,7 @@
   </div>
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
-  <script src="auth.js?v=20260731-sso"></script>
+  <script src="auth.js?v=20260803-watermark"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script>
     const fmt = new Intl.NumberFormat("en-IN");
