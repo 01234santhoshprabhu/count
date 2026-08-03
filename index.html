@@ -999,7 +999,7 @@
     function goToSection(id, button) {
       const target = document.getElementById(id);
       if (!target) return;
-      document.querySelectorAll(".nav-item").forEach(item => item.classList.toggle("active", item === button));
+      document.querySelectorAll(".nav-item[data-go]").forEach(item => item.classList.toggle("active", item === button));
       target.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
@@ -1041,7 +1041,7 @@
           document.getElementById("candidateDataStatus").textContent = `Upload failed: ${error.message}`;
         }
       });
-      document.querySelectorAll(".nav-item").forEach(item => {
+      document.querySelectorAll(".nav-item[data-go]").forEach(item => {
         item.addEventListener("click", () => goToSection(item.dataset.go, item));
       });
       document.getElementById("copyBtn").addEventListener("click", async () => {
