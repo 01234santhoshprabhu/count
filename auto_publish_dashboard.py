@@ -138,9 +138,6 @@ def record_daily_log_if_due():
 
 def copy_dashboard_files(target_dir):
     for filename in [
-        "index.html",
-        "auth.css",
-        "auth.js",
         "test.html",
         "summary.json",
         "enrollment_report.csv",
@@ -184,9 +181,6 @@ def publish_live_branch():
         run([
             "git",
             "add",
-            "index.html",
-            "auth.css",
-            "auth.js",
             "test.html",
             "summary.json",
             "enrollment_report.csv",
