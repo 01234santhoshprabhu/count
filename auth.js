@@ -29,7 +29,10 @@
 
   function setBusy(isBusy) {
     const btn = $("auth-google-btn");
-    if (btn) btn.disabled = !!isBusy;
+    if (btn) {
+      btn.disabled = false;
+      btn.setAttribute("aria-busy", isBusy ? "true" : "false");
+    }
   }
 
   function isAllowed(user) {
@@ -79,19 +82,29 @@
     }
     setBusy(true);
     setError("");
-    setMessage("Opening Google sign-in...");
-    const unlockTimer = window.setTimeout(() => {
-      setBusy(false);
-      setMessage("Sign in with your Google account to continue.");
-    }, 6000);
+    setMessage("Choose your Google account in the popup window.");
     try {
       await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-      await auth.signInWithRedirect(googleProvider());
+      const result = await auth.signInWithPopup(googleProvider());
+      if (!result || !result.user) throw new Error("Google sign-in did not return an account.");
+      if (!isAllowed(result.user)) {
+        showLocked("This Google account is not approved for this dashboard.");
+        setError((result.user.email || "This account") + " is not in the allowed list.");
+        await auth.signOut();
+        return;
+      }
+      showChooser(result.user);
     } catch (err) {
-      window.clearTimeout(unlockTimer);
-      setBusy(false);
+      if (err && err.code === "auth/popup-blocked") {
+        setError("Chrome blocked the Google popup. Allow pop-ups for this site, then click Sign in again.");
+      } else if (err && err.code === "auth/popup-closed-by-user") {
+        setError("Google sign-in was closed before finishing. Click Sign in again.");
+      } else {
+        setError((err && err.message) ? err.message : "Google sign-in failed. Please try again.");
+      }
       setMessage("Sign in with your Google account to continue.");
-      setError((err && err.message) ? err.message : "Google sign-in failed. Please try again.");
+    } finally {
+      setBusy(false);
     }
   }
   async function signOut() {
@@ -118,10 +131,7 @@
     }
 
     if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-    auth = firebase.auth();
-
-    auth.getRedirectResult().catch(err => setError(err.message || "Google sign-in redirect failed."));
-    auth.onAuthStateChanged(user => {
+    auth = firebase.auth();    auth.onAuthStateChanged(user => {
       setBusy(false);
       if (!user) {
         currentUser = null;
