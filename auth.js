@@ -51,6 +51,10 @@
 
   function showChooser(user) {
     currentUser = user;
+    if (localStorage.getItem("nptel_last_app") === "count") {
+      showCount();
+      return;
+    }
     document.body.classList.remove("auth-pending", "auth-locked", "auth-ready");
     document.body.classList.add("auth-chooser");
     setError("");
@@ -119,10 +123,10 @@
     const toolBtn = $("auth-tool-btn");
     const watermarkBtn = $("auth-watermark-btn");
     if (signInBtn) signInBtn.addEventListener("click", signIn);
-    if (signOutBtn) signOutBtn.addEventListener("click", signOut);
-    if (countBtn) countBtn.addEventListener("click", showCount);
-    if (toolBtn) toolBtn.addEventListener("click", () => window.location.href = TOOL_URL);
-    if (watermarkBtn) watermarkBtn.addEventListener("click", () => window.location.href = WATERMARK_URL);
+    if (signOutBtn) signOutBtn.addEventListener("click", () => { localStorage.removeItem("nptel_last_app"); signOut(); });
+    if (countBtn) countBtn.addEventListener("click", () => { localStorage.setItem("nptel_last_app", "count"); showCount(); });
+    if (toolBtn) toolBtn.addEventListener("click", () => { localStorage.setItem("nptel_last_app", "tool"); window.location.href = TOOL_URL; });
+    if (watermarkBtn) watermarkBtn.addEventListener("click", () => { localStorage.setItem("nptel_last_app", "watermark"); window.location.href = WATERMARK_URL; });
 
     if (!window.firebase || !firebase.initializeApp || !firebase.auth) {
       showLocked("Firebase Authentication did not load. Check your internet connection and refresh.");
