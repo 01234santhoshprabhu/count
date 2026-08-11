@@ -577,121 +577,6 @@
 
     .pill.good { background: #e7f8f1; color: #0f766e; }
     .pill.warn { background: #fff6df; color: #9a6700; }
-
-    /* Sync status pill */
-    .sync-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 6px 12px;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--muted);
-      background: rgba(255,255,255,.6);
-    }
-    .sync-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--muted);
-      flex: none;
-    }
-    .sync-pill.ok .sync-dot { background: var(--green); box-shadow: 0 0 0 3px rgba(15,139,101,.18); }
-    .sync-pill.loading .sync-dot { background: var(--blue); animation: syncPulse 1s ease-in-out infinite; }
-    .sync-pill.error { color: var(--red); border-color: rgba(180,35,24,.35); }
-    .sync-pill.error .sync-dot { background: var(--red); animation: syncPulse 1s ease-in-out infinite; }
-    @keyframes syncPulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.5); opacity: .5; }
-    }
-    .metric.is-loading .value, .panel.is-loading .table-wrap { opacity: .45; }
-
-    /* Mobile nav toggle (hidden on desktop) */
-    .nav-toggle { display: none; }
-
-    /* Dark mode */
-    body.theme-dark {
-      --bg: #0b1220;
-      --panel: #121b2c;
-      --ink: #e8eefb;
-      --muted: #93a2ba;
-      --line: rgba(255,255,255,.10);
-      --blue: #4f9cff;
-      --green: #37c98d;
-      --amber: #e0ac45;
-      --red: #ff6d5c;
-      --shadow: 0 28px 70px rgba(0,0,0,.45);
-    }
-    body.theme-dark { background: #0b1220; }
-    body.theme-dark header {
-      background: rgba(18,27,44,.86);
-      border-bottom-color: rgba(255,255,255,.08);
-    }
-    body.theme-dark h1 { color: #eef4ff; }
-    body.theme-dark .metric,
-    body.theme-dark .panel,
-    body.theme-dark .mini-card {
-      background: linear-gradient(180deg, #131e33, #0f1830);
-      border-color: rgba(255,255,255,.08);
-      box-shadow: 0 22px 48px rgba(0,0,0,.35);
-    }
-    body.theme-dark th {
-      background: linear-gradient(180deg, #182642, #101a2e);
-      color: #9db1d1;
-    }
-    body.theme-dark td { color: #dbe6f8; border-bottom-color: rgba(255,255,255,.06); }
-    body.theme-dark tbody tr:hover td { background: rgba(79,156,255,.08); }
-    body.theme-dark input[type="search"] {
-      background: rgba(255,255,255,.06);
-      border-color: rgba(255,255,255,.14);
-      color: #eef4ff;
-    }
-    body.theme-dark button.secondary,
-    body.theme-dark .file-button.secondary {
-      background: #131e33;
-      color: #7fb1ff;
-      border-color: rgba(127,177,255,.3);
-    }
-    body.theme-dark .sync-pill { background: rgba(255,255,255,.06); }
-    body.theme-dark .table-wrap { border-color: rgba(255,255,255,.08); }
-
-    @media (max-width: 1060px) {
-      .nav-toggle {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 38px;
-        height: 38px;
-        border-radius: 8px;
-        border: 1px solid var(--line);
-        background: #fff;
-        color: var(--ink);
-        font-size: 16px;
-        cursor: pointer;
-      }
-      body.theme-dark .nav-toggle { background: #131e33; color: #eef4ff; }
-      .app aside {
-        position: fixed;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: 78%;
-        max-width: 320px;
-        z-index: 30;
-        transform: translateX(-105%);
-        transition: transform .22s ease;
-      }
-      .app.nav-open aside { transform: translateX(0); }
-      .app.nav-open::before {
-        content: "";
-        position: fixed;
-        inset: 0;
-        background: rgba(6,12,24,.5);
-        z-index: 20;
-      }
-    }
   </style>
 </head>
 <body class="auth-pending">
@@ -729,8 +614,7 @@
       <button class="nav-item" data-go="exam-registration"><span class="nav-icon">E</span><span>Exam Registration</span></button>
       <button class="nav-item" data-go="member-counts"><span class="nav-icon">M</span><span>Members</span></button>
       <button class="nav-item" data-go="data-filter"><span class="nav-icon">⌕</span><span>Data Filter</span></button>
-      <button class="nav-item" data-go="candidate-analytics"><span class="nav-icon">◈</span><span>Candidates</span></button>
-      <button class="theme-chip" id="themeToggle" type="button">☾ Dark Mode</button>
+      <div class="theme-chip">Light Mode</div>
     </aside>
     <div class="content">
       <header>
@@ -739,14 +623,12 @@
           <div class="sub">Display refreshes every 10 seconds. GitHub regenerates data about every 5 minutes.</div>
         </div>
         <div class="header-actions">
-          <span class="sync-pill" id="syncPill"><span class="sync-dot" id="syncDot"></span><span id="syncText">Loading…</span></span>
           <a class="tool-link" href="https://01234santhoshprabhu.github.io/Tool/" title="Open Tool"><span>Tool</span></a>
           <a class="tool-link watermark-link" href="https://01234santhoshprabhu.github.io/NPTEL-Watermark/" title="Open Watermark"><span>Watermark</span></a>
           <div class="auth-user-pill" id="auth-user-pill" style="display:none">
             <span id="auth-user-email"></span>
             <button id="auth-signout-btn" type="button" title="Sign out">Sign out</button>
           </div>
-          <button class="nav-toggle" id="navToggle" type="button" aria-label="Toggle menu" aria-expanded="false">☰</button>
         </div>
       </header>
       <main>
@@ -826,7 +708,7 @@
           </div>
         </section>
 
-        <section id="candidate-analytics" class="panel" style="margin-top:14px;">
+        <section id="candidate-analytics" class="panel" style="display:none;">
           <h2>Candidate Analytics</h2>
           <div class="actions">
             <input id="candidateSearch" type="search" placeholder="Search email ID">
@@ -1402,96 +1284,23 @@
       if (!target) return;
       document.querySelectorAll(".nav-item[data-go]").forEach(item => item.classList.toggle("active", item === button));
       target.scrollIntoView({ behavior: "smooth", block: "start" });
-      document.querySelector(".app").classList.remove("nav-open");
-      document.getElementById("navToggle").setAttribute("aria-expanded", "false");
-    }
-
-    // --- Theme toggle ---
-    function initTheme() {
-      const btn = document.getElementById("themeToggle");
-      const stored = localStorage.getItem("nptel_theme");
-      const isDark = stored === "dark";
-      document.body.classList.toggle("theme-dark", isDark);
-      btn.textContent = isDark ? "☀ Light Mode" : "☾ Dark Mode";
-      btn.addEventListener("click", () => {
-        const nowDark = !document.body.classList.contains("theme-dark");
-        document.body.classList.toggle("theme-dark", nowDark);
-        btn.textContent = nowDark ? "☀ Light Mode" : "☾ Dark Mode";
-        localStorage.setItem("nptel_theme", nowDark ? "dark" : "light");
-      });
-    }
-
-    // --- Mobile nav toggle ---
-    function initMobileNav() {
-      const app = document.querySelector(".app");
-      const toggle = document.getElementById("navToggle");
-      toggle.addEventListener("click", () => {
-        const open = app.classList.toggle("nav-open");
-        toggle.setAttribute("aria-expanded", open ? "true" : "false");
-      });
-      app.addEventListener("click", event => {
-        if (app.classList.contains("nav-open") && event.target === app) {
-          app.classList.remove("nav-open");
-          toggle.setAttribute("aria-expanded", "false");
-        }
-      });
-    }
-
-    // --- Active nav highlight on scroll ---
-    function initScrollSpy() {
-      const navItems = [...document.querySelectorAll(".nav-item[data-go]")];
-      const sections = navItems.map(item => document.getElementById(item.dataset.go)).filter(Boolean);
-      if (!sections.length || !("IntersectionObserver" in window)) return;
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (!entry.isIntersecting) return;
-          const match = navItems.find(item => item.dataset.go === entry.target.id);
-          if (match) navItems.forEach(item => item.classList.toggle("active", item === match));
-        });
-      }, { rootMargin: "-96px 0px -70% 0px", threshold: 0 });
-      sections.forEach(section => observer.observe(section));
-    }
-
-    // --- Sync status pill ---
-    let firstLoadDone = false;
-    function setSyncState(state, label) {
-      const pill = document.getElementById("syncPill");
-      const text = document.getElementById("syncText");
-      pill.classList.remove("ok", "loading", "error");
-      pill.classList.add(state);
-      text.textContent = label;
-    }
-    function markLoadingCards(isLoading) {
-      if (firstLoadDone) return;
-      document.querySelectorAll(".metric, #data-filter, #exam-registration, #member-counts").forEach(el => {
-        el.classList.toggle("is-loading", isLoading);
-      });
-    }
-    async function runFullRefresh() {
-      setSyncState("loading", "Syncing…");
-      markLoadingCards(true);
-      const results = await Promise.allSettled([refreshDashboard(), refreshTable(), refreshMembers()]);
-      const failed = results.filter(result => result.status === "rejected");
-      markLoadingCards(false);
-      firstLoadDone = true;
-      if (failed.length) {
-        console.error(failed.map(result => result.reason));
-        setSyncState("error", failed.length === results.length ? "Data unavailable — retrying…" : "Partial data — retrying…");
-      } else {
-        setSyncState("ok", `Updated ${new Date().toLocaleTimeString()}`);
-      }
     }
 
     let dashboardStarted = false;
     function startDashboard() {
       if (dashboardStarted) return;
       dashboardStarted = true;
-      initTheme();
-      initMobileNav();
-      initScrollSpy();
-      runFullRefresh();
+      refreshDashboard().catch(error => {
+        document.getElementById("meta").innerHTML = `<div>Could not load enrollment data: <b>${escapeHtml(error.message || String(error))}</b></div>`;
+      });
+      refreshTable().catch(console.error);
+      refreshMembers().catch(console.error);
       loadCandidateCsv().catch(console.error);
-      setInterval(runFullRefresh, 10000);
+      setInterval(() => {
+        refreshDashboard().catch(console.error);
+        refreshTable().catch(console.error);
+        refreshMembers().catch(console.error);
+      }, 10000);
       document.getElementById("searchBox").addEventListener("input", renderAllRows);
       document.getElementById("examSearchBox").addEventListener("input", renderExamRegistrationRows);
       document.getElementById("memberSearchBox").addEventListener("input", renderMemberRows);
