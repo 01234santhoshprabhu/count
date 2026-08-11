@@ -5,6 +5,7 @@ import shutil
 import os
 import tempfile
 import json
+import urllib.request
 from datetime import datetime
 from pathlib import Path
 
@@ -86,6 +87,53 @@ def sync_member_files():
             target.write_bytes(source.read_bytes())
         else:
             log(f"Member test file missing, skipping: {source}")
+
+
+def parse_updated_at(value):
+    if not value:
+        return None
+    text = str(value).strip()
+    for fmt in ("%d-%m-%Y %H:%M:%S",):
+        try:
+            return datetime.strptime(text, fmt)
+        except ValueError:
+            pass
+    try:
+        return datetime.fromisoformat(text.replace("Z", "+00:00")).replace(tzinfo=None)
+    except ValueError:
+        return None
+
+
+def remote_is_newer_or_equal(current_bytes, remote_bytes):
+    try:
+        current = json.loads(current_bytes.decode("utf-8-sig")) if current_bytes else {}
+        remote = json.loads(remote_bytes.decode("utf-8-sig"))
+    except Exception:
+        return True
+
+    current_time = parse_updated_at(current.get("updated_at"))
+    remote_time = parse_updated_at(remote.get("updated_at"))
+    if current_time and remote_time and remote_time < current_time:
+        return False
+    return True
+
+
+def sync_live_enrollment_files():
+    live_files = ["summary.json", "enrollment_report.csv"]
+    for filename in live_files:
+        target = BASE_DIR / "docs" / filename
+        url = f"https://raw.githubusercontent.com/01234santhoshprabhu/count/gh-pages/{filename}"
+        try:
+            with urllib.request.urlopen(url, timeout=30) as response:
+                remote_bytes = response.read()
+            current_bytes = target.read_bytes() if target.exists() else b""
+            if filename.endswith(".json") and not remote_is_newer_or_equal(current_bytes, remote_bytes):
+                log(f"Kept newer local enrollment file instead of older live copy: {filename}")
+                continue
+            target.write_bytes(remote_bytes)
+            log(f"Synced latest live enrollment file before member publish: {filename}")
+        except Exception as exc:
+            log(f"Could not sync latest live enrollment file {filename}: {exc}")
 
 
 def record_daily_log_if_due():
@@ -222,6 +270,20 @@ def publish_once_locked():
     record_daily_log_if_due()
 
     publish_live_branch()
+
+
+def publish_member_update():
+    if not acquire_lock():
+        return False
+
+    try:
+        sync_live_enrollment_files()
+        sync_member_files()
+        record_daily_log_if_due()
+        publish_live_branch()
+        return True
+    finally:
+        release_lock()
 
 
 def main():
