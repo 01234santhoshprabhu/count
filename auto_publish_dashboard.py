@@ -119,21 +119,26 @@ def remote_is_newer_or_equal(current_bytes, remote_bytes):
 
 
 def sync_live_enrollment_files():
-    live_files = ["summary.json", "enrollment_report.csv"]
-    for filename in live_files:
-        target = BASE_DIR / "docs" / filename
+    remote_files = {}
+    for filename in ["summary.json", "enrollment_report.csv"]:
         url = f"https://raw.githubusercontent.com/01234santhoshprabhu/count/gh-pages/{filename}"
         try:
             with urllib.request.urlopen(url, timeout=30) as response:
-                remote_bytes = response.read()
-            current_bytes = target.read_bytes() if target.exists() else b""
-            if filename.endswith(".json") and not remote_is_newer_or_equal(current_bytes, remote_bytes):
-                log(f"Kept newer local enrollment file instead of older live copy: {filename}")
-                continue
-            target.write_bytes(remote_bytes)
-            log(f"Synced latest live enrollment file before member publish: {filename}")
+                remote_files[filename] = response.read()
         except Exception as exc:
             log(f"Could not sync latest live enrollment file {filename}: {exc}")
+            return
+
+    summary_target = BASE_DIR / "docs" / "summary.json"
+    current_summary = summary_target.read_bytes() if summary_target.exists() else b""
+    if not remote_is_newer_or_equal(current_summary, remote_files["summary.json"]):
+        log("Kept newer local enrollment summary/report instead of older live copy.")
+        return
+
+    for filename, remote_bytes in remote_files.items():
+        target = BASE_DIR / "docs" / filename
+        target.write_bytes(remote_bytes)
+        log(f"Synced latest live enrollment file before member publish: {filename}")
 
 
 def record_daily_log_if_due():
