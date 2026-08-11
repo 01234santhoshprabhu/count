@@ -1,9 +1,9 @@
 @echo off
 title NPTEL Dashboard Auto Updater
-cd /d "C:\Users\NPTEL031\Desktop\ENROLL"
+cd /d "%~dp0"
 set PYTHONHOME=
 set PYTHONPATH=
-set AUTO_PUBLISH_LOG=C:\Users\NPTEL031\Desktop\ENROLL\auto_publish_dashboard_%DATE:~-4%%DATE:~3,2%%DATE:~0,2%_%TIME:~0,2%%TIME:~3,2%%TIME:~6,2%.log
+set AUTO_PUBLISH_LOG=%~dp0auto_publish_dashboard_%DATE:~-4%%DATE:~3,2%%DATE:~0,2%_%TIME:~0,2%%TIME:~3,2%%TIME:~6,2%.log
 set AUTO_PUBLISH_LOG=%AUTO_PUBLISH_LOG: =0%
 echo Starting NPTEL dashboard auto updater...
 echo.
