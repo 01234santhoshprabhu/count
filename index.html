@@ -1443,23 +1443,186 @@
       if (!target) return;
       document.querySelectorAll(".nav-item[data-go]").forEach(item => item.classList.toggle("active", item === button));
       target.scrollIntoView({ behavior: "smooth", block: "start" });
+      document.querySelector(".app").classList.remove("nav-open");
+      document.getElementById("navToggle").setAttribute("aria-expanded", "false");
+    }
+
+    // --- Theme toggle ---
+    function initTheme() {
+      const btn = document.getElementById("themeToggle");
+      const stored = localStorage.getItem("nptel_theme");
+      const isDark = stored === "dark";
+      document.body.classList.toggle("theme-dark", isDark);
+      btn.textContent = isDark ? "☀ Light Mode" : "☾ Dark Mode";
+      btn.addEventListener("click", () => {
+        const nowDark = !document.body.classList.contains("theme-dark");
+        document.body.classList.toggle("theme-dark", nowDark);
+        btn.textContent = nowDark ? "☀ Light Mode" : "☾ Dark Mode";
+        localStorage.setItem("nptel_theme", nowDark ? "dark" : "light");
+      });
+    }
+
+    // --- Mobile nav toggle ---
+    function initMobileNav() {
+      const app = document.querySelector(".app");
+      const toggle = document.getElementById("navToggle");
+      toggle.addEventListener("click", () => {
+        const open = app.classList.toggle("nav-open");
+        toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+      app.addEventListener("click", event => {
+        if (app.classList.contains("nav-open") && event.target === app) {
+          app.classList.remove("nav-open");
+          toggle.setAttribute("aria-expanded", "false");
+        }
+      });
+    }
+
+    // --- Active nav highlight on scroll ---
+    function initScrollSpy() {
+      const navItems = [...document.querySelectorAll(".nav-item[data-go]")];
+      const sections = navItems.map(item => document.getElementById(item.dataset.go)).filter(Boolean);
+      if (!sections.length || !("IntersectionObserver" in window)) return;
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const match = navItems.find(item => item.dataset.go === entry.target.id);
+          if (match) navItems.forEach(item => item.classList.toggle("active", item === match));
+        });
+      }, { rootMargin: "-96px 0px -70% 0px", threshold: 0 });
+      sections.forEach(section => observer.observe(section));
+    }
+
+    // --- Sync status pill ---
+    let firstLoadDone = false;
+    function setSyncState(state, label) {
+      const pill = document.getElementById("syncPill");
+      const text = document.getElementById("syncText");
+      pill.classList.remove("ok", "loading", "error");
+      pill.classList.add(state);
+      text.textContent = label;
+    }
+    function markLoadingCards(isLoading) {
+      if (firstLoadDone) return;
+      document.querySelectorAll(".metric, #data-filter, #exam-registration, #member-counts").forEach(el => {
+        el.classList.toggle("is-loading", isLoading);
+      });
+    }
+    async function runFullRefresh() {
+      setSyncState("loading", "Syncing…");
+      markLoadingCards(true);
+      const results = await Promise.allSettled([refreshDashboard(), refreshTable(), refreshMembers()]);
+      const failed = results.filter(result => result.status === "rejected");
+      markLoadingCards(false);
+      firstLoadDone = true;
+      if (failed.length) {
+        console.error(failed.map(result => result.reason));
+        setSyncState("error", failed.length === results.length ? "Data unavailable — retrying…" : "Partial data — retrying…");
+      } else {
+        setSyncState("ok", `Updated ${new Date().toLocaleTimeString()}`);
+      }
+    }
+
+    // --- Admin: role management (Super Admin only can edit) ---
+    let currentUserRole = "viewer";
+    function fmtDate(value) {
+      if (!value) return "-";
+      const date = new Date(value);
+      return Number.isNaN(date.getTime()) ? "-" : date.toLocaleString();
+    }
+    async function loadRoles() {
+      const rowsEl = document.getElementById("roleRows");
+      try {
+        const rows = await supabaseFetch("/rest/v1/dashboard_users?select=email,role,updated_at&order=email.asc");
+        if (!rows.length) {
+          rowsEl.innerHTML = `<tr><td class="empty" colspan="4">No users added yet.</td></tr>`;
+          return;
+        }
+        const canEdit = currentUserRole === "super_admin";
+        rowsEl.innerHTML = rows.map(row => `
+          <tr>
+            <td>${escapeHtml(row.email)}</td>
+            <td>
+              ${canEdit
+                ? `<select data-email="${escapeHtml(row.email)}" class="role-select">
+                    <option value="viewer" ${row.role === "viewer" ? "selected" : ""}>Viewer</option>
+                    <option value="admin" ${row.role === "admin" ? "selected" : ""}>Admin</option>
+                    <option value="super_admin" ${row.role === "super_admin" ? "selected" : ""}>Super Admin</option>
+                  </select>`
+                : escapeHtml(row.role)}
+            </td>
+            <td>${escapeHtml(fmtDate(row.updated_at))}</td>
+            <td></td>
+          </tr>
+        `).join("");
+        if (canEdit) {
+          rowsEl.querySelectorAll(".role-select").forEach(select => {
+            select.addEventListener("change", async () => {
+              await saveRole(select.dataset.email, select.value);
+            });
+          });
+        }
+      } catch (error) {
+        rowsEl.innerHTML = `<tr><td class="empty" colspan="4">Could not load users: ${escapeHtml(error.message || String(error))}</td></tr>`;
+      }
+    }
+    async function saveRole(email, role) {
+      const note = document.getElementById("roleAdminNote");
+      note.textContent = `Saving ${email}…`;
+      try {
+        await supabaseFetch(`/rest/v1/dashboard_users?email=eq.${encodeURIComponent(email.toLowerCase())}`, {
+          method: "PATCH",
+          headers: { Prefer: "return=minimal" },
+          body: JSON.stringify({ role, updated_at: new Date().toISOString() })
+        });
+        note.textContent = `Saved ${email} as ${role}.`;
+        await loadRoles();
+      } catch (error) {
+        try {
+          await supabaseFetch("/rest/v1/dashboard_users", {
+            method: "POST",
+            headers: { Prefer: "return=minimal" },
+            body: JSON.stringify([{ email: email.toLowerCase(), role, updated_at: new Date().toISOString() }])
+          });
+          note.textContent = `Added ${email} as ${role}.`;
+          await loadRoles();
+        } catch (insertError) {
+          note.textContent = `Could not save role: ${insertError.message || String(insertError)}`;
+        }
+      }
+    }
+    function initAdminPanel() {
+      const addBtn = document.getElementById("addRoleBtn");
+      if (!addBtn) return;
+      addBtn.addEventListener("click", async () => {
+        const email = document.getElementById("newRoleEmail").value.trim();
+        const role = document.getElementById("newRoleValue").value;
+        if (!email) return;
+        await saveRole(email, role);
+        document.getElementById("newRoleEmail").value = "";
+      });
+    }
+    function applyRole(role) {
+      currentUserRole = role || "viewer";
+      document.body.classList.remove("role-viewer", "role-admin", "role-super_admin");
+      document.body.classList.add(`role-${currentUserRole}`);
+      if (currentUserRole === "admin" || currentUserRole === "super_admin") {
+        loadRoles().catch(console.error);
+      }
     }
 
     let dashboardStarted = false;
-    function startDashboard() {
+    function startDashboard(event) {
       if (dashboardStarted) return;
       dashboardStarted = true;
-      refreshDashboard().catch(error => {
-        document.getElementById("meta").innerHTML = `<div>Could not load enrollment data: <b>${escapeHtml(error.message || String(error))}</b></div>`;
-      });
-      refreshTable().catch(console.error);
-      refreshMembers().catch(console.error);
+      initTheme();
+      initMobileNav();
+      initScrollSpy();
+      initAdminPanel();
+      applyRole(event && event.detail && event.detail.role);
+      runFullRefresh();
       loadCandidateCsv().catch(console.error);
-      setInterval(() => {
-        refreshDashboard().catch(console.error);
-        refreshTable().catch(console.error);
-        refreshMembers().catch(console.error);
-      }, 10000);
+      setInterval(runFullRefresh, 10000);
       document.getElementById("searchBox").addEventListener("input", renderAllRows);
       document.getElementById("examSearchBox").addEventListener("input", renderExamRegistrationRows);
       document.getElementById("memberSearchBox").addEventListener("input", renderMemberRows);
