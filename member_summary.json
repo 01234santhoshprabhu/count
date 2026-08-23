@@ -1,12 +1,12 @@
 {
-  "updated_at": "2026-08-23T16:19:22.090618+05:30",
-  "started_at": "2026-08-23T16:15:00.105535+05:30",
+  "updated_at": "2026-08-23T16:23:53.348443+05:30",
+  "started_at": "2026-08-23T16:20:00.294640+05:30",
   "running": false,
   "total_courses": 1058,
   "completed": 1058,
   "numeric_count": 1054,
   "error_count": 4,
-  "total_members": 3927758,
+  "total_members": 3927754,
   "rows": [
     {
       "course_id": "noc26_ae21",
@@ -1196,7 +1196,7 @@
       "group_name": "noc26-ce163-announce",
       "member_count": 2065,
       "status": "OK",
-      "method": "browser"
+      "method": "http"
     },
     {
       "course_id": "noc26_ce165",
@@ -1903,7 +1903,7 @@
       "group_name": "noc26-cs120-announce",
       "member_count": 8055,
       "status": "OK",
-      "method": "browser"
+      "method": "http"
     },
     {
       "course_id": "noc26_cs121",
@@ -3133,7 +3133,7 @@
     {
       "course_id": "noc26_ee134",
       "group_name": "noc26-ee134-announce",
-      "member_count": 3945,
+      "member_count": 3944,
       "status": "OK",
       "method": "http"
     },
@@ -4267,7 +4267,7 @@
     {
       "course_id": "noc26_hs160",
       "group_name": "noc26-hs160-announce",
-      "member_count": 38359,
+      "member_count": 38358,
       "status": "OK",
       "method": "http"
     },
@@ -4897,7 +4897,7 @@
     {
       "course_id": "noc26_hs252",
       "group_name": "noc26-hs252-announce",
-      "member_count": 9521,
+      "member_count": 9520,
       "status": "OK",
       "method": "http"
     },
@@ -5934,8 +5934,8 @@
       "course_id": "noc26_me158",
       "group_name": "noc26-me158-announce",
       "member_count": 2345,
-      "status": "OK",
-      "method": "http"
+      "status": "Previous count (HTTP timeout)",
+      "method": "previous"
     },
     {
       "course_id": "noc26_me159",
@@ -6549,7 +6549,7 @@
     {
       "course_id": "noc26_mg143",
       "group_name": "noc26-mg143-announce",
-      "member_count": 3970,
+      "member_count": 3969,
       "status": "OK",
       "method": "http"
     },
