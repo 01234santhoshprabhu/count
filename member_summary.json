@@ -1,12 +1,12 @@
 {
-  "updated_at": "2026-08-24T15:35:37.612552+05:30",
-  "started_at": "2026-08-24T15:31:31.951430+05:30",
+  "updated_at": "2026-08-24T15:40:35.707916+05:30",
+  "started_at": "2026-08-24T15:36:32.112708+05:30",
   "running": false,
   "total_courses": 1058,
   "completed": 1058,
   "numeric_count": 1054,
   "error_count": 4,
-  "total_members": 3927264,
+  "total_members": 3927260,
   "rows": [
     {
       "course_id": "noc26_ae21",
@@ -908,8 +908,8 @@
       "course_id": "noc26_ce122",
       "group_name": "noc26-ce122-announce",
       "member_count": 3219,
-      "status": "Previous count (HTTP timeout)",
-      "method": "previous"
+      "status": "OK",
+      "method": "http"
     },
     {
       "course_id": "noc26_ce123",
@@ -1769,8 +1769,8 @@
       "course_id": "noc26_cs101",
       "group_name": "noc26-cs101-announce",
       "member_count": 6425,
-      "status": "OK",
-      "method": "http"
+      "status": "Previous count (HTTP timeout)",
+      "method": "previous"
     },
     {
       "course_id": "noc26_cs102",
@@ -1810,7 +1810,7 @@
     {
       "course_id": "noc26_cs107",
       "group_name": "noc26-cs107-announce",
-      "member_count": 79091,
+      "member_count": 79090,
       "status": "OK",
       "method": "http"
     },
@@ -2105,8 +2105,8 @@
       "course_id": "noc26_cs149",
       "group_name": "noc26-cs149-announce",
       "member_count": 423,
-      "status": "Previous count (HTTP timeout)",
-      "method": "previous"
+      "status": "OK",
+      "method": "http"
     },
     {
       "course_id": "noc26_cs150",
@@ -3161,7 +3161,7 @@
     {
       "course_id": "noc26_ee139",
       "group_name": "noc26-ee139-announce",
-      "member_count": 6887,
+      "member_count": 6886,
       "status": "OK",
       "method": "http"
     },
@@ -3413,7 +3413,7 @@
     {
       "course_id": "noc26_ee175",
       "group_name": "noc26-ee175-announce",
-      "member_count": 5893,
+      "member_count": 5892,
       "status": "OK",
       "method": "http"
     },
@@ -3427,7 +3427,7 @@
     {
       "course_id": "noc26_ee177",
       "group_name": "noc26-ee177-announce",
-      "member_count": 23204,
+      "member_count": 23203,
       "status": "OK",
       "method": "http"
     },
