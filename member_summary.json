@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-08-25T17:59:19.608536+05:30",
-  "started_at": "2026-08-25T17:55:23.542745+05:30",
+  "updated_at": "2026-08-25T18:04:15.627432+05:30",
+  "started_at": "2026-08-25T18:00:23.621895+05:30",
   "running": false,
   "total_courses": 1058,
   "completed": 1058,
@@ -61,8 +61,8 @@
       "course_id": "noc26_ae28",
       "group_name": "noc26-ae28-announce",
       "member_count": 3396,
-      "status": "Previous count (HTTP timeout)",
-      "method": "previous"
+      "status": "OK",
+      "method": "http"
     },
     {
       "course_id": "noc26_ae29",
@@ -124,8 +124,8 @@
       "course_id": "noc26_ae37",
       "group_name": "noc26-ae37-announce",
       "member_count": 288,
-      "status": "Previous count (HTTP timeout)",
-      "method": "previous"
+      "status": "OK",
+      "method": "http"
     },
     {
       "course_id": "noc26_ae38",
@@ -3154,7 +3154,7 @@
     {
       "course_id": "noc26_ee138",
       "group_name": "noc26-ee138-announce",
-      "member_count": 8005,
+      "member_count": 8006,
       "status": "OK",
       "method": "http"
     },
@@ -3413,7 +3413,7 @@
     {
       "course_id": "noc26_ee175",
       "group_name": "noc26-ee175-announce",
-      "member_count": 5889,
+      "member_count": 5890,
       "status": "OK",
       "method": "http"
     },
@@ -3889,7 +3889,7 @@
     {
       "course_id": "noc26_ge79",
       "group_name": "noc26-ge79-announce",
-      "member_count": 25930,
+      "member_count": 25929,
       "status": "OK",
       "method": "http"
     },
@@ -4064,7 +4064,7 @@
     {
       "course_id": "noc26_hs126",
       "group_name": "noc26-hs126-announce",
-      "member_count": 1841,
+      "member_count": 1840,
       "status": "OK",
       "method": "http"
     },
@@ -5934,8 +5934,8 @@
       "course_id": "noc26_me158",
       "group_name": "noc26-me158-announce",
       "member_count": 2344,
-      "status": "OK",
-      "method": "http"
+      "status": "Previous count (HTTP timeout)",
+      "method": "previous"
     },
     {
       "course_id": "noc26_me159",
