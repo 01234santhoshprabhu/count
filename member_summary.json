@@ -1,12 +1,12 @@
 {
-  "updated_at": "2026-08-25T13:00:35.785301+05:30",
-  "started_at": "2026-08-25T12:58:26.276598+05:30",
+  "updated_at": "2026-08-25T13:05:34.637260+05:30",
+  "started_at": "2026-08-25T13:03:25.977125+05:30",
   "running": false,
   "total_courses": 1058,
   "completed": 1058,
   "numeric_count": 1054,
   "error_count": 4,
-  "total_members": 3926756,
+  "total_members": 3926754,
   "rows": [
     {
       "course_id": "noc26_ae21",
@@ -1776,8 +1776,8 @@
       "course_id": "noc26_cs102",
       "group_name": "noc26-cs102-announce",
       "member_count": 9558,
-      "status": "OK",
-      "method": "http"
+      "status": "Previous count (HTTP timeout)",
+      "method": "previous"
     },
     {
       "course_id": "noc26_cs103",
@@ -2062,7 +2062,7 @@
     {
       "course_id": "noc26_cs143",
       "group_name": "noc26-cs143-announce",
-      "member_count": 2400,
+      "member_count": 2399,
       "status": "OK",
       "method": "http"
     },
@@ -2454,7 +2454,7 @@
     {
       "course_id": "noc26_cs99",
       "group_name": "noc26-cs99-announce",
-      "member_count": 33396,
+      "member_count": 33395,
       "status": "OK",
       "method": "http"
     },
@@ -3141,8 +3141,8 @@
       "course_id": "noc26_ee135",
       "group_name": "noc26-ee135-announce",
       "member_count": 5907,
-      "status": "Previous count (HTTP timeout)",
-      "method": "previous"
+      "status": "OK",
+      "method": "http"
     },
     {
       "course_id": "noc26_ee137",
@@ -4030,8 +4030,8 @@
       "course_id": "noc26_ge99",
       "group_name": "noc26-ge99-announce",
       "member_count": 3523,
-      "status": "OK",
-      "method": "http"
+      "status": "Previous count (HTTP timeout)",
+      "method": "previous"
     },
     {
       "course_id": "noc26_hs121",
@@ -4184,8 +4184,8 @@
       "course_id": "noc26_hs148",
       "group_name": "noc26-hs148-announce",
       "member_count": 783,
-      "status": "Previous count (HTTP timeout)",
-      "method": "previous"
+      "status": "OK",
+      "method": "http"
     },
     {
       "course_id": "noc26_hs149",
