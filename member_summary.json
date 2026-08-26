@@ -1,19 +1,19 @@
 {
-  "updated_at": "2026-08-26T17:32:33.642646+05:30",
-  "started_at": "2026-08-26T17:28:51.906565+05:30",
+  "updated_at": "2026-08-26T17:36:52.366662+05:30",
+  "started_at": "2026-08-26T17:33:52.406069+05:30",
   "running": false,
   "total_courses": 1058,
   "completed": 1058,
   "numeric_count": 1054,
   "error_count": 4,
-  "total_members": 3926140,
+  "total_members": 3926137,
   "rows": [
     {
       "course_id": "noc26_ae21",
       "group_name": "noc26-ae21-announce",
       "member_count": 923,
-      "status": "OK",
-      "method": "http"
+      "status": "Previous count (HTTP timeout)",
+      "method": "previous"
     },
     {
       "course_id": "noc26_ae22",
@@ -396,7 +396,7 @@
     {
       "course_id": "noc26_ar39",
       "group_name": "noc26-ar39-announce",
-      "member_count": 1112,
+      "member_count": 1111,
       "status": "OK",
       "method": "http"
     },
@@ -1699,8 +1699,8 @@
       "course_id": "noc26_ch91",
       "group_name": "noc26-ch91-announce",
       "member_count": 259,
-      "status": "OK",
-      "method": "http"
+      "status": "Previous count (HTTP timeout)",
+      "method": "previous"
     },
     {
       "course_id": "noc26_ch92",
@@ -2154,8 +2154,8 @@
       "course_id": "noc26_cs156",
       "group_name": "noc26-cs156-announce",
       "member_count": 17700,
-      "status": "OK",
-      "method": "http"
+      "status": "Previous count (HTTP timeout)",
+      "method": "previous"
     },
     {
       "course_id": "noc26_cs157",
@@ -2896,8 +2896,8 @@
       "course_id": "noc26_ee100",
       "group_name": "noc26-ee100-announce",
       "member_count": 383,
-      "status": "OK",
-      "method": "http"
+      "status": "Previous count (HTTP timeout)",
+      "method": "previous"
     },
     {
       "course_id": "noc26_ee101",
@@ -4219,8 +4219,8 @@
       "course_id": "noc26_hs153",
       "group_name": "noc26-hs153-announce",
       "member_count": 1323,
-      "status": "OK",
-      "method": "http"
+      "status": "Previous count (HTTP timeout)",
+      "method": "previous"
     },
     {
       "course_id": "noc26_hs154",
@@ -4498,7 +4498,7 @@
     {
       "course_id": "noc26_hs193",
       "group_name": "noc26-hs193-announce",
-      "member_count": 31799,
+      "member_count": 31798,
       "status": "OK",
       "method": "http"
     },
@@ -5213,8 +5213,8 @@
       "course_id": "noc26_ma124",
       "group_name": "noc26-ma124-announce",
       "member_count": 257,
-      "status": "Previous count (HTTP timeout)",
-      "method": "previous"
+      "status": "OK",
+      "method": "http"
     },
     {
       "course_id": "noc26_ma125",
@@ -5598,8 +5598,8 @@
       "course_id": "noc26_me110",
       "group_name": "noc26-me110-announce",
       "member_count": 775,
-      "status": "OK",
-      "method": "http"
+      "status": "Previous count (HTTP timeout)",
+      "method": "previous"
     },
     {
       "course_id": "noc26_me111",
@@ -6578,8 +6578,8 @@
       "course_id": "noc26_mg147",
       "group_name": "noc26-mg147-announce",
       "member_count": 8349,
-      "status": "OK",
-      "method": "http"
+      "status": "Previous count (HTTP timeout)",
+      "method": "previous"
     },
     {
       "course_id": "noc26_mg148",
@@ -6711,8 +6711,8 @@
       "course_id": "noc26_mg86",
       "group_name": "noc26-mg86-announce",
       "member_count": 2542,
-      "status": "Previous count (HTTP timeout)",
-      "method": "previous"
+      "status": "OK",
+      "method": "http"
     },
     {
       "course_id": "noc26_mg87",
@@ -6997,7 +6997,7 @@
     {
       "course_id": "noc26_mm76",
       "group_name": "noc26-mm76-announce",
-      "member_count": 7270,
+      "member_count": 7269,
       "status": "OK",
       "method": "http"
     },
@@ -7271,8 +7271,8 @@
       "course_id": "noc26_ph52",
       "group_name": "noc26-ph52-announce",
       "member_count": 582,
-      "status": "OK",
-      "method": "http"
+      "status": "Previous count (HTTP timeout)",
+      "method": "previous"
     },
     {
       "course_id": "noc26_ph53",
