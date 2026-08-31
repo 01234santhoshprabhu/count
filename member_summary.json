@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-08-31T16:03:02.844686+05:30",
-  "started_at": "2026-08-31T16:00:24.574665+05:30",
+  "updated_at": "2026-08-31T16:07:44.695620+05:30",
+  "started_at": "2026-08-31T16:05:24.279843+05:30",
   "running": false,
   "total_courses": 1058,
   "completed": 1058,
@@ -3659,8 +3659,8 @@
       "course_id": "noc26_ge101",
       "group_name": "noc26-ge101-announce",
       "member_count": 665,
-      "status": "OK",
-      "method": "http"
+      "status": "Previous count (HTTP timeout)",
+      "method": "previous"
     },
     {
       "course_id": "noc26_ge102",
@@ -6795,8 +6795,8 @@
       "course_id": "noc26_mg98",
       "group_name": "noc26-mg98-announce",
       "member_count": 4121,
-      "status": "Previous count (HTTP timeout)",
-      "method": "previous"
+      "status": "OK",
+      "method": "http"
     },
     {
       "course_id": "noc26_mg99",
