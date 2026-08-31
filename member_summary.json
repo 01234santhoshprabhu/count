@@ -1,12 +1,12 @@
 {
-  "updated_at": "2026-08-31T10:27:39.489975+05:30",
-  "started_at": "2026-08-31T10:25:23.488013+05:30",
+  "updated_at": "2026-08-31T10:32:36.349008+05:30",
+  "started_at": "2026-08-31T10:30:23.359868+05:30",
   "running": false,
   "total_courses": 1058,
   "completed": 1058,
   "numeric_count": 1054,
   "error_count": 4,
-  "total_members": 3924400,
+  "total_members": 3924398,
   "rows": [
     {
       "course_id": "noc26_ae21",
@@ -152,8 +152,8 @@
       "course_id": "noc26_ae41",
       "group_name": "noc26-ae41-announce",
       "member_count": 756,
-      "status": "Previous count (HTTP timeout)",
-      "method": "previous"
+      "status": "OK",
+      "method": "http"
     },
     {
       "course_id": "noc26_ae42",
@@ -641,7 +641,7 @@
     {
       "course_id": "noc26_bt84",
       "group_name": "noc26-bt84-announce",
-      "member_count": 2664,
+      "member_count": 2663,
       "status": "OK",
       "method": "http"
     },
@@ -2385,8 +2385,8 @@
       "course_id": "noc26_cs189",
       "group_name": "noc26-cs189-announce",
       "member_count": 28979,
-      "status": "Previous count (HTTP timeout)",
-      "method": "previous"
+      "status": "OK",
+      "method": "http"
     },
     {
       "course_id": "noc26_cs90",
@@ -2840,8 +2840,8 @@
       "course_id": "noc26_ec16",
       "group_name": "noc26-ec16-announce",
       "member_count": 4000,
-      "status": "Previous count (HTTP timeout)",
-      "method": "previous"
+      "status": "OK",
+      "method": "http"
     },
     {
       "course_id": "noc26_ec17",
@@ -2966,8 +2966,8 @@
       "course_id": "noc26_ee110",
       "group_name": "noc26-ee110-announce",
       "member_count": 2186,
-      "status": "Previous count (HTTP timeout)",
-      "method": "previous"
+      "status": "OK",
+      "method": "http"
     },
     {
       "course_id": "noc26_ee111",
@@ -3477,8 +3477,8 @@
       "course_id": "noc26_ee184",
       "group_name": "noc26-ee184-announce",
       "member_count": 776,
-      "status": "Previous count (HTTP timeout)",
-      "method": "previous"
+      "status": "OK",
+      "method": "http"
     },
     {
       "course_id": "noc26_ee185",
@@ -4268,8 +4268,8 @@
       "course_id": "noc26_hs160",
       "group_name": "noc26-hs160-announce",
       "member_count": 38340,
-      "status": "OK",
-      "method": "http"
+      "status": "Previous count (HTTP timeout)",
+      "method": "previous"
     },
     {
       "course_id": "noc26_hs161",
@@ -5059,8 +5059,8 @@
       "course_id": "noc26_ma102",
       "group_name": "noc26-ma102-announce",
       "member_count": 4617,
-      "status": "OK",
-      "method": "http"
+      "status": "Previous count (HTTP timeout)",
+      "method": "previous"
     },
     {
       "course_id": "noc26_ma103",
@@ -6612,7 +6612,7 @@
     {
       "course_id": "noc26_mg152",
       "group_name": "noc26-mg152-announce",
-      "member_count": 16094,
+      "member_count": 16093,
       "status": "OK",
       "method": "http"
     },
@@ -6655,8 +6655,8 @@
       "course_id": "noc26_mg158",
       "group_name": "noc26-mg158-announce",
       "member_count": 11932,
-      "status": "OK",
-      "method": "http"
+      "status": "Previous count (HTTP timeout)",
+      "method": "previous"
     },
     {
       "course_id": "noc26_mg159",
