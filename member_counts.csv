@@ -21,7 +21,7 @@ noc26_ae39,noc26-ae39-announce,952,OK,http
 noc26_ae40,noc26-ae40-announce,1183,OK,http
 noc26_ae41,noc26-ae41-announce,756,OK,http
 noc26_ae42,noc26-ae42-announce,780,OK,http
-noc26_ag17,noc26-ag17-announce,686,OK,http
+noc26_ag17,noc26-ag17-announce,686,Previous count (HTTP timeout),previous
 noc26_ag18,noc26-ag18-announce,2317,OK,http
 noc26_ag19,noc26-ag19-announce,1813,OK,http
 noc26_ag20,noc26-ag20-announce,5201,OK,http
@@ -68,10 +68,10 @@ noc26_bt57,noc26-bt57-announce,1010,OK,http
 noc26_bt58,noc26-bt58-announce,1626,OK,http
 noc26_bt59,noc26-bt59-announce,1653,OK,http
 noc26_bt60,noc26-bt60-announce,890,OK,http
-noc26_bt61,noc26-bt61-announce,3077,OK,http
+noc26_bt61,noc26-bt61-announce,3077,Previous count (HTTP timeout),previous
 noc26_bt62,noc26-bt62-announce,455,OK,http
 noc26_bt63,noc26-bt63-announce,395,OK,http
-noc26_bt65,noc26-bt65-announce,1253,OK,http
+noc26_bt65,noc26-bt65-announce,1253,Previous count (HTTP timeout),previous
 noc26_bt66,noc26-bt66-announce,1569,OK,http
 noc26_bt67,noc26-bt67-announce,1208,OK,http
 noc26_bt68,noc26-bt68-announce,1202,OK,http
@@ -141,7 +141,7 @@ noc26_ce132,noc26-ce132-announce,1917,OK,http
 noc26_ce133,noc26-ce133-announce,259,OK,http
 noc26_ce134,noc26-ce134-announce,383,OK,http
 noc26_ce135,noc26-ce135-announce,464,OK,http
-noc26_ce136,noc26-ce136-announce,2241,Previous count (HTTP timeout),previous
+noc26_ce136,noc26-ce136-announce,2241,OK,http
 noc26_ce137,noc26-ce137-announce,733,OK,http
 noc26_ce138,noc26-ce138-announce,405,OK,http
 noc26_ce139,noc26-ce139-announce,2894,OK,http
@@ -152,7 +152,7 @@ noc26_ce143,noc26-ce143-announce,423,OK,http
 noc26_ce144,noc26-ce144-announce,1456,OK,http
 noc26_ce145,noc26-ce145-announce,1217,OK,http
 noc26_ce146,noc26-ce146-announce,1817,OK,http
-noc26_ce147,noc26-ce147-announce,1622,OK,http
+noc26_ce147,noc26-ce147-announce,1622,Previous count (HTTP timeout),previous
 noc26_ce148,noc26-ce148-announce,2272,OK,http
 noc26_ce149,noc26-ce149-announce,2548,OK,http
 noc26_ce150,noc26-ce150-announce,328,OK,http
@@ -269,7 +269,7 @@ noc26_cs116,noc26-cs116-announce,719,OK,http
 noc26_cs117,noc26-cs117-announce,47037,OK,http
 noc26_cs118,noc26-cs118-announce,5399,OK,http
 noc26_cs119,noc26-cs119-announce,31215,OK,http
-noc26_cs120,noc26-cs120-announce,8044,Previous count (HTTP timeout),previous
+noc26_cs120,noc26-cs120-announce,8044,OK,http
 noc26_cs121,noc26-cs121-announce,2154,OK,http
 noc26_cs122,noc26-cs122-announce,2140,OK,http
 noc26_cs123,noc26-cs123-announce,21786,OK,http
@@ -282,7 +282,7 @@ noc26_cs129,noc26-cs129-announce,32938,OK,http
 noc26_cs130,noc26-cs130-announce,1334,OK,http
 noc26_cs131,noc26-cs131-announce,18098,OK,http
 noc26_cs132,noc26-cs132-announce,14678,OK,http
-noc26_cs133,noc26-cs133-announce,41902,OK,http
+noc26_cs133,noc26-cs133-announce,41901,OK,http
 noc26_cs134,noc26-cs134-announce,7982,OK,http
 noc26_cs135,noc26-cs135-announce,11701,OK,http
 noc26_cs136,noc26-cs136-announce,62770,OK,http
@@ -298,10 +298,10 @@ noc26_cs145,noc26-cs145-announce,22081,OK,http
 noc26_cs146,noc26-cs146-announce,23246,OK,http
 noc26_cs147,noc26-cs147-announce,726,OK,http
 noc26_cs148,noc26-cs148-announce,304,OK,http
-noc26_cs149,noc26-cs149-announce,422,Previous count (HTTP timeout),previous
+noc26_cs149,noc26-cs149-announce,422,OK,http
 noc26_cs150,noc26-cs150-announce,99073,OK,http
 noc26_cs151,noc26-cs151-announce,22483,OK,http
-noc26_cs152,noc26-cs152-announce,13393,OK,http
+noc26_cs152,noc26-cs152-announce,13393,Previous count (HTTP timeout),previous
 noc26_cs153,noc26-cs153-announce,91412,OK,http
 noc26_cs154,noc26-cs154-announce,1190,OK,http
 noc26_cs155,noc26-cs155-announce,13373,OK,http
@@ -310,7 +310,7 @@ noc26_cs157,noc26-cs157-announce,49633,OK,http
 noc26_cs158,noc26-cs158-announce,10911,OK,http
 noc26_cs159,noc26-cs159-announce,17688,OK,http
 noc26_cs160,noc26-cs160-announce,50672,OK,http
-noc26_cs161,noc26-cs161-announce,127179,OK,http
+noc26_cs161,noc26-cs161-announce,127178,OK,http
 noc26_cs162,noc26-cs162-announce,35644,OK,http
 noc26_cs163,noc26-cs163-announce,3276,OK,http
 noc26_cs164,noc26-cs164-announce,1990,OK,http
@@ -379,7 +379,7 @@ noc26_cy67,noc26-cy67-announce,306,OK,http
 noc26_cy68,noc26-cy68-announce,930,OK,http
 noc26_cy69,noc26-cy69-announce,1317,OK,http
 noc26_cy70,noc26-cy70-announce,882,OK,http
-noc26_cy71,noc26-cy71-announce,457,OK,http
+noc26_cy71,noc26-cy71-announce,457,Previous count (HTTP timeout),previous
 noc26_cy72,noc26-cy72-announce,1036,OK,http
 noc26_cy73,noc26-cy73-announce,3590,OK,http
 noc26_cy74,noc26-cy74-announce,593,OK,http
@@ -428,7 +428,7 @@ noc26_ee113,noc26-ee113-announce,3593,OK,http
 noc26_ee114,noc26-ee114-announce,732,OK,http
 noc26_ee115,noc26-ee115-announce,2706,OK,http
 noc26_ee116,noc26-ee116-announce,2267,OK,http
-noc26_ee117,noc26-ee117-announce,187,Previous count (HTTP timeout),previous
+noc26_ee117,noc26-ee117-announce,187,OK,http
 noc26_ee118,noc26-ee118-announce,2461,OK,http
 noc26_ee119,noc26-ee119-announce,1164,OK,http
 noc26_ee120,noc26-ee120-announce,7316,OK,http
@@ -441,7 +441,7 @@ noc26_ee126,noc26-ee126-announce,1347,OK,http
 noc26_ee127,noc26-ee127-announce,1394,OK,http
 noc26_ee128,noc26-ee128-announce,298,OK,http
 noc26_ee129,noc26-ee129-announce,1213,OK,http
-noc26_ee130,noc26-ee130-announce,1849,OK,http
+noc26_ee130,noc26-ee130-announce,1849,Previous count (HTTP timeout),previous
 noc26_ee131,noc26-ee131-announce,1849,OK,http
 noc26_ee132,noc26-ee132-announce,200,OK,http
 noc26_ee133,noc26-ee133-announce,1213,OK,http
@@ -475,7 +475,7 @@ noc26_ee161,noc26-ee161-announce,382,OK,http
 noc26_ee162,noc26-ee162-announce,778,OK,http
 noc26_ee163,noc26-ee163-announce,799,OK,http
 noc26_ee164,noc26-ee164-announce,247,OK,http
-noc26_ee165,noc26-ee165-announce,280,OK,http
+noc26_ee165,noc26-ee165-announce,280,Previous count (HTTP timeout),previous
 noc26_ee166,noc26-ee166-announce,2336,OK,http
 noc26_ee167,noc26-ee167-announce,2304,OK,http
 noc26_ee168,noc26-ee168-announce,4167,OK,http
@@ -519,14 +519,14 @@ noc26_ee96,noc26-ee96-announce,7251,OK,http
 noc26_ee97,noc26-ee97-announce,3892,OK,http
 noc26_ee98,noc26-ee98-announce,2013,OK,http
 noc26_ee99,noc26-ee99-announce,384,OK,http
-noc26_ge100,noc26-ge100-announce,29123,OK,http
+noc26_ge100,noc26-ge100-announce,29122,OK,http
 noc26_ge101,noc26-ge101-announce,665,OK,http
 noc26_ge102,noc26-ge102-announce,8447,OK,http
 noc26_ge103,noc26-ge103-announce,1546,OK,http
 noc26_ge104,noc26-ge104-announce,457,OK,http
 noc26_ge105,noc26-ge105-announce,9199,OK,http
 noc26_ge106,noc26-ge106-announce,9751,OK,http
-noc26_ge47,noc26-ge47-announce,237,Previous count (HTTP timeout),previous
+noc26_ge47,noc26-ge47-announce,237,OK,http
 noc26_ge48,noc26-ge48-announce,596,OK,http
 noc26_ge49,noc26-ge49-announce,787,OK,http
 noc26_ge50,noc26-ge50-announce,1936,OK,http
@@ -542,7 +542,7 @@ noc26_ge64,noc26-ge64-announce,810,OK,http
 noc26_ge65,noc26-ge65-announce,3824,OK,http
 noc26_ge66,noc26-ge66-announce,547,OK,http
 noc26_ge67,noc26-ge67-announce,3047,OK,http
-noc26_ge68,noc26-ge68-announce,1098,Previous count (HTTP timeout),previous
+noc26_ge68,noc26-ge68-announce,1098,OK,http
 noc26_ge69,noc26-ge69-announce,4251,OK,http
 noc26_ge70,noc26-ge70-announce,1403,OK,http
 noc26_ge71,noc26-ge71-announce,192,OK,http
@@ -600,11 +600,11 @@ noc26_hs149,noc26-hs149-announce,4863,OK,http
 noc26_hs150,noc26-hs150-announce,2918,OK,http
 noc26_hs151,noc26-hs151-announce,829,OK,http
 noc26_hs152,noc26-hs152-announce,721,OK,http
-noc26_hs153,noc26-hs153-announce,1318,OK,http
+noc26_hs153,noc26-hs153-announce,1317,OK,http
 noc26_hs154,noc26-hs154-announce,1685,OK,http
 noc26_hs155,noc26-hs155-announce,307,OK,http
 noc26_hs156,noc26-hs156-announce,1222,OK,http
-noc26_hs157,noc26-hs157-announce,263,Previous count (HTTP timeout),previous
+noc26_hs157,noc26-hs157-announce,263,OK,http
 noc26_hs158,noc26-hs158-announce,1447,OK,http
 noc26_hs159,noc26-hs159-announce,742,OK,http
 noc26_hs160,noc26-hs160-announce,38332,OK,http
@@ -696,7 +696,7 @@ noc26_hs247,noc26-hs247-announce,3957,OK,http
 noc26_hs248,noc26-hs248-announce,1257,OK,http
 noc26_hs249,noc26-hs249-announce,55089,OK,http
 noc26_hs250,noc26-hs250-announce,1303,OK,http
-noc26_hs251,noc26-hs251-announce,961,Previous count (HTTP timeout),previous
+noc26_hs251,noc26-hs251-announce,961,OK,http
 noc26_hs252,noc26-hs252-announce,9502,OK,http
 noc26_hs253,noc26-hs253-announce,1663,OK,http
 noc26_hs254,noc26-hs254-announce,2740,OK,http
@@ -776,7 +776,7 @@ noc26_ma80,noc26-ma80-announce,3584,OK,http
 noc26_ma81,noc26-ma81-announce,837,OK,http
 noc26_ma83,noc26-ma83-announce,1689,OK,http
 noc26_ma84,noc26-ma84-announce,1524,OK,http
-noc26_ma85,noc26-ma85-announce,1196,OK,http
+noc26_ma85,noc26-ma85-announce,1196,Previous count (HTTP timeout),previous
 noc26_ma86,noc26-ma86-announce,572,OK,http
 noc26_ma87,noc26-ma87-announce,240,OK,http
 noc26_ma88,noc26-ma88-announce,1062,OK,http
@@ -784,7 +784,7 @@ noc26_ma89,noc26-ma89-announce,315,OK,http
 noc26_ma90,noc26-ma90-announce,877,OK,http
 noc26_ma91,noc26-ma91-announce,1248,OK,http
 noc26_ma92,noc26-ma92-announce,757,OK,http
-noc26_ma93,noc26-ma93-announce,219,OK,http
+noc26_ma93,noc26-ma93-announce,219,Previous count (HTTP timeout),previous
 noc26_ma94,noc26-ma94-announce,355,OK,http
 noc26_ma95,noc26-ma95-announce,1087,OK,http
 noc26_ma96,noc26-ma96-announce,723,OK,http
@@ -833,7 +833,7 @@ noc26_me142,noc26-me142-announce,1831,OK,http
 noc26_me143,noc26-me143-announce,419,OK,http
 noc26_me144,noc26-me144-announce,242,OK,http
 noc26_me145,noc26-me145-announce,629,OK,http
-noc26_me146,noc26-me146-announce,429,Previous count (HTTP timeout),previous
+noc26_me146,noc26-me146-announce,429,OK,http
 noc26_me147,noc26-me147-announce,675,OK,http
 noc26_me148,noc26-me148-announce,443,OK,http
 noc26_me149,noc26-me149-announce,1876,OK,http
@@ -880,7 +880,7 @@ noc26_me189,noc26-me189-announce,6844,OK,http
 noc26_me190,noc26-me190-announce,322,OK,http
 noc26_me191,noc26-me191-announce,725,OK,http
 noc26_me192,noc26-me192-announce,1095,OK,http
-noc26_me193,noc26-me193-announce,1483,Previous count (HTTP timeout),previous
+noc26_me193,noc26-me193-announce,1483,OK,http
 noc26_me194,noc26-me194-announce,846,OK,http
 noc26_me195,noc26-me195-announce,202,OK,http
 noc26_me196,noc26-me196-announce,2074,OK,http
@@ -901,7 +901,7 @@ noc26_mg105,noc26-mg105-announce,4259,OK,http
 noc26_mg106,noc26-mg106-announce,4172,OK,http
 noc26_mg107,noc26-mg107-announce,3867,OK,http
 noc26_mg108,noc26-mg108-announce,2249,OK,http
-noc26_mg109,noc26-mg109-announce,6497,OK,http
+noc26_mg109,noc26-mg109-announce,6497,Previous count (HTTP timeout),previous
 noc26_mg110,noc26-mg110-announce,809,OK,http
 noc26_mg111,noc26-mg111-announce,2406,OK,http
 noc26_mg112,noc26-mg112-announce,5380,OK,http
@@ -936,7 +936,7 @@ noc26_mg142,noc26-mg142-announce,13662,OK,http
 noc26_mg143,noc26-mg143-announce,3958,OK,http
 noc26_mg144,noc26-mg144-announce,1694,OK,http
 noc26_mg145,noc26-mg145-announce,15286,OK,http
-noc26_mg146,noc26-mg146-announce,2203,Previous count (HTTP timeout),previous
+noc26_mg146,noc26-mg146-announce,2203,OK,http
 noc26_mg147,noc26-mg147-announce,8336,OK,http
 noc26_mg148,noc26-mg148-announce,3443,OK,http
 noc26_mg149,noc26-mg149-announce,2293,OK,http
@@ -982,7 +982,7 @@ noc26_mm57,noc26-mm57-announce,146,OK,http
 noc26_mm58,noc26-mm58-announce,160,OK,http
 noc26_mm59,noc26-mm59-announce,144,OK,http
 noc26_mm60,noc26-mm60-announce,412,OK,http
-noc26_mm61,noc26-mm61-announce,259,OK,http
+noc26_mm61,noc26-mm61-announce,259,Previous count (HTTP timeout),previous
 noc26_mm62,noc26-mm62-announce,232,OK,http
 noc26_mm63,noc26-mm63-announce,186,OK,http
 noc26_mm64,noc26-mm64-announce,852,OK,http
