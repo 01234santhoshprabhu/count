@@ -1,12 +1,12 @@
 {
-  "updated_at": "2026-09-04T16:55:38.196155+05:30",
-  "started_at": "2026-09-04T16:51:52.285310+05:30",
+  "updated_at": "2026-09-04T17:00:07.359064+05:30",
+  "started_at": "2026-09-04T16:56:50.825772+05:30",
   "running": false,
   "total_courses": 1058,
   "completed": 1058,
   "numeric_count": 1054,
   "error_count": 4,
-  "total_members": 3922246,
+  "total_members": 3922245,
   "rows": [
     {
       "course_id": "noc26_ae21",
@@ -236,8 +236,8 @@
       "course_id": "noc26_ag27",
       "group_name": "noc26-ag27-announce",
       "member_count": 2365,
-      "status": "OK",
-      "method": "http"
+      "status": "Previous count (HTTP timeout)",
+      "method": "previous"
     },
     {
       "course_id": "noc26_ag28",
@@ -2902,7 +2902,7 @@
     {
       "course_id": "noc26_ee101",
       "group_name": "noc26-ee101-announce",
-      "member_count": 5132,
+      "member_count": 5131,
       "status": "OK",
       "method": "http"
     },
@@ -3078,8 +3078,8 @@
       "course_id": "noc26_ee126",
       "group_name": "noc26-ee126-announce",
       "member_count": 1347,
-      "status": "Previous count (HTTP timeout)",
-      "method": "previous"
+      "status": "OK",
+      "method": "http"
     },
     {
       "course_id": "noc26_ee127",
@@ -3848,8 +3848,8 @@
       "course_id": "noc26_ge73",
       "group_name": "noc26-ge73-announce",
       "member_count": 159,
-      "status": "OK",
-      "method": "http"
+      "status": "Previous count (HTTP timeout)",
+      "method": "previous"
     },
     {
       "course_id": "noc26_ge74",
@@ -3890,8 +3890,8 @@
       "course_id": "noc26_ge79",
       "group_name": "noc26-ge79-announce",
       "member_count": 25906,
-      "status": "OK",
-      "method": "http"
+      "status": "Previous count (HTTP timeout)",
+      "method": "previous"
     },
     {
       "course_id": "noc26_ge80",
@@ -7348,8 +7348,8 @@
       "course_id": "noc26_ph63",
       "group_name": "noc26-ph63-announce",
       "member_count": 465,
-      "status": "OK",
-      "method": "http"
+      "status": "Previous count (HTTP timeout)",
+      "method": "previous"
     },
     {
       "course_id": "noc26_ph64",
