@@ -1,12 +1,12 @@
 {
-  "updated_at": "2026-09-08T13:51:05.392380+05:30",
-  "started_at": "2026-09-08T13:49:02.470033+05:30",
+  "updated_at": "2026-09-08T13:56:08.097444+05:30",
+  "started_at": "2026-09-08T13:54:01.783350+05:30",
   "running": false,
   "total_courses": 1058,
   "completed": 1058,
   "numeric_count": 1054,
   "error_count": 4,
-  "total_members": 3920505,
+  "total_members": 3920501,
   "rows": [
     {
       "course_id": "noc26_ae21",
@@ -424,7 +424,7 @@
     {
       "course_id": "noc26_bt102",
       "group_name": "noc26-bt102-announce",
-      "member_count": 7562,
+      "member_count": 7561,
       "status": "OK",
       "method": "http"
     },
@@ -1516,7 +1516,7 @@
     {
       "course_id": "noc26_ch65",
       "group_name": "noc26-ch65-announce",
-      "member_count": 733,
+      "member_count": 732,
       "status": "OK",
       "method": "http"
     },
@@ -1796,9 +1796,9 @@
     {
       "course_id": "noc26_cs105",
       "group_name": "noc26-cs105-announce",
-      "member_count": 6954,
-      "status": "Previous count (HTTP timeout)",
-      "method": "previous"
+      "member_count": 6953,
+      "status": "OK",
+      "method": "http"
     },
     {
       "course_id": "noc26_cs106",
@@ -2118,7 +2118,7 @@
     {
       "course_id": "noc26_cs151",
       "group_name": "noc26-cs151-announce",
-      "member_count": 22463,
+      "member_count": 22462,
       "status": "OK",
       "method": "http"
     },
@@ -3764,8 +3764,8 @@
       "course_id": "noc26_ge61",
       "group_name": "noc26-ge61-announce",
       "member_count": 1485,
-      "status": "Previous count (HTTP timeout)",
-      "method": "previous"
+      "status": "OK",
+      "method": "http"
     },
     {
       "course_id": "noc26_ge62",
@@ -5542,8 +5542,8 @@
       "course_id": "noc26_ma98",
       "group_name": "noc26-ma98-announce",
       "member_count": 1748,
-      "status": "Previous count (HTTP timeout)",
-      "method": "previous"
+      "status": "OK",
+      "method": "http"
     },
     {
       "course_id": "noc26_ma99",
