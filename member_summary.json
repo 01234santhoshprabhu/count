@@ -1,12 +1,12 @@
 {
-  "updated_at": "2026-09-08T17:00:38.877950+05:30",
-  "started_at": "2026-09-08T16:58:37.142294+05:30",
+  "updated_at": "2026-09-08T17:05:46.744033+05:30",
+  "started_at": "2026-09-08T17:03:37.154112+05:30",
   "running": false,
   "total_courses": 1058,
   "completed": 1058,
   "numeric_count": 1054,
   "error_count": 4,
-  "total_members": 3920416,
+  "total_members": 3920415,
   "rows": [
     {
       "course_id": "noc26_ae21",
@@ -2035,8 +2035,8 @@
       "course_id": "noc26_cs139",
       "group_name": "noc26-cs139-announce",
       "member_count": 9597,
-      "status": "Previous count (HTTP timeout)",
-      "method": "previous"
+      "status": "OK",
+      "method": "http"
     },
     {
       "course_id": "noc26_cs140",
@@ -3792,8 +3792,8 @@
       "course_id": "noc26_ge65",
       "group_name": "noc26-ge65-announce",
       "member_count": 3820,
-      "status": "OK",
-      "method": "http"
+      "status": "Previous count (HTTP timeout)",
+      "method": "previous"
     },
     {
       "course_id": "noc26_ge66",
@@ -4519,7 +4519,7 @@
     {
       "course_id": "noc26_hs196",
       "group_name": "noc26-hs196-announce",
-      "member_count": 332,
+      "member_count": 331,
       "status": "OK",
       "method": "http"
     },
