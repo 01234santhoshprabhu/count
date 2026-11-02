@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>NPTEL Enrollment and Member Live Dashboard</title>
-  <link rel="stylesheet" href="auth.css?v=20260803-ultra-luxury">
   <style>
     :root {
       --bg: #f4f7fb;
@@ -137,33 +136,6 @@
       font-size: 13px;
     }
     header .status { display: none; }
-    .header-actions {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-    .tool-link {
-      min-height: 36px;
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 0 14px;
-      background: #1769d8;
-      color: #fff;
-      font-size: 12px;
-      font-weight: 800;
-      text-decoration: none;
-      white-space: nowrap;
-      box-shadow: 0 8px 18px rgba(23, 105, 216, .18);
-    }
-    .tool-link:hover { background: #145ec2; }
-    .watermark-link { background: #0f766e; }
-    .watermark-link:hover { background: #0d665f; }
-    .tool-nav-link { text-decoration: none; }
     .hero {
       background: linear-gradient(135deg, #12213a, #285c9e 62%, #2f89ea);
       color: #fff;
@@ -299,474 +271,26 @@
       .grid, .meta, .candidate-kpis { grid-template-columns: 1fr; }
       h1 { font-size: 20px; }
     }
-
-    /* Ultra luxury visual refresh: shell only, data logic untouched */
-    :root {
-      --bg: #eef3f8;
-      --panel: rgba(255,255,255,.92);
-      --ink: #08111f;
-      --muted: #647084;
-      --line: rgba(15,23,42,.12);
-      --blue: #1457d9;
-      --blue-dark: #07111f;
-      --nav: #07111f;
-      --nav-soft: #111c2e;
-      --green: #0f8b65;
-      --amber: #b7791f;
-      --red: #b42318;
-      --gold: #d4af37;
-      --cyan: #22d3ee;
-      --shadow: 0 28px 70px rgba(15,23,42,.12);
-    }
-
-    body {
-      background:
-        linear-gradient(115deg, rgba(20,87,217,.08), transparent 22%),
-        linear-gradient(245deg, rgba(15,139,101,.08), transparent 24%),
-        repeating-linear-gradient(135deg, rgba(15,23,42,.025) 0 1px, transparent 1px 22px),
-        #eef3f8;
-    }
-
-    .app {
-      grid-template-columns: 288px 1fr;
-    }
-
-    aside {
-      background:
-        linear-gradient(180deg, rgba(212,175,55,.14), transparent 18%),
-        linear-gradient(160deg, #07111f, #111827 58%, #0f172a);
-      border-right: 1px solid rgba(255,255,255,.10);
-      box-shadow: 18px 0 58px rgba(7,17,31,.22);
-    }
-
-    aside::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(135deg, rgba(255,255,255,.035) 0 1px, transparent 1px 18px);
-      pointer-events: none;
-    }
-
-    aside > * {
-      position: relative;
-      z-index: 1;
-    }
-
-    .brand {
-      padding: 4px 6px 22px;
-      border-bottom-color: rgba(212,175,55,.22);
-      letter-spacing: .02em;
-    }
-
-    .brand-mark {
-      width: 48px;
-      height: 48px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, #0f766e, #1457d9 52%, #d4af37);
-      box-shadow: 0 18px 44px rgba(20,87,217,.28), inset 0 1px 0 rgba(255,255,255,.35);
-    }
-
-    .brand small {
-      color: #d4af37;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      font-size: 11px;
-    }
-
-    .nav-label {
-      color: rgba(212,175,55,.78);
-      letter-spacing: .18em;
-    }
-
-    .nav-item {
-      min-height: 46px;
-      border-radius: 8px;
-      color: #d9e7f7;
-      transition: background .2s ease, border-color .2s ease, transform .2s ease;
-    }
-
-    .nav-item.active,
-    .nav-item:hover {
-      background: linear-gradient(135deg, rgba(20,87,217,.32), rgba(15,139,101,.20));
-      border-color: rgba(212,175,55,.35);
-      transform: translateX(2px);
-    }
-
-    .nav-icon {
-      border-radius: 8px;
-      background: rgba(255,255,255,.10);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
-    }
-
-    .theme-chip {
-      border-radius: 8px;
-      border-color: rgba(212,175,55,.22);
-      background: rgba(255,255,255,.08);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
-    }
-
-    header {
-      background: rgba(255,255,255,.82);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(15,23,42,.10);
-      box-shadow: 0 18px 42px rgba(15,23,42,.08);
-    }
-
-    h1 {
-      font-size: clamp(24px, 2.3vw, 34px);
-      font-weight: 900;
-      color: #07111f;
-    }
-
-    main {
-      max-width: 1480px;
-      padding: 24px;
-    }
-
-    .tool-link {
-      min-height: 40px;
-      border-color: rgba(255,255,255,.20);
-      border-radius: 8px;
-      background: linear-gradient(135deg, #07111f, #1457d9);
-      box-shadow: 0 16px 34px rgba(20,87,217,.22);
-    }
-
-    .tool-link:hover {
-      background: linear-gradient(135deg, #0f172a, #0f766e);
-    }
-
-    .watermark-link {
-      background: linear-gradient(135deg, #0f766e, #d4af37);
-      color: #07111f;
-    }
-
-    .hero {
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,.24);
-      border-radius: 8px;
-      padding: 34px;
-      background:
-        linear-gradient(130deg, rgba(212,175,55,.18), transparent 26%),
-        linear-gradient(135deg, #07111f, #123d72 58%, #0f766e);
-      box-shadow: 0 34px 80px rgba(15,23,42,.18);
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      inset: 12px;
-      border: 1px solid rgba(255,255,255,.14);
-      border-radius: 8px;
-      pointer-events: none;
-    }
-
-    .hero .eyebrow {
-      color: #d4af37;
-      letter-spacing: .22em;
-    }
-
-    .hero h2 {
-      font-size: clamp(36px, 4vw, 56px);
-      font-weight: 900;
-      letter-spacing: 0;
-    }
-
-    .hero p {
-      color: #dce8f7;
-      font-size: 16px;
-    }
-
-    .metric,
-    .panel {
-      border: 1px solid rgba(15,23,42,.10);
-      border-radius: 8px;
-      background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(248,250,252,.90));
-      box-shadow: 0 22px 48px rgba(15,23,42,.08), inset 0 1px 0 rgba(255,255,255,.75);
-    }
-
-    .metric {
-      min-height: 118px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .metric .label {
-      font-weight: 700;
-      letter-spacing: .03em;
-    }
-
-    .metric .value {
-      font-size: clamp(28px, 3vw, 42px);
-      line-height: 1;
-      letter-spacing: 0;
-    }
-
-    .metric.good .value { color: #0f8b65; }
-    .metric.warn .value { color: #b7791f; }
-    .metric.blue .value { color: #1457d9; }
-
-    .panel h2,
-    .panel h3 {
-      color: #10203a;
-      font-weight: 900;
-    }
-
-    button,
-    a.download,
-    .file-button {
-      border: 0;
-      border-radius: 8px;
-      background: linear-gradient(135deg, #07111f, #1457d9);
-      box-shadow: 0 14px 28px rgba(20,87,217,.18);
-    }
-
-    button:hover,
-    a.download:hover,
-    .file-button:hover {
-      filter: saturate(1.08);
-      transform: translateY(-1px);
-    }
-
-    button.secondary,
-    .file-button.secondary {
-      border: 1px solid rgba(20,87,217,.18);
-      background: #ffffff;
-      color: #1457d9;
-      box-shadow: none;
-    }
-
-    input[type="search"] {
-      border-radius: 8px;
-      border-color: rgba(15,23,42,.14);
-      background: rgba(255,255,255,.88);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.9);
-    }
-
-    .table-wrap {
-      border-radius: 8px;
-      border-color: rgba(15,23,42,.10);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
-    }
-
-    th {
-      background: linear-gradient(180deg, #f8fafc, #eef3f8);
-      color: #4b5b70;
-      font-weight: 900;
-    }
-
-    td {
-      color: #172033;
-    }
-
-    tbody tr:hover td {
-      background: rgba(20,87,217,.04);
-    }
-
-    .mini-card {
-      border-radius: 8px;
-      background: linear-gradient(180deg, #ffffff, #f7fafc);
-      box-shadow: 0 12px 28px rgba(15,23,42,.06);
-    }
-
-    .pill {
-      background: #e8f1ff;
-      color: #123d72;
-    }
-
-    .pill.good { background: #e7f8f1; color: #0f766e; }
-    .pill.warn { background: #fff6df; color: #9a6700; }
-
-    /* Sync status pill */
-    .sync-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 6px 12px;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--muted);
-      background: rgba(255,255,255,.6);
-    }
-    .sync-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--muted);
-      flex: none;
-    }
-    .sync-pill.ok .sync-dot { background: var(--green); box-shadow: 0 0 0 3px rgba(15,139,101,.18); }
-    .sync-pill.loading .sync-dot { background: var(--blue); animation: syncPulse 1s ease-in-out infinite; }
-    .sync-pill.error { color: var(--red); border-color: rgba(180,35,24,.35); }
-    .sync-pill.error .sync-dot { background: var(--red); animation: syncPulse 1s ease-in-out infinite; }
-    @keyframes syncPulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.5); opacity: .5; }
-    }
-    .metric.is-loading .value, .panel.is-loading .table-wrap { opacity: .45; }
-
-    /* Role badge + gating */
-    .role-badge {
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: .04em;
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: #edf4ff;
-      color: #185ba8;
-    }
-    .role-badge.role-admin { background: #fff6df; color: #9a6700; }
-    .role-badge.role-super_admin { background: #fde8e8; color: #b42318; }
-    body:not(.role-admin):not(.role-super_admin) .admin-only { display: none !important; }
-    body.role-viewer label.file-button[for="candidateFile"],
-    body.role-viewer #candidateFile { display: none; }
-
-    /* Mobile nav toggle (hidden on desktop) */
-    .nav-toggle { display: none; }
-
-    /* Dark mode */
-    body.theme-dark {
-      --bg: #0b1220;
-      --panel: #121b2c;
-      --ink: #e8eefb;
-      --muted: #93a2ba;
-      --line: rgba(255,255,255,.10);
-      --blue: #4f9cff;
-      --green: #37c98d;
-      --amber: #e0ac45;
-      --red: #ff6d5c;
-      --shadow: 0 28px 70px rgba(0,0,0,.45);
-    }
-    body.theme-dark { background: #0b1220; }
-    body.theme-dark header {
-      background: rgba(18,27,44,.86);
-      border-bottom-color: rgba(255,255,255,.08);
-    }
-    body.theme-dark h1 { color: #eef4ff; }
-    body.theme-dark .metric,
-    body.theme-dark .panel,
-    body.theme-dark .mini-card {
-      background: linear-gradient(180deg, #131e33, #0f1830);
-      border-color: rgba(255,255,255,.08);
-      box-shadow: 0 22px 48px rgba(0,0,0,.35);
-    }
-    body.theme-dark th {
-      background: linear-gradient(180deg, #182642, #101a2e);
-      color: #9db1d1;
-    }
-    body.theme-dark td { color: #dbe6f8; border-bottom-color: rgba(255,255,255,.06); }
-    body.theme-dark tbody tr:hover td { background: rgba(79,156,255,.08); }
-    body.theme-dark input[type="search"],
-    body.theme-dark select {
-      background: rgba(255,255,255,.06);
-      border-color: rgba(255,255,255,.14);
-      color: #eef4ff;
-    }
-    body.theme-dark button.secondary,
-    body.theme-dark .file-button.secondary {
-      background: #131e33;
-      color: #7fb1ff;
-      border-color: rgba(127,177,255,.3);
-    }
-    body.theme-dark .sync-pill { background: rgba(255,255,255,.06); }
-    body.theme-dark .table-wrap { border-color: rgba(255,255,255,.08); }
-
-    @media (max-width: 1060px) {
-      .nav-toggle {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 38px;
-        height: 38px;
-        border-radius: 8px;
-        border: 1px solid var(--line);
-        background: #fff;
-        color: var(--ink);
-        font-size: 16px;
-        cursor: pointer;
-      }
-      body.theme-dark .nav-toggle { background: #131e33; color: #eef4ff; }
-      .app aside {
-        position: fixed;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: 78%;
-        max-width: 320px;
-        z-index: 30;
-        transform: translateX(-105%);
-        transition: transform .22s ease;
-      }
-      .app.nav-open aside { transform: translateX(0); }
-      .app.nav-open::before {
-        content: "";
-        position: fixed;
-        inset: 0;
-        background: rgba(6,12,24,.5);
-        z-index: 20;
-      }
-    }
   </style>
 </head>
-<body class="auth-pending">
-  <div id="auth-screen" class="auth-screen" aria-live="polite">
-    <div class="auth-card">
-      <div class="auth-mark">N</div>
-      <div class="auth-kicker">NPTEL Portal Team</div>
-      <div class="auth-login">
-        <h1>Sign In</h1>
-        <p id="auth-message">Sign in once to open Count Dashboard or Tool.</p>
-        <button id="auth-google-btn" class="auth-google-btn" type="button">
-          <span class="auth-google-icon">G</span>
-          <span>Sign in with Google</span>
-        </button>
-      </div>
-      <div class="auth-choice">
-        <h1>Choose Application</h1>
-        <p>Signed in as <strong id="auth-choice-email"></strong></p>
-        <button id="auth-count-btn" class="auth-link-btn primary" type="button">Open Count Dashboard</button>
-        <button id="auth-tool-btn" class="auth-link-btn tool" type="button">Open Tool</button>
-        <button id="auth-watermark-btn" class="auth-link-btn watermark" type="button">Open Watermark</button>
-      </div>
-      <div id="auth-error" class="auth-error" role="alert"></div>
-    </div>
-  </div>
+<body>
   <div class="app">
     <aside>
       <div class="brand"><div class="brand-mark">N</div><div>NPTEL<small>SP</small></div></div>
       <div class="nav-label">Main</div>
       <button class="nav-item active" data-go="dashboard"><span class="nav-icon">▣</span><span>Dashboard</span></button>
       <div class="nav-label">Tools</div>
-      <a class="nav-item tool-nav-link" href="https://01234santhoshprabhu.github.io/Tool/"><span class="nav-icon">T</span><span>Tool</span></a>
-      <a class="nav-item tool-nav-link" href="https://01234santhoshprabhu.github.io/NPTEL-Watermark/"><span class="nav-icon">W</span><span>Watermark</span></a>
       <button class="nav-item" data-go="course-counts"><span class="nav-icon">#</span><span>Course Counts</span></button>
       <button class="nav-item" data-go="exam-registration"><span class="nav-icon">E</span><span>Exam Registration</span></button>
       <button class="nav-item" data-go="member-counts"><span class="nav-icon">M</span><span>Members</span></button>
       <button class="nav-item" data-go="data-filter"><span class="nav-icon">⌕</span><span>Data Filter</span></button>
-      <button class="nav-item" data-go="candidate-analytics"><span class="nav-icon">◈</span><span>Candidates</span></button>
-      <button class="nav-item admin-only" data-go="admin-panel"><span class="nav-icon">★</span><span>Admin</span></button>
-      <button class="theme-chip" id="themeToggle" type="button">☾ Dark Mode</button>
+      <div class="theme-chip">Light Mode</div>
     </aside>
     <div class="content">
       <header>
         <div>
           <h1>NPTEL Enrollment and Member Live Dashboard</h1>
           <div class="sub">Display refreshes every 10 seconds. GitHub regenerates data about every 5 minutes.</div>
-        </div>
-        <div class="header-actions">
-          <span class="sync-pill" id="syncPill"><span class="sync-dot" id="syncDot"></span><span id="syncText">Loading…</span></span>
-          <a class="tool-link" href="https://01234santhoshprabhu.github.io/Tool/" title="Open Tool"><span>Tool</span></a>
-          <a class="tool-link watermark-link" href="https://01234santhoshprabhu.github.io/NPTEL-Watermark/" title="Open Watermark"><span>Watermark</span></a>
-          <div class="auth-user-pill" id="auth-user-pill" style="display:none">
-            <span id="auth-user-role" class="role-badge"></span>
-            <span id="auth-user-email"></span>
-            <button id="auth-signout-btn" type="button" title="Sign out">Sign out</button>
-          </div>
-          <button class="nav-toggle" id="navToggle" type="button" aria-label="Toggle menu" aria-expanded="false">☰</button>
         </div>
       </header>
       <main>
@@ -846,7 +370,7 @@
           </div>
         </section>
 
-        <section id="candidate-analytics" class="panel" style="margin-top:14px;">
+        <section id="candidate-analytics" class="panel" style="display:none;">
           <h2>Candidate Analytics</h2>
           <div class="actions">
             <input id="candidateSearch" type="search" placeholder="Search email ID">
@@ -887,33 +411,9 @@
             <div id="errorRows"></div>
           </div>
         </section>
-
-        <section id="admin-panel" class="panel admin-only" style="margin-top:14px;">
-          <h2>Admin — User Roles</h2>
-          <p class="note">Viewers have read-only access. Admin and Super Admin can upload candidate data. Only Super Admin can change roles below.</p>
-          <div class="actions">
-            <input id="newRoleEmail" type="search" placeholder="Email to add/update">
-            <select id="newRoleValue">
-              <option value="viewer">Viewer</option>
-              <option value="admin">Admin</option>
-              <option value="super_admin">Super Admin</option>
-            </select>
-            <button id="addRoleBtn" type="button">Save role</button>
-            <span class="note" id="roleAdminNote"></span>
-          </div>
-          <div class="table-wrap">
-            <table>
-              <thead><tr><th>Email</th><th>Role</th><th>Updated</th><th></th></tr></thead>
-              <tbody id="roleRows"><tr><td class="empty" colspan="4">Loading users…</td></tr></tbody>
-            </table>
-          </div>
-        </section>
       </main>
     </div>
   </div>
-  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
-  <script src="auth.js?v=20260803-popup-enabled"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script>
     const fmt = new Intl.NumberFormat("en-IN");
@@ -1441,243 +941,74 @@
     function goToSection(id, button) {
       const target = document.getElementById(id);
       if (!target) return;
-      document.querySelectorAll(".nav-item[data-go]").forEach(item => item.classList.toggle("active", item === button));
+      document.querySelectorAll(".nav-item").forEach(item => item.classList.toggle("active", item === button));
       target.scrollIntoView({ behavior: "smooth", block: "start" });
-      document.querySelector(".app").classList.remove("nav-open");
-      document.getElementById("navToggle").setAttribute("aria-expanded", "false");
     }
 
-    // --- Theme toggle ---
-    function initTheme() {
-      const btn = document.getElementById("themeToggle");
-      const stored = localStorage.getItem("nptel_theme");
-      const isDark = stored === "dark";
-      document.body.classList.toggle("theme-dark", isDark);
-      btn.textContent = isDark ? "☀ Light Mode" : "☾ Dark Mode";
-      btn.addEventListener("click", () => {
-        const nowDark = !document.body.classList.contains("theme-dark");
-        document.body.classList.toggle("theme-dark", nowDark);
-        btn.textContent = nowDark ? "☀ Light Mode" : "☾ Dark Mode";
-        localStorage.setItem("nptel_theme", nowDark ? "dark" : "light");
-      });
-    }
-
-    // --- Mobile nav toggle ---
-    function initMobileNav() {
-      const app = document.querySelector(".app");
-      const toggle = document.getElementById("navToggle");
-      toggle.addEventListener("click", () => {
-        const open = app.classList.toggle("nav-open");
-        toggle.setAttribute("aria-expanded", open ? "true" : "false");
-      });
-      app.addEventListener("click", event => {
-        if (app.classList.contains("nav-open") && event.target === app) {
-          app.classList.remove("nav-open");
-          toggle.setAttribute("aria-expanded", "false");
-        }
-      });
-    }
-
-    // --- Active nav highlight on scroll ---
-    function initScrollSpy() {
-      const navItems = [...document.querySelectorAll(".nav-item[data-go]")];
-      const sections = navItems.map(item => document.getElementById(item.dataset.go)).filter(Boolean);
-      if (!sections.length || !("IntersectionObserver" in window)) return;
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (!entry.isIntersecting) return;
-          const match = navItems.find(item => item.dataset.go === entry.target.id);
-          if (match) navItems.forEach(item => item.classList.toggle("active", item === match));
-        });
-      }, { rootMargin: "-96px 0px -70% 0px", threshold: 0 });
-      sections.forEach(section => observer.observe(section));
-    }
-
-    // --- Sync status pill ---
-    let firstLoadDone = false;
-    function setSyncState(state, label) {
-      const pill = document.getElementById("syncPill");
-      const text = document.getElementById("syncText");
-      pill.classList.remove("ok", "loading", "error");
-      pill.classList.add(state);
-      text.textContent = label;
-    }
-    function markLoadingCards(isLoading) {
-      if (firstLoadDone) return;
-      document.querySelectorAll(".metric, #data-filter, #exam-registration, #member-counts").forEach(el => {
-        el.classList.toggle("is-loading", isLoading);
-      });
-    }
-    async function runFullRefresh() {
-      setSyncState("loading", "Syncing…");
-      markLoadingCards(true);
-      const results = await Promise.allSettled([refreshDashboard(), refreshTable(), refreshMembers()]);
-      const failed = results.filter(result => result.status === "rejected");
-      markLoadingCards(false);
-      firstLoadDone = true;
-      if (failed.length) {
-        console.error(failed.map(result => result.reason));
-        setSyncState("error", failed.length === results.length ? "Data unavailable — retrying…" : "Partial data — retrying…");
-      } else {
-        setSyncState("ok", `Updated ${new Date().toLocaleTimeString()}`);
-      }
-    }
-
-    // --- Admin: role management (Super Admin only can edit) ---
-    let currentUserRole = "viewer";
-    function fmtDate(value) {
-      if (!value) return "-";
-      const date = new Date(value);
-      return Number.isNaN(date.getTime()) ? "-" : date.toLocaleString();
-    }
-    async function loadRoles() {
-      const rowsEl = document.getElementById("roleRows");
+    refreshDashboard().catch(error => {
+      document.getElementById("meta").innerHTML = `<div>Could not load enrollment data: <b>${escapeHtml(error.message || String(error))}</b></div>`;
+    });
+    refreshTable().catch(console.error);
+    refreshMembers().catch(console.error);
+    loadCandidateCsv().catch(console.error);
+    setInterval(() => {
+      refreshDashboard().catch(console.error);
+      refreshTable().catch(console.error);
+      refreshMembers().catch(console.error);
+    }, 10000);
+    document.getElementById("searchBox").addEventListener("input", renderAllRows);
+    document.getElementById("examSearchBox").addEventListener("input", renderExamRegistrationRows);
+    document.getElementById("memberSearchBox").addEventListener("input", renderMemberRows);
+    document.getElementById("candidateSearch").addEventListener("input", renderCandidateAnalytics);
+    document.getElementById("clearCandidate").addEventListener("click", () => {
+      document.getElementById("candidateSearch").value = "";
+      renderCandidateAnalytics();
+      document.getElementById("candidateSearch").focus();
+    });
+    document.getElementById("candidateFile").addEventListener("change", async event => {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const lowerName = file.name.toLowerCase();
       try {
-        const rows = await supabaseFetch("/rest/v1/dashboard_users?select=email,role,updated_at&order=email.asc");
-        if (!rows.length) {
-          rowsEl.innerHTML = `<tr><td class="empty" colspan="4">No users added yet.</td></tr>`;
-          return;
-        }
-        const canEdit = currentUserRole === "super_admin";
-        rowsEl.innerHTML = rows.map(row => `
-          <tr>
-            <td>${escapeHtml(row.email)}</td>
-            <td>
-              ${canEdit
-                ? `<select data-email="${escapeHtml(row.email)}" class="role-select">
-                    <option value="viewer" ${row.role === "viewer" ? "selected" : ""}>Viewer</option>
-                    <option value="admin" ${row.role === "admin" ? "selected" : ""}>Admin</option>
-                    <option value="super_admin" ${row.role === "super_admin" ? "selected" : ""}>Super Admin</option>
-                  </select>`
-                : escapeHtml(row.role)}
-            </td>
-            <td>${escapeHtml(fmtDate(row.updated_at))}</td>
-            <td></td>
-          </tr>
-        `).join("");
-        if (canEdit) {
-          rowsEl.querySelectorAll(".role-select").forEach(select => {
-            select.addEventListener("change", async () => {
-              await saveRole(select.dataset.email, select.value);
-            });
-          });
+        if (lowerName.endsWith(".xlsx") || lowerName.endsWith(".xls")) {
+          await uploadWorkbookToSupabase(file);
+        } else {
+          await loadCandidateCsvFromText(await file.text(), file.name, "CSV");
         }
       } catch (error) {
-        rowsEl.innerHTML = `<tr><td class="empty" colspan="4">Could not load users: ${escapeHtml(error.message || String(error))}</td></tr>`;
+        document.getElementById("candidateDataStatus").textContent = `Upload failed: ${error.message}`;
       }
-    }
-    async function saveRole(email, role) {
-      const note = document.getElementById("roleAdminNote");
-      note.textContent = `Saving ${email}…`;
-      try {
-        await supabaseFetch(`/rest/v1/dashboard_users?email=eq.${encodeURIComponent(email.toLowerCase())}`, {
-          method: "PATCH",
-          headers: { Prefer: "return=minimal" },
-          body: JSON.stringify({ role, updated_at: new Date().toISOString() })
-        });
-        note.textContent = `Saved ${email} as ${role}.`;
-        await loadRoles();
-      } catch (error) {
-        try {
-          await supabaseFetch("/rest/v1/dashboard_users", {
-            method: "POST",
-            headers: { Prefer: "return=minimal" },
-            body: JSON.stringify([{ email: email.toLowerCase(), role, updated_at: new Date().toISOString() }])
-          });
-          note.textContent = `Added ${email} as ${role}.`;
-          await loadRoles();
-        } catch (insertError) {
-          note.textContent = `Could not save role: ${insertError.message || String(insertError)}`;
-        }
-      }
-    }
-    function initAdminPanel() {
-      const addBtn = document.getElementById("addRoleBtn");
-      if (!addBtn) return;
-      addBtn.addEventListener("click", async () => {
-        const email = document.getElementById("newRoleEmail").value.trim();
-        const role = document.getElementById("newRoleValue").value;
-        if (!email) return;
-        await saveRole(email, role);
-        document.getElementById("newRoleEmail").value = "";
-      });
-    }
-    function applyRole(role) {
-      currentUserRole = role || "viewer";
-      document.body.classList.remove("role-viewer", "role-admin", "role-super_admin");
-      document.body.classList.add(`role-${currentUserRole}`);
-      if (currentUserRole === "admin" || currentUserRole === "super_admin") {
-        loadRoles().catch(console.error);
-      }
-    }
-
-    let dashboardStarted = false;
-    function startDashboard(event) {
-      if (dashboardStarted) return;
-      dashboardStarted = true;
-      initTheme();
-      initMobileNav();
-      initScrollSpy();
-      initAdminPanel();
-      applyRole(event && event.detail && event.detail.role);
-      runFullRefresh();
-      loadCandidateCsv().catch(console.error);
-      setInterval(runFullRefresh, 10000);
-      document.getElementById("searchBox").addEventListener("input", renderAllRows);
-      document.getElementById("examSearchBox").addEventListener("input", renderExamRegistrationRows);
-      document.getElementById("memberSearchBox").addEventListener("input", renderMemberRows);
-      document.getElementById("candidateSearch").addEventListener("input", renderCandidateAnalytics);
-      document.getElementById("clearCandidate").addEventListener("click", () => {
-        document.getElementById("candidateSearch").value = "";
-        renderCandidateAnalytics();
-        document.getElementById("candidateSearch").focus();
-      });
-      document.getElementById("candidateFile").addEventListener("change", async event => {
-        const file = event.target.files && event.target.files[0];
-        if (!file) return;
-        const lowerName = file.name.toLowerCase();
-        try {
-          if (lowerName.endsWith(".xlsx") || lowerName.endsWith(".xls")) {
-            await uploadWorkbookToSupabase(file);
-          } else {
-            await loadCandidateCsvFromText(await file.text(), file.name, "CSV");
-          }
-        } catch (error) {
-          document.getElementById("candidateDataStatus").textContent = `Upload failed: ${error.message}`;
-        }
-      });
-      document.querySelectorAll(".nav-item[data-go]").forEach(item => {
-        item.addEventListener("click", () => goToSection(item.dataset.go, item));
-      });
-      document.getElementById("copyBtn").addEventListener("click", async () => {
-        const lines = [
-          ["Course_ID", "Learners_Enrolled", "Exam_Registration", "Members"],
-          ...allCourseRows.map(row => [
-            row.course_id,
-            row.count,
-            row.exam_registration,
-            plainMemberForCourse(row.course_id)
-          ])
-        ];
-        const tableText = lines.map(row => row.join("\t")).join("\n");
-        await navigator.clipboard.writeText(tableText);
-        document.getElementById("copyBtn").textContent = "Copied";
-        setTimeout(() => document.getElementById("copyBtn").textContent = "Copy table", 1500);
-      });
-      document.getElementById("downloadLink").addEventListener("click", event => {
-        event.preventDefault();
-        downloadEnrollmentMemberCsv();
-      });
-      document.getElementById("copyMemberBtn").addEventListener("click", async () => {
-        const lines = [["Course_ID", "Group", "Members", "Status", "Method"], ...memberRowsData.map(row => [
-          row.course_id, row.group_name, row.member_count, row.status, row.method
-        ])];
-        await navigator.clipboard.writeText(lines.map(row => row.join("\t")).join("\n"));
-        document.getElementById("copyMemberBtn").textContent = "Copied";
-        setTimeout(() => document.getElementById("copyMemberBtn").textContent = "Copy member table", 1500);
-      });
-    }
-    window.addEventListener("nptel-auth-ready", startDashboard, { once: true });
+    });
+    document.querySelectorAll(".nav-item").forEach(item => {
+      item.addEventListener("click", () => goToSection(item.dataset.go, item));
+    });
+    document.getElementById("copyBtn").addEventListener("click", async () => {
+      const lines = [
+        ["Course_ID", "Learners_Enrolled", "Exam_Registration", "Members"],
+        ...allCourseRows.map(row => [
+          row.course_id,
+          row.count,
+          row.exam_registration,
+          plainMemberForCourse(row.course_id)
+        ])
+      ];
+      const tableText = lines.map(row => row.join("\t")).join("\n");
+      await navigator.clipboard.writeText(tableText);
+      document.getElementById("copyBtn").textContent = "Copied";
+      setTimeout(() => document.getElementById("copyBtn").textContent = "Copy table", 1500);
+    });
+    document.getElementById("downloadLink").addEventListener("click", event => {
+      event.preventDefault();
+      downloadEnrollmentMemberCsv();
+    });
+    document.getElementById("copyMemberBtn").addEventListener("click", async () => {
+      const lines = [["Course_ID", "Group", "Members", "Status", "Method"], ...memberRowsData.map(row => [
+        row.course_id, row.group_name, row.member_count, row.status, row.method
+      ])];
+      await navigator.clipboard.writeText(lines.map(row => row.join("\t")).join("\n"));
+      document.getElementById("copyMemberBtn").textContent = "Copied";
+      setTimeout(() => document.getElementById("copyMemberBtn").textContent = "Copy member table", 1500);
+    });
   </script>
 </body>
 </html>
