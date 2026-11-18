@@ -712,29 +712,7 @@
     }
   </style>
 </head>
-<body class="auth-pending">
-  <div id="auth-screen" class="auth-screen" aria-live="polite">
-    <div class="auth-card">
-      <div class="auth-mark">N</div>
-      <div class="auth-kicker">NPTEL Portal Team</div>
-      <div class="auth-login">
-        <h1>Sign In</h1>
-        <p id="auth-message">Sign in once to open Count Dashboard or Tool.</p>
-        <button id="auth-google-btn" class="auth-google-btn" type="button">
-          <span class="auth-google-icon">G</span>
-          <span>Sign in with Google</span>
-        </button>
-      </div>
-      <div class="auth-choice">
-        <h1>Choose Application</h1>
-        <p>Signed in as <strong id="auth-choice-email"></strong></p>
-        <button id="auth-count-btn" class="auth-link-btn primary" type="button">Open Count Dashboard</button>
-        <button id="auth-tool-btn" class="auth-link-btn tool" type="button">Open Tool</button>
-        <button id="auth-watermark-btn" class="auth-link-btn watermark" type="button">Open Watermark</button>
-      </div>
-      <div id="auth-error" class="auth-error" role="alert"></div>
-    </div>
-  </div>
+<body>
   <div class="app">
     <aside>
       <div class="brand"><div class="brand-mark">N</div><div>NPTEL<small>SP</small></div></div>
@@ -761,11 +739,6 @@
           <span class="sync-pill" id="syncPill"><span class="sync-dot" id="syncDot"></span><span id="syncText">Loading…</span></span>
           <a class="tool-link" href="https://01234santhoshprabhu.github.io/Tool/" title="Open Tool"><span>Tool</span></a>
           <a class="tool-link watermark-link" href="https://01234santhoshprabhu.github.io/NPTEL-Watermark/" title="Open Watermark"><span>Watermark</span></a>
-          <div class="auth-user-pill" id="auth-user-pill" style="display:none">
-            <span id="auth-user-role" class="role-badge"></span>
-            <span id="auth-user-email"></span>
-            <button id="auth-signout-btn" type="button" title="Sign out">Sign out</button>
-          </div>
           <button class="nav-toggle" id="navToggle" type="button" aria-label="Toggle menu" aria-expanded="false">☰</button>
         </div>
       </header>
@@ -911,9 +884,6 @@
       </main>
     </div>
   </div>
-  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
-  <script src="auth.js?v=20260803-popup-enabled"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script>
     const fmt = new Intl.NumberFormat("en-IN");
@@ -1677,7 +1647,7 @@
         setTimeout(() => document.getElementById("copyMemberBtn").textContent = "Copy member table", 1500);
       });
     }
-    window.addEventListener("nptel-auth-ready", startDashboard, { once: true });
+    startDashboard();
   </script>
 </body>
 </html>
